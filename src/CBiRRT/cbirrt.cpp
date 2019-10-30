@@ -67,9 +67,6 @@ bool RRT::plan(robot_state::RobotState & goal_state, robot_state::RobotState & s
 
 
     robot_state::RobotState random_state = planning_scene_ptr->getCurrentStateNonConst();
-    random_numbers::RandomNumberGenerator & random_generate = random_state.getRandomNumberGenerator();
-
-
     robot_state::RobotState new_state = planning_scene_ptr->getCurrentStateNonConst();
 
     Eigen::Matrix<double, 7, 1> random_state_value_matrix;
@@ -90,11 +87,11 @@ bool RRT::plan(robot_state::RobotState & goal_state, robot_state::RobotState & s
     }
     _rrt_tree_matrix.push_back(start_value_matrix);
 
-    for(int count=0; count<100000; count++){
+    for(int count=0; count<1000; count++){
         std::cout<<count<<std::endl;
         sample(goal_state, random_state, random_state_value_matrix, planning_group);
         nearest_node_index = near(random_state_value_matrix, nearest_node_matrix);
-        steer(random_state_value_matrix, nearest_node_matrix, 0.2, new_node_matrix);
+        steer(random_state_value_matrix, nearest_node_matrix, 0.05, new_node_matrix);
 
         if(collision_check(new_node_matrix, new_state, planning_group, planning_group_name, planning_scene_ptr)){
             continue;
@@ -117,7 +114,6 @@ bool RRT::plan(robot_state::RobotState & goal_state, robot_state::RobotState & s
             return true;
         }
     }
-    ROS_INFO("Fail!!!");
     return false;
 }
 

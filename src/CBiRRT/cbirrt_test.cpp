@@ -38,11 +38,7 @@ int main(int argc, char** argv){
     planning_scene_for_operate->decoupleParent();
 
     robot_state::RobotState start_state = planning_scene_for_operate->getCurrentStateNonConst();
-//    std::vector<double> test_start_value = {0.17109754, -0.87923624, -0.08423487,  1.712199,   -0.81049842,  2.09320188,  2.58848987}; //手臂平放
-    std::vector<double> test_start_value = {-0.697542,-0.614647,0.446381,0.788902,3.03776,-0.908998,3.01904,5.65122e-05,-4.41007e-05,9.34576e-05,4.04623e-05,-5.03587e-05,6.91139e-05,4.40965e-05};
-
-
-
+    std::vector<double> test_start_value = {0.17109754, -0.87923624, -0.08423487,  1.712199,   -0.81049842,  2.09320188,  2.58848987};
     const robot_state::JointModelGroup* planning_group = start_state.getJointModelGroup("left_arm"); //
     start_state.setJointGroupPositions(planning_group, test_start_value);
 
@@ -61,9 +57,7 @@ int main(int argc, char** argv){
 
 
     robot_state::RobotState goal_state = planning_scene_for_operate->getCurrentStateNonConst();
-//    std::vector<double> test_goal_value = {-0.53121395, -1.14663671 , 0.21698349  ,2.33939883 ,-1.17448029  ,1.81105335,  2.82284528}; //手臂平放
-    std::vector<double> test_goal_value = {-0.76382,0.0949877,-1.27838,1.33618,2.91362,1.44069,-1.73362,-8.73017e-05,-8.39939e-05,-7.68254e-05,6.1303e-05,-6.85512e-05,-8.68332e-05,1.60297e-06};
-
+    std::vector<double> test_goal_value = {-0.53121395, -1.14663671 , 0.21698349  ,2.33939883 ,-1.17448029  ,1.81105335,  2.82284528};
     goal_state.setJointGroupPositions(planning_group, test_goal_value);
 
 

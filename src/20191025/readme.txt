@@ -1,0 +1,2 @@
+test1:测试通过发布sensor_msg/JointState 消息来通过 joint_state_publisher 来改变机器人当前的关节角度
+test2:测试 PlanningSceneMonitor 的使用方法，尝试用 updatesScene 修改但是没有实现
