@@ -1,5 +1,5 @@
 #include <ros/ros.h>
-#include <baxter_moveit_application/MyRRT/my_rrt.h>
+#include <baxter_moveit_application/CBiRRT/cbirrt.h>
 
 #include <moveit/robot_model_loader/robot_model_loader.h>
 #include <moveit/robot_model/robot_model.h>
@@ -23,13 +23,15 @@
 #include <moveit_msgs/RobotState.h>
 #include <moveit_msgs/DisplayTrajectory.h>
 
+#include <geometry_msgs/Pose.h>
+
 int main(int argc, char** argv){
-    ros::init(argc, argv, "my_rrt_test");
+    ros::init(argc, argv, "cbirrt_test");
     ros::NodeHandle n;
     ros::AsyncSpinner spinner(1);
     spinner.start();
 
-    RRT my_planner(0.7);
+    CRRT my_planner(0.9);
 
     planning_scene_monitor::PlanningSceneMonitorPtr monitor_ptr = std::make_shared<planning_scene_monitor::PlanningSceneMonitor>("robot_description");
     monitor_ptr->requestPlanningSceneState("get_planning_scene");
@@ -38,6 +40,7 @@ int main(int argc, char** argv){
     planning_scene_for_operate->decoupleParent();
 
     robot_state::RobotState start_state = planning_scene_for_operate->getCurrentStateNonConst();
+    //Z:180 Y:90 X:-90   2.94792  1.56999 -1.76536
     std::vector<double> test_start_value = {0.17109754, -0.87923624, -0.08423487,  1.712199,   -0.81049842,  2.09320188,  2.58848987};
     const robot_state::JointModelGroup* planning_group = start_state.getJointModelGroup("left_arm"); //
     start_state.setJointGroupPositions(planning_group, test_start_value);
@@ -69,6 +72,8 @@ int main(int argc, char** argv){
     std::reverse(result.begin(), result.end());
     ROS_INFO("waypoints num is %d", int(result.size()));
 
+    std::vector<geometry_msgs::Pose> result_pose;
+
     moveit_msgs::RobotTrajectory result_msg;
     trajectory_msgs::JointTrajectory path_point_msg;
     trajectory_msgs::JointTrajectoryPoint path_point_position_msg;
@@ -77,7 +82,22 @@ int main(int argc, char** argv){
         result[i].copyJointGroupPositions(planning_group, tmp);
         path_point_position_msg.positions = tmp;
         path_point_msg.points.push_back(path_point_position_msg);
+
+        if(i%5==0) {
+            geometry_msgs::Pose tmp_pose_msg;
+            const Eigen::Affine3d end_pose = result[i].getGlobalLinkTransform("left_gripper");
+            Eigen::Quaterniond end_quaternion(end_pose.rotation());
+            tmp_pose_msg.position.x = end_pose(0, 3);
+            tmp_pose_msg.position.y = end_pose(1, 3);
+            tmp_pose_msg.position.z = end_pose(2, 3);
+            tmp_pose_msg.orientation.x = end_quaternion.x();
+            tmp_pose_msg.orientation.y = end_quaternion.y();
+            tmp_pose_msg.orientation.z = end_quaternion.z();
+            tmp_pose_msg.orientation.w = end_quaternion.w();
+            result_pose.push_back(tmp_pose_msg);
+        }
     }
+
     const std::vector<std::string>& joint_names = planning_group->getVariableNames();
     for(size_t i=0; i<joint_names.size(); i++){
         std::cout<<joint_names[i]<<std::endl;
@@ -94,7 +114,10 @@ int main(int argc, char** argv){
     Eigen::Affine3d text_pose = Eigen::Affine3d::Identity();
     text_pose.translation().z() = 1.75;
     visual_tools.publishText(text_pose, "Simple RRT", rvt::WHITE, rvt::XLARGE);
+    for (std::size_t i = 0; i < result_pose.size(); ++i)
+        visual_tools.publishAxisLabeled(result_pose[i], "pt" + std::to_string(i), rvt::SMALL);
     visual_tools.trigger();
+
 
 
     //创建一个DisplayTrajectory msg

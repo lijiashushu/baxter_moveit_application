@@ -177,6 +177,9 @@ target_link_libraries(20191029_test2_node ${catkin_LIBRARIES})
 add_executable(20191029_test3_node src/20191029/20191029_test3.cpp)
 target_link_libraries(20191029_test3_node ${catkin_LIBRARIES})
 
+add_executable(20191030_test1_node src/20191030/20191030_test1.cpp)
+target_link_libraries(20191030_test1_node ${catkin_LIBRARIES})
+
 add_executable(my_rrt_node src/MyRRT/my_rrt_test.cpp src/MyRRT/my_rrt.cpp include/baxter_moveit_application/MyRRT/my_rrt.h)
 target_link_libraries(my_rrt_node ${catkin_LIBRARIES})
 

@@ -15,11 +15,12 @@
 #include <moveit_msgs/AttachedCollisionObject.h>
 #include <moveit_msgs/CollisionObject.h>
 #include <eigen3/Eigen/Core>
+
+
 int main(int argc, char** argv){
-    Eigen::Vector2f a,b;
-    a<<3,4;
-    b<<3,4;
-    auto c=a==b;
-    std::cout<<c<<std::endl;
-    return 0;
+    Eigen::Vector3d test;
+    test<< 1, 2, 3;
+    Eigen::Vector3d test2;
+    test2<<1, 2, 3;
+    std::cout<<(test == test2)<<std::endl;
 }

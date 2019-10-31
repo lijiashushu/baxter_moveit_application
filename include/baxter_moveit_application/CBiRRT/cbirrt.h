@@ -25,16 +25,17 @@
 
 #include <eigen3/Eigen/Core>
 
-class RRT{
+class CRRT{
 public:
-    RRT(double probability);
-    ~RRT();
+    CRRT(double probability);
+    ~CRRT();
 
     void sample(robot_state::RobotState & goal_state, robot_state::RobotState & random_state, Eigen::Matrix<double, 7, 1> & random_state_value_matrix, const robot_state::JointModelGroup* planning_group);
     size_t near(Eigen::Matrix<double, 7, 1> & random_state_value_matrix, Eigen::Matrix<double, 7, 1> & nearest_node_matrix);
     void steer(Eigen::Matrix<double, 7, 1> & random_state_value_matrix, Eigen::Matrix<double, 7, 1> & nearest_node_matrix, double step_size, Eigen::Matrix<double, 7, 1> & new_node_matrix);
     bool collision_check(Eigen::Matrix<double, 7, 1> & new_node_matrix, robot_state::RobotState & new_state, const robot_state::JointModelGroup* planning_group, const std::string & planning_group_name, planning_scene::PlanningScenePtr & planning_scene_ptr);
     bool plan(robot_state::RobotState & goal_state, robot_state::RobotState & start_state, planning_scene::PlanningScenePtr& planning_scene_ptr, const std::string & planning_group_name, const robot_state::JointModelGroup* planning_group);
+    void constraint_extend(Eigen::Matrix<double, 7, 1> & random_state_value_matrix, Eigen::Matrix<double, 7, 1> & nearest_node_matrix, size_t nearst_node_index, Eigen::Matrix<double, 7, 1> & reached_state_matrix, const robot_state::JointModelGroup* planning_group, const std::string & planning_group_name, planning_scene::PlanningScenePtr & planning_scene_ptr);
 
     std::vector<robot_state::RobotState> planning_result;
 private:
@@ -43,12 +44,17 @@ private:
 //    planning_scene::PlanningScenePtr _planning_scene_ptr;
 //    robot_state::RobotState _planning_state;
 //    const robot_state::JointModelGroup* _planning_group;
-
 //
     std::vector<std::pair<robot_state::RobotState, size_t>> _rrt_tree_state;
     std::vector<Eigen::Matrix<double, 7, 1>> _rrt_tree_matrix;
     std::default_random_engine _random_engine;
     std::bernoulli_distribution _random_distribution;
+    double _step_size;
+    double _constrain_delta;
+    double _pitch_min;
+    double _pitch_max;
+    double _yaw_min;
+    double _yaw_max;
 
 //
 //    std::vector<std::vector<double>> _result;
