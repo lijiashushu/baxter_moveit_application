@@ -26,7 +26,7 @@ int main(int argc, char** argv){
     planning_scene_monitor::LockedPlanningSceneRW ps(monitor_ptr);
 
     robot_state::RobotState & robot_state_write = ps->getCurrentStateNonConst();
-    const robot_state::JointModelGroup* two_arm = robot_state_write.getJointModelGroup("both_arms");
+    const robot_state::JointModelGroup* two_arm = robot_state_write.getJointModelGroup("left_arm");
     std::vector<double> original_values;
     robot_state_write.copyJointGroupPositions(two_arm, original_values);
     for(std::vector<double>::iterator it=original_values.begin(); it!=original_values.end();it++){

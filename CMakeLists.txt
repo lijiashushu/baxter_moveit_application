@@ -183,8 +183,11 @@ target_link_libraries(20191030_test1_node ${catkin_LIBRARIES})
 add_executable(my_rrt_node src/MyRRT/my_rrt_test.cpp src/MyRRT/my_rrt.cpp include/baxter_moveit_application/MyRRT/my_rrt.h)
 target_link_libraries(my_rrt_node ${catkin_LIBRARIES})
 
-add_executable(cbirrt_node src/CBiRRT/cbirrt_test.cpp src/CBiRRT/cbirrt.cpp include/baxter_moveit_application/CBiRRT/cbirrt.h)
-target_link_libraries(cbirrt_node ${catkin_LIBRARIES})
+add_executable(crrt_node src/CRRT/crrt_test.cpp src/CRRT/crrt.cpp include/baxter_moveit_application/CRRT/crrt.h)
+target_link_libraries(crrt_node ${catkin_LIBRARIES})
+
+add_executable(cbitrrt_node src/CBiRRT/cbirrt_test.cpp src/CBiRRT/cbirrt.cpp include/baxter_moveit_application/CBiRRT/cbirrt.h)
+target_link_libraries(cbitrrt_node ${catkin_LIBRARIES})
 
 ## Rename C++ executable without prefix
 ## The above recommended prefix causes long target names, the following renames the

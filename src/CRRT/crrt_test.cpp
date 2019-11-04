@@ -1,5 +1,5 @@
 #include <ros/ros.h>
-#include <baxter_moveit_application/CBiRRT/cbirrt.h>
+#include <baxter_moveit_application/CRRT/crrt.h>
 
 #include <moveit/robot_model_loader/robot_model_loader.h>
 #include <moveit/robot_model/robot_model.h>
@@ -31,7 +31,7 @@ int main(int argc, char** argv){
     ros::AsyncSpinner spinner(1);
     spinner.start();
 
-    CBiRRT my_planner(1.0);
+    CRRT my_planner(0.8);
 
     planning_scene_monitor::PlanningSceneMonitorPtr monitor_ptr = std::make_shared<planning_scene_monitor::PlanningSceneMonitor>("robot_description");
     monitor_ptr->requestPlanningSceneState("get_planning_scene");
@@ -41,10 +41,8 @@ int main(int argc, char** argv){
 
     robot_state::RobotState start_state = planning_scene_for_operate->getCurrentStateNonConst();
     //Z:180 Y:90 X:-90   2.94792  1.56999 -1.76536
-
-
-    std::vector<double> test_start_value = {0.178307,-1.36637,-0.718743,2.32057,-1.28874,1.62442,2.4651};//有障碍时手臂平方位置
-//    std::vector<double> test_start_value = {0.17109754, -0.87923624, -0.08423487,  1.712199,   -0.81049842,  2.09320188,  2.58848987}; //无障碍时手臂平方位置
+        std::vector<double> test_start_value = {0.178307,-1.36637,-0.718743,2.32057,-1.28874,1.62442,2.4651};//有障碍时手臂平方位置
+//    std::vector<double> test_start_value = {0.17109754, -0.87923624, -0.08423487,  1.712199,   -0.81049842,  2.09320188,  2.58848987};
     const robot_state::JointModelGroup* planning_group = start_state.getJointModelGroup("left_arm"); //
     start_state.setJointGroupPositions(planning_group, test_start_value);
 
@@ -63,9 +61,8 @@ int main(int argc, char** argv){
 
 
     robot_state::RobotState goal_state = planning_scene_for_operate->getCurrentStateNonConst();
-
-    std::vector<double> test_goal_value = {0.0511426,-0.422846,-0.602817,1.92707,-0.888771,1.20479,2.70597};//有障碍时手臂平方位置
-//    std::vector<double> test_goal_value = {-0.53121395, -1.14663671 , 0.21698349  ,2.33939883 ,-1.17448029  ,1.81105335,  2.82284528};//无障碍时手臂平方位置
+        std::vector<double> test_goal_value = {0.0511426,-0.422846,-0.602817,1.92707,-0.888771,1.20479,2.70597};//有障碍时手臂平方位置
+//    std::vector<double> test_goal_value = {-0.53121395, -1.14663671 , 0.21698349  ,2.33939883 ,-1.17448029  ,1.81105335,  2.82284528};
     goal_state.setJointGroupPositions(planning_group, test_goal_value);
 
 
@@ -74,6 +71,7 @@ int main(int argc, char** argv){
     }
 
     std::vector<robot_state::RobotState> result = my_planner.planning_result;
+    std::reverse(result.begin(), result.end());
     ROS_INFO("waypoints num is %d", int(result.size()));
 
     std::vector<geometry_msgs::Pose> result_pose;

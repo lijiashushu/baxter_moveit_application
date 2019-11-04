@@ -29,15 +29,15 @@ int main(int argc, char** argv){
     planning_scene_for_operate->decoupleParent();
 
     robot_state::RobotState start_state = planning_scene_for_operate->getCurrentStateNonConst();
-    std::vector<double> test_start_value = {0.17109754, -0.87923624, -0.08423487,  1.712199,   -0.81049842,  2.09320188,  2.58848987};
+    std::vector<double> test_start_value = {0.0511426,-0.422846,-0.602817,1.92707,-0.888771,1.20479,2.70597}; //有障碍目标位置
     const robot_state::JointModelGroup* planning_group = start_state.getJointModelGroup("left_arm");
     start_state.setJointGroupPositions(planning_group, test_start_value);
 
-    std::vector<double> test_goal_value = {-0.53121395, -1.14663671 , 0.21698349  ,2.33939883 ,-1.17448029  ,1.81105335,  2.82284528};
+    std::vector<double> test_goal_value = {-0.53121395, -1.14663671 , 0.21698349  ,2.33939883 ,-1.17448029  ,1.81105335,  2.82284528}; //无障碍目标位置
     robot_state::RobotState goal_state = planning_scene_for_operate->getCurrentStateNonConst();
     goal_state.setJointGroupPositions(planning_group, test_goal_value);
-    
-    
+
+    planning_scene_for_operate->setCurrentState(start_state);
 
     moveit_msgs::PlanningScene planning_scene_msg;
     planning_scene_for_operate->getPlanningSceneMsg(planning_scene_msg);
@@ -48,6 +48,7 @@ int main(int argc, char** argv){
     {
         sleep_t.sleep();
     }
+    std::cout<<"??"<<std::endl;
     planning_scene_diff_publisher.publish(planning_scene_msg);
     ros::Duration(1).sleep();
 
