@@ -4,9 +4,9 @@
 #include <algorithm>
 
 CBiRRT::CBiRRT(double probability):_random_distribution(probability){
-    _random_engine.seed(time(0));
+    _random_engine.seed(0);
     _step_size = 0.03;
-    _constrain_delta = 0.1; //弧度值
+    _constrain_delta = 0.2; //弧度值
     _pitch_min =  1.56999 - 0.00025;
     _pitch_max =  1.56999 + 0.00025 ;
     _yaw_min = 2.94792  - 0.00025;
