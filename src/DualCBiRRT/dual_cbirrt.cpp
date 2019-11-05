@@ -235,26 +235,28 @@ void DualCBiRRT::constraint_extend_a_tree(Eigen::Matrix<double, 7, 1> & random_s
             //如果投影成功，qs_state肯定更新过
             if(project_success){
 
-                if(planning_scene_ptr->isStateValid(qs_state, planning_group_name)) {
-                    if(true){
-//                    if(solve_IK_problem(current_slave_angles_matrix, qs_matrix, computed_slave_angles_matrix, planning_group, slave_group, planning_scene_ptr, slave_joint_pos_bounds)){
-                        std::cout<<"adding a state"<<std::endl;
+//                if(planning_scene_ptr->isStateValid(qs_state, planning_group_name)) {
+                if(true){
 
-                        for(size_t i=0; i<7; i++){
-                            slave_angles_vector[i] = computed_slave_angles_matrix[i];
+                        if(solve_IK_problem(current_slave_angles_matrix, qs_matrix, computed_slave_angles_matrix, planning_group, slave_group, planning_scene_ptr, slave_joint_pos_bounds)){
+                            std::cout<<"adding a state"<<std::endl;
+
+                            for(size_t i=0; i<7; i++){
+                                slave_angles_vector[i] = computed_slave_angles_matrix[i];
+                            }
+                            qs_state.setJointGroupPositions(slave_group, slave_angles_vector);
+
+                            //将节点加入树中
+                            matrix_tree_element.head(7) = qs_matrix;
+                            matrix_tree_element.tail(7) = computed_slave_angles_matrix;
+                            _a_rrt_tree_matrix.push_back(matrix_tree_element);
+                            current_slave_angles_matrix = computed_slave_angles_matrix; //如果还在这个循环里执行，下一次计算IK的话slave从这个值为初始值开始计算
+
+                            std::pair<robot_state::RobotState, size_t> tmp(qs_state, qs_old_index);
+                            _a_rrt_tree_state.push_back(tmp);
+                            qs_old_index = _a_rrt_tree_state.size() - 1;
                         }
-                        qs_state.setJointGroupPositions(slave_group, slave_angles_vector);
 
-                        //将节点加入树中
-                        matrix_tree_element.head(7) = qs_matrix;
-                        matrix_tree_element.tail(7) = computed_slave_angles_matrix;
-                        _a_rrt_tree_matrix.push_back(matrix_tree_element);
-                        current_slave_angles_matrix = computed_slave_angles_matrix; //如果还在这个循环里执行，下一次计算IK的话slave从这个值为初始值开始计算
-
-                        std::pair<robot_state::RobotState, size_t> tmp(qs_state, qs_old_index);
-                        _a_rrt_tree_state.push_back(tmp);
-                        qs_old_index = _a_rrt_tree_state.size() - 1;
-                    }
                 }
                 else{
                     reached_state_matrix = qs_old_matrix;
@@ -435,9 +437,9 @@ void DualCBiRRT::constraint_extend_b_tree(Eigen::Matrix<double, 7, 1> & random_s
             //如果投影成功，qs_state肯定更新过
             if(project_success){
 
-                if(planning_scene_ptr->isStateValid(qs_state, planning_group_name)) {
-                    if(true){
-//                    if(solve_IK_problem(current_slave_angles_matrix, qs_matrix, computed_slave_angles_matrix, planning_group, slave_group, planning_scene_ptr, slave_joint_pos_bounds)){
+//                if(planning_scene_ptr->isStateValid(qs_state, planning_group_name)) {
+                if(true){
+                    if(solve_IK_problem(current_slave_angles_matrix, qs_matrix, computed_slave_angles_matrix, planning_group, slave_group, planning_scene_ptr, slave_joint_pos_bounds)){
                         std::cout<<"adding a state"<<std::endl;
 
                         for(size_t i=0; i<7; i++){
@@ -655,6 +657,8 @@ bool DualCBiRRT::solve_IK_problem(Eigen::Matrix<double, 7, 1> slave_state_value_
         master_joint_value_vector.push_back(master_state_value_matrix[i]);
         slave_joint_value_vector.push_back(slave_state_value_matrix[i]);
     }
+    std::cout<<"master_state_value_matrix\n"<<master_state_value_matrix.transpose()<<std::endl;
+
     master_state.setJointGroupPositions(planning_group, master_joint_value_vector);
     slave_state.setJointGroupPositions(slave_group,slave_joint_value_vector);
     //*******************************************************************************************************************************************
@@ -674,13 +678,16 @@ bool DualCBiRRT::solve_IK_problem(Eigen::Matrix<double, 7, 1> slave_state_value_
     Eigen::MatrixXd slave_end_jacobian;
     Eigen::MatrixXd slave_end_jacobian_mp_inverse;
     slave_end_jacobian = slave_state.getJacobian(slave_group);
-    
-    //************************************计算 slave 的目标末端位置，欧拉角向量以及旋转矩阵*************************************
+    std::cout<<"slave_current_euler\n  "<<slave_euler.transpose() <<std::endl;
+
+
+    //************************************计算 slave 的目标末端位置，欧拉角向量以及旋转矩阵************************************
+
     Eigen::Vector3d slave_goal_euler(master_euler[0], master_euler[1], master_euler[2] + 3.1415926);
     Eigen::Vector3d slave_goal_pos;
-    Eigen::Vector3d distance(0, 0, 0.1);
+    Eigen::Vector3d distance(0, 0, 0.06);
     std::cout<<"distance\n  "<<distance.transpose() <<std::endl;
-    std::cout<<"master_end_pos\n  "<<master_end_pos.transpose() <<std::endl;
+    std::cout<<"slave_goal_euler\n  "<<slave_goal_euler.transpose() <<std::endl;
     slave_goal_pos = master_end_rot_matrix * distance + master_end_pos;
     Eigen::AngleAxisd goal_roll_angle(Eigen::AngleAxisd(slave_goal_euler[2], Eigen::Vector3d::UnitX()));
     Eigen::AngleAxisd goal_pitch_angle(Eigen::AngleAxisd(slave_goal_euler[1], Eigen::Vector3d::UnitY()));
@@ -688,7 +695,8 @@ bool DualCBiRRT::solve_IK_problem(Eigen::Matrix<double, 7, 1> slave_state_value_
     Eigen::Matrix3d slave_goal_rot_matrix;
     slave_goal_rot_matrix = goal_yaw_angle*goal_pitch_angle*goal_roll_angle;
     //*****************************************************************************************
-
+    std::cout<<"master_euler\n  "<<master_euler.transpose() <<std::endl;
+    std::cout<<"slave_euler\n  "<<slave_euler.transpose() <<std::endl;
     //*********************计算 slave 的目标末端位置，欧拉角向量误差，定义任务空间误差，关节角度增量**********************
     Eigen::Vector3d pos_error = slave_goal_pos - slave_end_pos;
     Eigen::Vector3d rot_error = slave_goal_euler - slave_euler;
@@ -732,10 +740,11 @@ bool DualCBiRRT::solve_IK_problem(Eigen::Matrix<double, 7, 1> slave_state_value_
         }
         else{
             count+=1;
-            if(std::abs(pos_error[0]) < 0.05 && std::abs(pos_error[1])< 0.05 && std::abs(pos_error[2])< 0.05 &&  std::abs(rot_error[0]) < 0.1 && std::abs(rot_error[1]) < 0.1 && std::abs(rot_error[2]) < 0.1)
+            if(std::abs(pos_error[0]) < 0.01 && std::abs(pos_error[1])< 0.01 && std::abs(pos_error[2])< 0.01 &&  std::abs(rot_error[0]) < 0.1 && std::abs(rot_error[1]) < 0.1 && std::abs(rot_error[2]) < 0.1)
             {
                 result_state_value_matrix = slave_state_value_matrix;
                 std::cout<<"computing IK success"<<std::endl;
+                std::cout<<"success_slave_euler\n"<<slave_euler.transpose()<<std::endl;
                 return true;
             } 
             else{
@@ -744,43 +753,43 @@ bool DualCBiRRT::solve_IK_problem(Eigen::Matrix<double, 7, 1> slave_state_value_
                 pos_error_draw.emplace_back(pos_error.transpose());
                 euler_error_draw.emplace_back(rot_error.transpose());
                 joint_angles_draw.emplace_back(slave_state_value_matrix.transpose());
-                if(count == 1000){
-                    std::string filenum = std::to_string(_draw_count++);
-                    std::ofstream out1("/home/lijiashushu/ros_ws/src/baxter_moveit_application/draw_data/"+filenum+"pos_error_draw.txt");
-                    if(out1){
-                        std::cout<<"Open file success"<<std::endl;
-                    }
-                    else{
-                        std::cout<<"Open file fail"<<std::endl;
-                    }
-                    std::ofstream out2("/home/lijiashushu/ros_ws/src/baxter_moveit_application/draw_data/"+filenum+"euler_error_draw.txt");
-                    std::ofstream out3("/home/lijiashushu/ros_ws/src/baxter_moveit_application/draw_data/"+filenum+"joint_angles_draw.txt");
-                    std::ofstream out4("/home/lijiashushu/ros_ws/src/baxter_moveit_application/draw_data/"+filenum+"joint_bounds.txt");
-                    for (size_t i=0; i<pos_error_draw.size(); i++){
-                        out1<<pos_error_draw[i]<<std::endl;
-                        out2<<euler_error_draw[i]<<std::endl;
-                        out3<<joint_angles_draw[i]<<std::endl;
-                    }
-                    for (size_t i=0; i<slave_joint_pos_bounds.first.size();i++){
-                        if(i == slave_joint_pos_bounds.first.size()-1){
-                            out4 << slave_joint_pos_bounds.first[i] <<std::endl;
-                        }
-                        else{
-                            out4 << slave_joint_pos_bounds.first[i] <<" ";
-                        }
-                    }
-                    for (size_t i=0; i<slave_joint_pos_bounds.second.size();i++){
-                        if(i == slave_joint_pos_bounds.second.size()-1){
-                            out4 << slave_joint_pos_bounds.second[i] <<std::endl;
-                        }
-                        else{
-                            out4 << slave_joint_pos_bounds.second[i] <<" ";
-                        }
-                    }
-                    out1.close();
-                    out2.close();
-                    out3.close();
-                }
+//                if(count == 1000){
+//                    std::string filenum = std::to_string(_draw_count++);
+//                    std::ofstream out1("/home/lijiashushu/ros_ws/src/baxter_moveit_application/draw_data/"+filenum+"pos_error_draw.txt");
+//                    if(out1){
+//                        std::cout<<"Open file success"<<std::endl;
+//                    }
+//                    else{
+//                        std::cout<<"Open file fail"<<std::endl;
+//                    }
+//                    std::ofstream out2("/home/lijiashushu/ros_ws/src/baxter_moveit_application/draw_data/"+filenum+"euler_error_draw.txt");
+//                    std::ofstream out3("/home/lijiashushu/ros_ws/src/baxter_moveit_application/draw_data/"+filenum+"joint_angles_draw.txt");
+//                    std::ofstream out4("/home/lijiashushu/ros_ws/src/baxter_moveit_application/draw_data/"+filenum+"joint_bounds.txt");
+//                    for (size_t i=0; i<pos_error_draw.size(); i++){
+//                        out1<<pos_error_draw[i]<<std::endl;
+//                        out2<<euler_error_draw[i]<<std::endl;
+//                        out3<<joint_angles_draw[i]<<std::endl;
+//                    }
+//                    for (size_t i=0; i<slave_joint_pos_bounds.first.size();i++){
+//                        if(i == slave_joint_pos_bounds.first.size()-1){
+//                            out4 << slave_joint_pos_bounds.first[i] <<std::endl;
+//                        }
+//                        else{
+//                            out4 << slave_joint_pos_bounds.first[i] <<" ";
+//                        }
+//                    }
+//                    for (size_t i=0; i<slave_joint_pos_bounds.second.size();i++){
+//                        if(i == slave_joint_pos_bounds.second.size()-1){
+//                            out4 << slave_joint_pos_bounds.second[i] <<std::endl;
+//                        }
+//                        else{
+//                            out4 << slave_joint_pos_bounds.second[i] <<" ";
+//                        }
+//                    }
+//                    out1.close();
+//                    out2.close();
+//                    out3.close();
+//                }
                 //计算消除末端在任务空间的误差所需要的速度
                 rot_error_matrix = slave_goal_rot_matrix * slave_end_rot_matrix.inverse();
                 rot_error_axis_angle = rot_error_matrix;
@@ -806,7 +815,7 @@ bool DualCBiRRT::solve_IK_problem(Eigen::Matrix<double, 7, 1> slave_state_value_
 
 
 
-                slave_end_jacobian_mp_inverse = (slave_end_jacobian.transpose() * ((slave_end_jacobian * slave_end_jacobian.transpose() + 1 * Eigen::Matrix<double, 6, 6>::Identity()).inverse())).eval();
+                slave_end_jacobian_mp_inverse = (slave_end_jacobian.transpose() * ((slave_end_jacobian * slave_end_jacobian.transpose()).inverse())).eval();
 
                 //计算优化性能指标
                 for(size_t i=0; i<7; i++){

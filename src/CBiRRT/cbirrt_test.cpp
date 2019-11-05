@@ -65,8 +65,7 @@ int main(int argc, char** argv){
     robot_state::RobotState goal_state = planning_scene_for_operate->getCurrentStateNonConst();
 
 //    std::vector<double> test_goal_value = {0.0511426,-0.422846,-0.602817,1.92707,-0.888771,1.20479,2.70597};//有障碍时手臂平方位置
-//    std::vector<double> test_goal_value = {-0.53121395, -1.14663671 , 0.21698349  ,2.33939883 ,-1.17448029  ,1.81105335,  2.82284528};//无障碍时手臂平方位置
-    std::vector<double> test_goal_value = {-0.623942,-0.650041,-0.208132,1.99769,-1.4868,1.4407,2.90019};
+    std::vector<double> test_goal_value = {-0.53121395, -1.14663671 , 0.21698349  ,2.33939883 ,-1.17448029  ,1.81105335,  2.82284528};//无障碍时手臂平方位置
     goal_state.setJointGroupPositions(planning_group, test_goal_value);
 
 

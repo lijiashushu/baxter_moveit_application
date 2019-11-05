@@ -43,32 +43,49 @@ int main(int argc, char** argv){
     //Z:180 Y:90 X:-90   2.94792  1.56999 -1.76536
 
 
-
+    const robot_state::JointModelGroup* planning_group = start_state.getJointModelGroup("left_arm"); //
+    const robot_state::JointModelGroup* slave_group = start_state.getJointModelGroup("right_arm"); //
 
 //    std::vector<double> test_start_value = {0.178307,-1.36637,-0.718743,2.32057,-1.28874,1.62442,2.4651};//有障碍时手臂平方位置
-//    std::vector<double> test_start_value = {0.17109754, -0.87923624, -0.08423487,  1.712199,   -0.81049842,  2.09320188,  2.58848987}; //无障碍时手臂平方位置
+    std::vector<double> test_start_value = {0.17109754, -0.87923624, -0.08423487,  1.712199,   -0.81049842,  2.09320188,  2.58848987}; //无障碍时手臂平方位置
 
     //求解测试数据，master 为Python程序规划出来的一个中间值，slave_test_start_value 为起始值所对应的slave
     std::vector<double> slave_test_start_value = {0.0633710, 0.118378, 1.5027523, 2.2347026,-0.579105, 0.054547, -1.11615}; //无障碍时手臂平方位置
 //    std::vector<double> test_start_value = {-0.1962478, -1.019100, 0.073317, 2.0402, -1.00087, 1.94562, 2.7110    }; //测试的中间位置
 //    std::vector<double> test_start_value = {-0.623942,-0.650041,-0.208132,1.99769,-1.4868,1.4407,2.90019}; //测试的中间位置
-    std::vector<double> test_start_value = {-1.03453,-1.13675,0.54026,2.42528,-1.40089,1.85371,2.85445};
+//    std::vector<double> test_start_value = {-1.03453,-1.13675,0.54026,2.42528,-1.40089,1.85371,2.85445};
     std::vector<double> slave_computed_vector;
-
 
     Eigen::Matrix<double, 7, 1> slave_start_matrix;
     Eigen::Matrix<double, 7, 1> master_matrix;
     Eigen::Matrix<double, 7, 1> slave_computed_matrix;
+
+
 
     for(size_t i=0; i<7; i++){
         master_matrix[i] = test_start_value[i];
         slave_start_matrix[i] = slave_test_start_value[i];
     }
 
+    std::cout<<"master_matrix\n"<<master_matrix.transpose()<<std::endl;
+    std::cout<<"slave_start_matrix\n"<<slave_start_matrix.transpose()<<std::endl;
 
-    const robot_state::JointModelGroup* planning_group = start_state.getJointModelGroup("left_arm"); //
-    const robot_state::JointModelGroup* slave_group = start_state.getJointModelGroup("right_arm"); //
+    start_state.setJointGroupPositions(planning_group, test_start_value);
+    start_state.setJointGroupPositions(slave_group, slave_test_start_value);
 
+    auto left_test = start_state.getGlobalLinkTransform("left_gripper");
+    auto left_rotation = left_test.rotation();
+    auto left_euler = left_rotation.eulerAngles(2, 1, 0);
+    auto left_pos = left_test.translation();
+    std::cout<<"left_euler\n"<<left_euler.transpose()<<std::endl;
+    std::cout<<"left_pos\n"<<left_pos.transpose()<<std::endl;
+
+    auto right_test = start_state.getGlobalLinkTransform("right_gripper");
+    auto right_rotation = right_test.rotation();
+    auto right_euler = right_rotation.eulerAngles(2, 1, 0);
+    auto right_pos = right_test.translation();
+    std::cout<<"right_euler\n"<<right_euler.transpose()<<std::endl;
+    std::cout<<"right_pos\n"<<right_pos.transpose()<<std::endl;
 
     //***********************获取slave group的关节界限，用于求解IK***********************
     const robot_model::RobotModelConstPtr & baxter_robot_model_ptr = planning_scene_for_operate->getRobotModel();

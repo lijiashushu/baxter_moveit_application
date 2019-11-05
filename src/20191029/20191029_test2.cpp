@@ -18,9 +18,24 @@
 
 
 int main(int argc, char** argv){
-    Eigen::Vector3d test;
-    test<< 1, 2, 3;
-    Eigen::Vector3d test2;
-    test2<<1, 2, 3;
-    std::cout<<(test == test2)<<std::endl;
+    Eigen::Vector3d euler1(3.04237, 1.56985, 1.47079);
+    Eigen::AngleAxisd goal_roll_angle(Eigen::AngleAxisd(euler1[2], Eigen::Vector3d::UnitX()));
+    Eigen::AngleAxisd goal_pitch_angle(Eigen::AngleAxisd(euler1[1], Eigen::Vector3d::UnitY()));
+    Eigen::AngleAxisd goal_yaw_angle(Eigen::AngleAxisd(euler1[0], Eigen::Vector3d::UnitZ()));
+    Eigen::Matrix3d euler1_rot_matrix;
+    euler1_rot_matrix = goal_yaw_angle*goal_pitch_angle*goal_roll_angle;
+
+    Eigen::Vector3d euler2(0.354233,  1.58171, -1.21038);
+    Eigen::AngleAxisd goal_roll_angle2(Eigen::AngleAxisd(euler2[2], Eigen::Vector3d::UnitX()));
+    Eigen::AngleAxisd goal_pitch_angle2(Eigen::AngleAxisd(euler2[1], Eigen::Vector3d::UnitY()));
+    Eigen::AngleAxisd goal_yaw_angle2(Eigen::AngleAxisd(euler2[0], Eigen::Vector3d::UnitZ()));
+    Eigen::Matrix3d euler2_rot_matrix;
+    euler2_rot_matrix = goal_yaw_angle2*goal_pitch_angle2*goal_roll_angle2;
+
+    Eigen::Matrix3d err_matrix = euler2_rot_matrix * euler1_rot_matrix.inverse();
+    Eigen::AngleAxisd err_angle_axis (err_matrix);
+
+    std::cout<<err_angle_axis.angle()<<std::endl;
+    std::cout<<err_angle_axis.axis()<<std::endl;
+    return 0;
 }

@@ -46,12 +46,20 @@ int main(int argc, char** argv){
 //    std::vector<double> test_start_value = {0.178307,-1.36637,-0.718743,2.32057,-1.28874,1.62442,2.4651};//有障碍时手臂平方位置
     std::vector<double> test_start_value = {0.17109754, -0.87923624, -0.08423487,  1.712199,   -0.81049842,  2.09320188,  2.58848987}; //无障碍时手臂平方位置
     std::vector<double> slave_test_start_value = {0.0633710, 0.118378, 1.5027523, 2.2347026,-0.579105, 0.054547, -1.11615}; //无障碍时手臂平方位置
-
+    std::vector<double> both_start_value;
     const robot_state::JointModelGroup* planning_group = start_state.getJointModelGroup("left_arm"); //
     const robot_state::JointModelGroup* slave_group = start_state.getJointModelGroup("right_arm"); //
+    const robot_state::JointModelGroup* both_group = start_state.getJointModelGroup("both_arms"); //
 
     start_state.setJointGroupPositions(planning_group, test_start_value);
     start_state.setJointGroupPositions(slave_group, slave_test_start_value);
+    start_state.copyJointGroupPositions(both_group, both_start_value);
+    Eigen::Matrix<double ,14, 1 >both_start_value_matrix;
+    for(size_t i=0; i<14; i++){
+        both_start_value_matrix[i] = both_start_value[i];
+    }
+    std::cout<<"both_start_value_matrix\n"<<both_start_value_matrix.transpose()<<std::endl;
+
 
     planning_scene_for_operate->setCurrentState(start_state);
     moveit_msgs::PlanningScene planning_scene_msg;
@@ -75,6 +83,32 @@ int main(int argc, char** argv){
 
     goal_state.setJointGroupPositions(planning_group, test_goal_value);
     goal_state.setJointGroupPositions(slave_group, slave_test_goal_value);
+
+    auto left_test = goal_state.getGlobalLinkTransform("left_gripper");
+    auto left_rotation = left_test.rotation();
+    auto left_euler = left_rotation.eulerAngles(2, 1, 0);
+    auto left_pos = left_test.translation();
+    std::cout<<"left_euler\n"<<left_euler.transpose()<<std::endl;
+    std::cout<<"left_pos\n"<<left_pos.transpose()<<std::endl;
+
+    auto right_test = goal_state.getGlobalLinkTransform("right_gripper");
+    auto right_rotation = right_test.rotation();
+    auto right_euler = right_rotation.eulerAngles(2, 1, 0);
+    auto right_pos = right_test.translation();
+    std::cout<<"right_euler\n"<<right_euler.transpose()<<std::endl;
+    std::cout<<"right_pos\n"<<right_pos.transpose()<<std::endl;
+
+    Eigen::Vector3d slave_goal_euler(left_euler[0], left_euler[1] + 3.1415926, left_euler[2] - 3.1415926);
+    std::cout<<"slave_goal_euler\n"<<slave_goal_euler.transpose()<<std::endl;
+    Eigen::AngleAxisd goal_roll_angle(Eigen::AngleAxisd(slave_goal_euler[2], Eigen::Vector3d::UnitX()));
+    Eigen::AngleAxisd goal_pitch_angle(Eigen::AngleAxisd(slave_goal_euler[1], Eigen::Vector3d::UnitY()));
+    Eigen::AngleAxisd goal_yaw_angle(Eigen::AngleAxisd(slave_goal_euler[0], Eigen::Vector3d::UnitZ()));
+    Eigen::Matrix3d slave_goal_rot_matrix;
+    slave_goal_rot_matrix = goal_yaw_angle*goal_pitch_angle*goal_roll_angle;
+    Eigen::Vector3d slave_goal_euler2 = slave_goal_rot_matrix.eulerAngles(2,1,0);
+    std::cout<<"slave_goal_euler2\n"<<slave_goal_euler2.transpose()<<std::endl;
+
+
 
     if(my_planner.plan(goal_state, start_state, planning_scene_for_operate, "left_arm", planning_group, slave_group)){
         std::cout<<"???"<<std::endl;
