@@ -8,104 +8,104 @@
       <config projectName="baxter_moveit_application" targetName="geometry_msgs_generate_messages_eus" />
       <config projectName="baxter_moveit_application" targetName="20191028_test1_node" />
       <config projectName="baxter_moveit_application" targetName="tf2_msgs_generate_messages_eus" />
-      <config projectName="baxter_moveit_application" targetName="moveit_msgs_generate_messages_cpp" />
       <config projectName="baxter_moveit_application" targetName="crrt_node" />
+      <config projectName="baxter_moveit_application" targetName="sensor_msgs_generate_messages_py" />
       <config projectName="baxter_moveit_application" targetName="20191028_test2_node" />
       <config projectName="baxter_moveit_application" targetName="object_recognition_msgs_generate_messages_nodejs" />
       <config projectName="baxter_moveit_application" targetName="visualization_msgs_generate_messages_nodejs" />
       <config projectName="baxter_moveit_application" targetName="sensor_msgs_generate_messages_cpp" />
       <config projectName="baxter_moveit_application" targetName="tf_generate_messages_lisp" />
       <config projectName="baxter_moveit_application" targetName="tf2_msgs_generate_messages_nodejs" />
-      <config projectName="baxter_moveit_application" targetName="trajectory_msgs_generate_messages_py" />
+      <config projectName="baxter_moveit_application" targetName="shape_msgs_generate_messages_py" />
       <config projectName="baxter_moveit_application" targetName="doxygen" />
       <config projectName="baxter_moveit_application" targetName="graph_msgs_generate_messages_py" />
       <config projectName="baxter_moveit_application" targetName="run_tests" />
       <config projectName="baxter_moveit_application" targetName="geometry_msgs_generate_messages_nodejs" />
       <config projectName="baxter_moveit_application" targetName="moveit_ros_planning_gencfg" />
-      <config projectName="baxter_moveit_application" targetName="object_recognition_msgs_generate_messages_lisp" />
       <config projectName="baxter_moveit_application" targetName="rosgraph_msgs_generate_messages_cpp" />
       <config projectName="baxter_moveit_application" targetName="octomap_msgs_generate_messages_cpp" />
       <config projectName="baxter_moveit_application" targetName="std_msgs_generate_messages_eus" />
+      <config projectName="baxter_moveit_application" targetName="tf_generate_messages_nodejs" />
       <config projectName="baxter_moveit_application" targetName="object_recognition_msgs_generate_messages_cpp" />
       <config projectName="baxter_moveit_application" targetName="object_recognition_msgs_generate_messages_py" />
       <config projectName="baxter_moveit_application" targetName="moveit_msgs_generate_messages_nodejs" />
       <config projectName="baxter_moveit_application" targetName="actionlib_msgs_generate_messages_cpp" />
       <config projectName="baxter_moveit_application" targetName="cbitrrt_node" />
+      <config projectName="baxter_moveit_application" targetName="20191026_test1_node" />
       <config projectName="baxter_moveit_application" targetName="ik_test_node" />
-      <config projectName="baxter_moveit_application" targetName="20191027_test2_node" />
+      <config projectName="baxter_moveit_application" targetName="moveit_msgs_generate_messages_cpp" />
       <config projectName="baxter_moveit_application" targetName="trajectory_msgs_generate_messages_nodejs" />
       <config projectName="baxter_moveit_application" targetName="rosgraph_msgs_generate_messages_nodejs" />
       <config projectName="baxter_moveit_application" targetName="std_msgs_generate_messages_py" />
       <config projectName="baxter_moveit_application" targetName="roscpp_generate_messages_py" />
       <config projectName="baxter_moveit_application" targetName="sensor_msgs_generate_messages_eus" />
-      <config projectName="baxter_moveit_application" targetName="actionlib_msgs_generate_messages_lisp" />
       <config projectName="baxter_moveit_application" targetName="tf_generate_messages_py" />
       <config projectName="baxter_moveit_application" targetName="trajectory_msgs_generate_messages_eus" />
       <config projectName="baxter_moveit_application" targetName="actionlib_msgs_generate_messages_nodejs" />
       <config projectName="baxter_moveit_application" targetName="octomap_msgs_generate_messages_lisp" />
       <config projectName="baxter_moveit_application" targetName="tf_generate_messages_cpp" />
       <config projectName="baxter_moveit_application" targetName="std_msgs_generate_messages_lisp" />
-      <config projectName="baxter_moveit_application" targetName="gmock" />
+      <config projectName="baxter_moveit_application" targetName="actionlib_msgs_generate_messages_lisp" />
       <config projectName="baxter_moveit_application" targetName="rosgraph_msgs_generate_messages_eus" />
       <config projectName="baxter_moveit_application" targetName="octomap_msgs_generate_messages_eus" />
       <config projectName="baxter_moveit_application" targetName="actionlib_msgs_generate_messages_py" />
       <config projectName="baxter_moveit_application" targetName="rosgraph_msgs_generate_messages_lisp" />
       <config projectName="baxter_moveit_application" targetName="tf2_msgs_generate_messages_lisp" />
       <config projectName="baxter_moveit_application" targetName="object_recognition_msgs_generate_messages_eus" />
-      <config projectName="baxter_moveit_application" targetName="sensor_msgs_generate_messages_py" />
+      <config projectName="baxter_moveit_application" targetName="object_recognition_msgs_generate_messages_lisp" />
       <config projectName="baxter_moveit_application" targetName="download_extra_data" />
       <config projectName="baxter_moveit_application" targetName="moveit_msgs_generate_messages_lisp" />
       <config projectName="baxter_moveit_application" targetName="trajectory_msgs_generate_messages_cpp" />
       <config projectName="baxter_moveit_application" targetName="actionlib_msgs_generate_messages_eus" />
-      <config projectName="baxter_moveit_application" targetName="visualization_msgs_generate_messages_lisp" />
+      <config projectName="baxter_moveit_application" targetName="20191025_test1_node" />
       <config projectName="baxter_moveit_application" targetName="20191029_test1_node" />
-      <config projectName="baxter_moveit_application" targetName="gtest_main" />
+      <config projectName="baxter_moveit_application" targetName="gmock" />
       <config projectName="baxter_moveit_application" targetName="moveit_msgs_generate_messages_eus" />
-      <config projectName="baxter_moveit_application" targetName="20191027_test1_node" />
       <config projectName="baxter_moveit_application" targetName="tests" />
       <config projectName="baxter_moveit_application" targetName="visualization_msgs_generate_messages_cpp" />
       <config projectName="baxter_moveit_application" targetName="graph_msgs_generate_messages_lisp" />
       <config projectName="baxter_moveit_application" targetName="octomap_msgs_generate_messages_nodejs" />
       <config projectName="baxter_moveit_application" targetName="roscpp_generate_messages_lisp" />
       <config projectName="baxter_moveit_application" targetName="20191029_test3_node" />
-      <config projectName="baxter_moveit_application" targetName="actionlib_generate_messages_nodejs" />
-      <config projectName="baxter_moveit_application" targetName="rosgraph_msgs_generate_messages_py" />
+      <config projectName="baxter_moveit_application" targetName="trajectory_msgs_generate_messages_py" />
       <config projectName="baxter_moveit_application" targetName="visualization_msgs_generate_messages_py" />
       <config projectName="baxter_moveit_application" targetName="sensor_msgs_generate_messages_nodejs" />
       <config projectName="baxter_moveit_application" targetName="tf2_msgs_generate_messages_py" />
-      <config projectName="baxter_moveit_application" targetName="shape_msgs_generate_messages_py" />
+      <config projectName="baxter_moveit_application" targetName="actionlib_generate_messages_nodejs" />
       <config projectName="baxter_moveit_application" targetName="geometry_msgs_generate_messages_lisp" />
       <config projectName="baxter_moveit_application" targetName="tf_generate_messages_eus" />
       <config projectName="baxter_moveit_application" targetName="roscpp_generate_messages_nodejs" />
-      <config projectName="baxter_moveit_application" targetName="tf2_msgs_generate_messages_cpp" />
       <config projectName="baxter_moveit_application" targetName="dual_cbitrrt_node" />
-      <config projectName="baxter_moveit_application" targetName="actionlib_generate_messages_lisp" />
-      <config projectName="baxter_moveit_application" targetName="shape_msgs_generate_messages_cpp" />
+      <config projectName="baxter_moveit_application" targetName="rosgraph_msgs_generate_messages_py" />
       <config projectName="baxter_moveit_application" targetName="my_rrt_node" />
       <config projectName="baxter_moveit_application" targetName="actionlib_generate_messages_eus" />
       <config projectName="baxter_moveit_application" targetName="shape_msgs_generate_messages_eus" />
       <config projectName="baxter_moveit_application" targetName="octomap_msgs_generate_messages_py" />
       <config projectName="baxter_moveit_application" targetName="clean_test_results" />
       <config projectName="baxter_moveit_application" targetName="graph_msgs_generate_messages_cpp" />
+      <config projectName="baxter_moveit_application" targetName="gmock_main" />
       <config projectName="baxter_moveit_application" targetName="roscpp_generate_messages_cpp" />
-      <config projectName="baxter_moveit_application" targetName="moveit_msgs_generate_messages_py" />
+      <config projectName="baxter_moveit_application" targetName="20191027_test2_node" />
       <config projectName="baxter_moveit_application" targetName="20191025_test2_node" />
-      <config projectName="baxter_moveit_application" targetName="20191026_test1_node" />
+      <config projectName="baxter_moveit_application" targetName="trajectory_msgs_generate_messages_lisp" />
+      <config projectName="baxter_moveit_application" targetName="moveit_msgs_generate_messages_py" />
       <config projectName="baxter_moveit_application" targetName="20191029_test2_node" />
       <config projectName="baxter_moveit_application" targetName="geometry_msgs_generate_messages_cpp" />
       <config projectName="baxter_moveit_application" targetName="visualization_msgs_generate_messages_eus" />
-      <config projectName="baxter_moveit_application" targetName="trajectory_msgs_generate_messages_lisp" />
+      <config projectName="baxter_moveit_application" targetName="tf2_msgs_generate_messages_cpp" />
       <config projectName="baxter_moveit_application" targetName="gtest" />
-      <config projectName="baxter_moveit_application" targetName="gmock_main" />
+      <config projectName="baxter_moveit_application" targetName="visualization_msgs_generate_messages_lisp" />
+      <config projectName="baxter_moveit_application" targetName="20191030_test1_node" />
       <config projectName="baxter_moveit_application" targetName="shape_msgs_generate_messages_lisp" />
+      <config projectName="baxter_moveit_application" targetName="gtest_main" />
       <config projectName="baxter_moveit_application" targetName="actionlib_generate_messages_py" />
       <config projectName="baxter_moveit_application" targetName="moveit_ros_manipulation_gencfg" />
-      <config projectName="baxter_moveit_application" targetName="tf_generate_messages_nodejs" />
-      <config projectName="baxter_moveit_application" targetName="20191025_test1_node" />
+      <config projectName="baxter_moveit_application" targetName="20191027_test1_node" />
+      <config projectName="baxter_moveit_application" targetName="shape_msgs_generate_messages_cpp" />
       <config projectName="baxter_moveit_application" targetName="sensor_msgs_generate_messages_lisp" />
       <config projectName="baxter_moveit_application" targetName="actionlib_generate_messages_cpp" />
       <config projectName="baxter_moveit_application" targetName="shape_msgs_generate_messages_nodejs" />
-      <config projectName="baxter_moveit_application" targetName="20191030_test1_node" />
+      <config projectName="baxter_moveit_application" targetName="actionlib_generate_messages_lisp" />
       <config projectName="baxter_moveit_application" targetName="std_msgs_generate_messages_nodejs" />
       <config projectName="baxter_moveit_application" targetName="std_msgs_generate_messages_cpp" />
       <config projectName="baxter_moveit_application" targetName="graph_msgs_generate_messages_eus" />
@@ -118,546 +118,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6fae3ce6-f295-4788-bee1-00ffa829f99c" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/draw_data/0euler_error_draw.txt" beforeDir="false" afterPath="$PROJECT_DIR$/draw_data/0euler_error_draw.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/0joint_angles_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/0joint_bounds.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/0pos_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/100euler_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/100joint_angles_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/100joint_bounds.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/100pos_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/101euler_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/101joint_angles_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/101joint_bounds.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/101pos_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/102euler_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/102joint_angles_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/102joint_bounds.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/102pos_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/103euler_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/103joint_angles_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/103joint_bounds.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/103pos_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/104euler_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/104joint_angles_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/104joint_bounds.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/104pos_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/105euler_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/105joint_angles_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/105joint_bounds.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/105pos_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/106euler_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/106joint_angles_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/106joint_bounds.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/106pos_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/107euler_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/107joint_angles_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/107joint_bounds.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/107pos_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/108euler_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/108joint_angles_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/108joint_bounds.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/108pos_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/109euler_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/109joint_angles_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/109joint_bounds.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/109pos_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/10euler_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/10joint_angles_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/10joint_bounds.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/10pos_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/110euler_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/110joint_angles_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/110joint_bounds.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/110pos_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/111euler_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/111joint_angles_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/111joint_bounds.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/111pos_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/112euler_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/112joint_angles_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/112joint_bounds.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/112pos_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/113euler_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/113joint_angles_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/113joint_bounds.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/113pos_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/114euler_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/114joint_angles_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/114joint_bounds.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/114pos_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/115euler_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/115joint_angles_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/115joint_bounds.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/115pos_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/116euler_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/116joint_angles_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/116joint_bounds.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/116pos_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/117euler_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/117joint_angles_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/117joint_bounds.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/117pos_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/118euler_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/118joint_angles_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/118joint_bounds.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/118pos_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/119euler_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/119joint_angles_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/119joint_bounds.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/119pos_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/11euler_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/11joint_angles_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/11joint_bounds.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/11pos_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/120euler_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/120joint_angles_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/120joint_bounds.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/120pos_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/121euler_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/121joint_angles_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/121joint_bounds.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/121pos_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/122euler_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/122joint_angles_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/122joint_bounds.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/122pos_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/123euler_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/123joint_angles_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/123joint_bounds.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/123pos_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/124euler_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/124joint_angles_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/124joint_bounds.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/124pos_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/125euler_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/125joint_angles_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/125joint_bounds.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/125pos_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/126euler_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/126joint_angles_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/126joint_bounds.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/126pos_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/127euler_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/127joint_angles_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/127joint_bounds.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/127pos_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/128euler_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/128joint_angles_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/128joint_bounds.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/128pos_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/129euler_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/129joint_angles_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/129joint_bounds.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/129pos_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/12euler_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/12joint_angles_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/12joint_bounds.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/12pos_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/130euler_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/130joint_angles_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/130joint_bounds.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/130pos_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/131euler_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/131joint_angles_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/131joint_bounds.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/131pos_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/132euler_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/132joint_angles_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/132joint_bounds.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/132pos_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/133euler_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/133joint_angles_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/133joint_bounds.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/133pos_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/13euler_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/13joint_angles_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/13joint_bounds.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/13pos_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/14euler_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/14joint_angles_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/14joint_bounds.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/14pos_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/15euler_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/15joint_angles_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/15joint_bounds.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/15pos_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/16euler_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/16joint_angles_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/16joint_bounds.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/16pos_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/17euler_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/17joint_angles_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/17joint_bounds.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/17pos_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/18euler_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/18joint_angles_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/18joint_bounds.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/18pos_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/19euler_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/19joint_angles_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/19joint_bounds.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/19pos_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/1euler_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/1joint_angles_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/1joint_bounds.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/1pos_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/20euler_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/20joint_angles_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/20joint_bounds.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/20pos_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/21euler_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/21joint_angles_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/21joint_bounds.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/21pos_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/22euler_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/22joint_angles_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/22joint_bounds.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/22pos_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/23euler_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/23joint_angles_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/23joint_bounds.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/23pos_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/24euler_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/24joint_angles_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/24joint_bounds.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/24pos_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/25euler_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/25joint_angles_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/25joint_bounds.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/25pos_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/26euler_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/26joint_angles_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/26joint_bounds.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/26pos_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/27euler_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/27joint_angles_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/27joint_bounds.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/27pos_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/28euler_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/28joint_angles_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/28joint_bounds.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/28pos_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/29euler_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/29joint_angles_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/29joint_bounds.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/29pos_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/2euler_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/2joint_angles_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/2joint_bounds.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/2pos_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/30euler_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/30joint_angles_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/30joint_bounds.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/30pos_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/31euler_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/31joint_angles_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/31joint_bounds.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/31pos_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/32euler_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/32joint_angles_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/32joint_bounds.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/32pos_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/33euler_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/33joint_angles_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/33joint_bounds.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/33pos_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/34euler_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/34joint_angles_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/34joint_bounds.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/34pos_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/35euler_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/35joint_angles_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/35joint_bounds.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/35pos_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/36euler_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/36joint_angles_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/36joint_bounds.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/36pos_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/37euler_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/37joint_angles_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/37joint_bounds.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/37pos_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/38euler_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/38joint_angles_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/38joint_bounds.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/38pos_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/39euler_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/39joint_angles_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/39joint_bounds.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/39pos_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/3euler_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/3joint_angles_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/3joint_bounds.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/3pos_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/40euler_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/40joint_angles_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/40joint_bounds.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/40pos_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/41euler_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/41joint_angles_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/41joint_bounds.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/41pos_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/42euler_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/42joint_angles_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/42joint_bounds.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/42pos_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/43euler_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/43joint_angles_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/43joint_bounds.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/43pos_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/44euler_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/44joint_angles_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/44joint_bounds.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/44pos_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/45euler_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/45joint_angles_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/45joint_bounds.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/45pos_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/46euler_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/46joint_angles_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/46joint_bounds.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/46pos_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/47euler_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/47joint_angles_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/47joint_bounds.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/47pos_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/48euler_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/48joint_angles_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/48joint_bounds.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/48pos_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/49euler_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/49joint_angles_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/49joint_bounds.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/49pos_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/4euler_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/4joint_angles_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/4joint_bounds.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/4pos_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/50euler_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/50joint_angles_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/50joint_bounds.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/50pos_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/51euler_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/51joint_angles_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/51joint_bounds.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/51pos_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/52euler_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/52joint_angles_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/52joint_bounds.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/52pos_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/53euler_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/53joint_angles_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/53joint_bounds.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/53pos_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/54euler_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/54joint_angles_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/54joint_bounds.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/54pos_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/55euler_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/55joint_angles_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/55joint_bounds.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/55pos_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/56euler_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/56joint_angles_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/56joint_bounds.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/56pos_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/57euler_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/57joint_angles_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/57joint_bounds.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/57pos_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/58euler_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/58joint_angles_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/58joint_bounds.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/58pos_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/59euler_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/59joint_angles_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/59joint_bounds.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/59pos_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/5euler_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/5joint_angles_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/5joint_bounds.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/5pos_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/60euler_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/60joint_angles_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/60joint_bounds.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/60pos_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/61euler_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/61joint_angles_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/61joint_bounds.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/61pos_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/62euler_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/62joint_angles_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/62joint_bounds.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/62pos_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/63euler_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/63joint_angles_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/63joint_bounds.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/63pos_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/64euler_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/64joint_angles_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/64joint_bounds.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/64pos_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/65euler_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/65joint_angles_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/65joint_bounds.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/65pos_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/66euler_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/66joint_angles_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/66joint_bounds.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/66pos_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/67euler_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/67joint_angles_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/67joint_bounds.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/67pos_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/68euler_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/68joint_angles_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/68joint_bounds.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/68pos_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/69euler_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/69joint_angles_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/69joint_bounds.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/69pos_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/6euler_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/6joint_angles_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/6joint_bounds.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/6pos_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/70euler_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/70joint_angles_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/70joint_bounds.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/70pos_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/71euler_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/71joint_angles_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/71joint_bounds.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/71pos_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/72euler_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/72joint_angles_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/72joint_bounds.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/72pos_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/73euler_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/73joint_angles_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/73joint_bounds.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/73pos_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/74euler_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/74joint_angles_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/74joint_bounds.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/74pos_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/75euler_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/75joint_angles_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/75joint_bounds.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/75pos_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/76euler_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/76joint_angles_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/76joint_bounds.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/76pos_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/77euler_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/77joint_angles_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/77joint_bounds.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/77pos_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/78euler_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/78joint_angles_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/78joint_bounds.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/78pos_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/79euler_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/79joint_angles_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/79joint_bounds.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/79pos_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/7euler_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/7joint_angles_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/7joint_bounds.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/7pos_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/80euler_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/80joint_angles_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/80joint_bounds.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/80pos_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/81euler_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/81joint_angles_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/81joint_bounds.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/81pos_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/82euler_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/82joint_angles_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/82joint_bounds.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/82pos_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/83euler_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/83joint_angles_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/83joint_bounds.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/83pos_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/84euler_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/84joint_angles_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/84joint_bounds.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/84pos_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/85euler_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/85joint_angles_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/85joint_bounds.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/85pos_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/86euler_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/86joint_angles_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/86joint_bounds.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/86pos_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/87euler_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/87joint_angles_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/87joint_bounds.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/87pos_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/88euler_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/88joint_angles_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/88joint_bounds.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/88pos_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/89euler_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/89joint_angles_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/89joint_bounds.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/89pos_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/8euler_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/8joint_angles_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/8joint_bounds.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/8pos_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/90euler_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/90joint_angles_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/90joint_bounds.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/90pos_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/91euler_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/91joint_angles_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/91joint_bounds.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/91pos_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/92euler_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/92joint_angles_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/92joint_bounds.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/92pos_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/93euler_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/93joint_angles_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/93joint_bounds.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/93pos_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/94euler_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/94joint_angles_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/94joint_bounds.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/94pos_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/95euler_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/95joint_angles_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/95joint_bounds.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/95pos_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/96euler_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/96joint_angles_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/96joint_bounds.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/96pos_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/97euler_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/97joint_angles_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/97joint_bounds.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/97pos_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/98euler_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/98joint_angles_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/98joint_bounds.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/98pos_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/99euler_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/99joint_angles_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/99joint_bounds.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/99pos_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/9euler_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/9joint_angles_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/9joint_bounds.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/9pos_error_draw.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/draw_data.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/draw_data/0rot_error_angle_draw.txt" beforeDir="false" afterPath="$PROJECT_DIR$/draw_data/0rot_error_angle_draw.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/DualCBiRRT/dual_cbirrt.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/DualCBiRRT/dual_cbirrt.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/DualCBiRRT/dual_cbirrt_test.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/DualCBiRRT/dual_cbirrt_test.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/DualCBiRRT/ik_test.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/DualCBiRRT/ik_test.cpp" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/cmake-build-debug/" />
     <ignored path="$PROJECT_DIR$/../../build/" />
@@ -682,11 +147,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/DualCBiRRT/dual_cbirrt_test.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1420">
-              <caret line="129" column="53" selection-start-line="129" selection-start-column="53" selection-end-line="129" selection-end-column="53" />
+            <state relative-caret-position="14">
+              <caret line="50" selection-start-line="50" selection-end-line="50" />
               <folding>
                 <element signature="e#0#20#0" expanded="true" />
               </folding>
@@ -694,11 +159,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/DualCBiRRT/dual_cbirrt.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="346">
-              <caret line="746" column="60" selection-start-line="746" selection-start-column="60" selection-end-line="746" selection-end-column="60" />
+            <state relative-caret-position="484">
+              <caret line="460" column="38" selection-start-line="460" selection-start-column="38" selection-end-line="460" selection-end-column="38" />
               <folding>
                 <element signature="e#1#62#0" expanded="true" />
               </folding>
@@ -707,10 +172,31 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
+        <entry file="file:///opt/ros/kinetic/include/moveit/collision_detection/collision_world.h">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="718">
+              <caret line="87" column="15" selection-start-line="87" selection-start-column="15" selection-end-line="87" selection-end-column="15" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/DualCBiRRT/ik_test.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="456">
-              <caret line="64" column="30" lean-forward="true" selection-start-line="64" selection-start-column="30" selection-end-line="64" selection-end-column="30" />
+            <state relative-caret-position="159">
+              <caret line="38" column="58" selection-start-line="38" selection-start-column="58" selection-end-line="38" selection-end-column="58" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/CBiRRT/cbirrt_test.cpp">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="182">
+              <caret line="45" column="46" selection-start-line="45" selection-start-column="46" selection-end-line="45" selection-end-column="105" />
+              <folding>
+                <element signature="e#0#20#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -728,27 +214,10 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/20191028/readme.txt">
-          <provider selected="true" editor-type-id="text-editor" />
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/20191028/20191028_test1.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1349">
-              <caret line="71" column="74" selection-start-line="71" selection-start-column="74" selection-end-line="71" selection-end-column="74" />
-              <folding>
-                <element signature="e#0#20#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/20191028/20191028_test2.cpp">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="532">
-              <caret line="28" column="30" selection-start-line="28" selection-start-column="30" selection-end-line="28" selection-end-column="30" />
+            <state relative-caret-position="253">
+              <caret line="59" column="61" selection-start-line="59" selection-end-line="60" />
               <folding>
                 <element signature="e#0#20#0" expanded="true" />
               </folding>
@@ -760,12 +229,7 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>fail</find>
-      <find>slave_state_value_matrix</find>
-      <find>test_start_value</find>
-      <find>singularValues</find>
       <find>solve_IK_problem</find>
-      <find>isS</find>
       <find>fcl</find>
       <find>FC</find>
       <find>satisf</find>
@@ -787,9 +251,14 @@
       <find>c</find>
       <find>copy</find>
       <find>mas</find>
-      <find>master_matrix</find>
       <find>slave_cu</find>
       <find>master_euler</find>
+      <find>4</find>
+      <find>6</find>
+      <find>isStateValid</find>
+      <find>isS</find>
+      <find>master_matrix</find>
+      <find>count</find>
     </findStrings>
     <replaceStrings>
       <replace>CRRT</replace>
@@ -802,6 +271,7 @@
       <replace>cur</replace>
       <replace>goal</replace>
       <replace>right</replace>
+      <replace>7</replace>
     </replaceStrings>
   </component>
   <component name="Git.Settings">
@@ -824,19 +294,19 @@
         <option value="$PROJECT_DIR$/src/CRRT/crrt_test.cpp" />
         <option value="$PROJECT_DIR$/src/CBiRRT/cbirrt.cpp" />
         <option value="$PROJECT_DIR$/src/CBiRRT/cbirrt_test.cpp" />
-        <option value="$PROJECT_DIR$/src/DualCBiRRT/ik_test.cpp" />
         <option value="$PROJECT_DIR$/src/20191029/20191029_test2.cpp" />
-        <option value="$PROJECT_DIR$/src/DualCBiRRT/dual_cbirrt_test.cpp" />
         <option value="$PROJECT_DIR$/src/DualCBiRRT/dual_cbirrt.cpp" />
+        <option value="$PROJECT_DIR$/src/DualCBiRRT/ik_test.cpp" />
+        <option value="$PROJECT_DIR$/src/DualCBiRRT/dual_cbirrt_test.cpp" />
       </list>
     </option>
   </component>
   <component name="OCFindUsagesOptions" text="true" ivars="false" properties="true" derivedClasses="false" />
-  <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="65" />
-    <option name="y" value="-4" />
-    <option name="width" value="897" />
-    <option name="height" value="1070" />
+  <component name="ProjectFrameBounds">
+    <option name="x" value="66" />
+    <option name="y" value="24" />
+    <option name="width" value="807" />
+    <option name="height" value="1042" />
   </component>
   <component name="ProjectView">
     <navigator proportions="" version="1">
@@ -861,6 +331,13 @@
               <item name="baxter_moveit_application" type="47feb1d3:ProjectViewModuleNode" />
               <item name="baxter_moveit_application" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="baxter_moveit_application" type="b2602c69:ProjectViewProjectNode" />
+              <item name="baxter_moveit_application" type="47feb1d3:ProjectViewModuleNode" />
+              <item name="baxter_moveit_application" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="CBiRRT" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="baxter_moveit_application" type="b2602c69:ProjectViewProjectNode" />
@@ -899,7 +376,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="CMake Application.ik_test_node">
+  <component name="RunManager" selected="CMake Application.dual_cbitrrt_node">
     <configuration name="20191025_test1_node" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="baxter_moveit_application" TARGET_NAME="20191025_test1_node" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="baxter_moveit_application" RUN_TARGET_NAME="20191025_test1_node">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
@@ -1579,19 +1056,18 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="99570000" />
+    <option name="totallyTimeSpent" value="105351000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="65" y="-4" width="1855" height="1084" extended-state="6" />
-    <editor active="true" />
+    <frame x="66" y="24" width="807" height="1042" extended-state="0" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.12548369" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.03942181" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.3294979" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.4997236" visible="true" weight="0.15167364" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.4424686" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.4997236" visible="true" weight="0.86404496" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.1495816" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
@@ -1600,7 +1076,7 @@
       <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.5002764" side_tool="true" weight="0.5366109" />
       <window_info anchor="bottom" id="Version Control" order="10" />
       <window_info anchor="bottom" id="CMake" order="11" weight="0.1495816" />
-      <window_info anchor="bottom" id="Messages" order="12" weight="0.34728032" />
+      <window_info anchor="bottom" id="Messages" order="12" weight="0.43370786" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -1626,47 +1102,47 @@
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
           <condition expression="count==1000" language="ObjectiveC" />
           <url>file://$PROJECT_DIR$/src/DualCBiRRT/dual_cbirrt.cpp</url>
-          <line>768</line>
+          <line>789</line>
           <option name="timeStamp" value="24" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
           <url>file://$PROJECT_DIR$/src/DualCBiRRT/dual_cbirrt.cpp</url>
-          <line>834</line>
+          <line>855</line>
           <option name="timeStamp" value="34" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
           <url>file://$PROJECT_DIR$/src/DualCBiRRT/dual_cbirrt.cpp</url>
-          <line>839</line>
+          <line>860</line>
           <option name="timeStamp" value="35" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
           <url>file://$PROJECT_DIR$/src/DualCBiRRT/dual_cbirrt.cpp</url>
-          <line>847</line>
+          <line>868</line>
           <option name="timeStamp" value="36" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
           <url>file://$PROJECT_DIR$/src/DualCBiRRT/dual_cbirrt.cpp</url>
-          <line>854</line>
+          <line>875</line>
           <option name="timeStamp" value="38" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
           <url>file://$PROJECT_DIR$/src/DualCBiRRT/dual_cbirrt_test.cpp</url>
-          <line>112</line>
+          <line>118</line>
           <option name="timeStamp" value="43" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
           <url>file://$PROJECT_DIR$/src/DualCBiRRT/dual_cbirrt_test.cpp</url>
-          <line>63</line>
+          <line>67</line>
           <option name="timeStamp" value="44" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
           <url>file://$PROJECT_DIR$/src/DualCBiRRT/ik_test.cpp</url>
-          <line>90</line>
+          <line>106</line>
           <option name="timeStamp" value="45" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
           <url>file://$PROJECT_DIR$/src/DualCBiRRT/dual_cbirrt_test.cpp</url>
-          <line>86</line>
+          <line>92</line>
           <option name="timeStamp" value="47" />
         </line-breakpoint>
       </breakpoints>
@@ -1892,16 +1368,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/CBiRRT/cbirrt_test.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2052">
-          <caret line="108" column="5" selection-start-line="108" selection-start-column="5" selection-end-line="108" selection-end-column="5" />
-          <folding>
-            <element signature="e#0#20#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file:///usr/include/eigen3/Eigen/src/Core/DenseBase.h">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="200">
@@ -1929,30 +1395,54 @@
     <entry file="file://$PROJECT_DIR$/src/20191028/readme.txt">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/20191028/20191028_test1.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1349">
-          <caret line="71" column="74" selection-start-line="71" selection-start-column="74" selection-end-line="71" selection-end-column="74" />
-          <folding>
-            <element signature="e#0#20#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/20191028/20191028_test2.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="532">
-          <caret line="28" column="30" selection-start-line="28" selection-start-column="30" selection-end-line="28" selection-end-column="30" />
+        <state relative-caret-position="253">
+          <caret line="33" column="28" lean-forward="true" selection-start-line="33" selection-start-column="28" selection-end-line="33" selection-end-column="28" />
           <folding>
             <element signature="e#0#20#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/DualCBiRRT/dual_cbirrt_test.cpp">
+    <entry file="file://$PROJECT_DIR$/src/20191028/20191028_test1.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1420">
-          <caret line="129" column="53" selection-start-line="129" selection-start-column="53" selection-end-line="129" selection-end-column="53" />
+        <state relative-caret-position="253">
+          <caret line="59" column="61" selection-start-line="59" selection-end-line="60" />
+          <folding>
+            <element signature="e#0#20#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///opt/ros/kinetic/include/moveit/collision_detection/collision_common.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="452">
+          <caret line="370" column="38" selection-start-line="370" selection-start-column="22" selection-end-line="370" selection-end-column="38" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///opt/ros/kinetic/include/moveit/collision_detection/collision_world.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="718">
+          <caret line="87" column="15" selection-start-line="87" selection-start-column="15" selection-end-line="87" selection-end-column="15" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/DualCBiRRT/dual_cbirrt.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="484">
+          <caret line="460" column="38" selection-start-line="460" selection-start-column="38" selection-end-line="460" selection-end-column="38" />
+          <folding>
+            <element signature="e#1#62#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/CBiRRT/cbirrt_test.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="182">
+          <caret line="45" column="46" selection-start-line="45" selection-start-column="46" selection-end-line="45" selection-end-column="105" />
           <folding>
             <element signature="e#0#20#0" expanded="true" />
           </folding>
@@ -1961,17 +1451,17 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/DualCBiRRT/ik_test.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="456">
-          <caret line="64" column="30" lean-forward="true" selection-start-line="64" selection-start-column="30" selection-end-line="64" selection-end-column="30" />
+        <state relative-caret-position="159">
+          <caret line="38" column="58" selection-start-line="38" selection-start-column="58" selection-end-line="38" selection-end-column="58" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/DualCBiRRT/dual_cbirrt.cpp">
+    <entry file="file://$PROJECT_DIR$/src/DualCBiRRT/dual_cbirrt_test.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="346">
-          <caret line="746" column="60" selection-start-line="746" selection-start-column="60" selection-end-line="746" selection-end-column="60" />
+        <state relative-caret-position="14">
+          <caret line="50" selection-start-line="50" selection-end-line="50" />
           <folding>
-            <element signature="e#1#62#0" expanded="true" />
+            <element signature="e#0#20#0" expanded="true" />
           </folding>
         </state>
       </provider>

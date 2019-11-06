@@ -6,6 +6,9 @@
 #include <sstream>
 #include <Eigen/SVD>
 #include <math.h>
+#include <moveit/collision_detection/collision_world.h>
+#include <moveit/collision_detection_fcl/collision_world_fcl.h>
+#include <moveit/collision_detection/collision_common.h>
 #define PI 3.1415926
 
 DualCBiRRT::DualCBiRRT(double probability):_random_distribution(probability){
@@ -68,6 +71,10 @@ size_t DualCBiRRT::near_b_tree(Eigen::Matrix<double, 7, 1> & random_state_value_
 }
 
 void DualCBiRRT::constraint_extend_a_tree(Eigen::Matrix<double, 7, 1> & random_state_value_matrix, Eigen::Matrix<double, 7, 1> & nearest_node_matrix, size_t nearst_node_index, Eigen::Matrix<double, 7, 1> & reached_state_matrix, const robot_state::JointModelGroup* planning_group, const std::string & planning_group_name, planning_scene::PlanningScenePtr & planning_scene_ptr, const robot_state::JointModelGroup* slave_group, std::pair<std::vector<double>, std::vector<double>>& slave_joint_pos_bounds){
+    collision_detection::CollisionRequest collision_req;
+    collision_detection::CollisionResult collision_res;
+    collision_req.group_name = "both_arms";
+
     size_t qs_old_index = nearst_node_index;
     Eigen::Matrix<double, 7, 1> qs_matrix = nearest_node_matrix;
     Eigen::Matrix<double, 7, 1> qs_old_matrix = nearest_node_matrix;
@@ -235,27 +242,29 @@ void DualCBiRRT::constraint_extend_a_tree(Eigen::Matrix<double, 7, 1> & random_s
             //如果投影成功，qs_state肯定更新过
             if(project_success){
 
-//                if(planning_scene_ptr->isStateValid(qs_state, planning_group_name)) {
-                if(true){
+                if(solve_IK_problem(current_slave_angles_matrix, qs_matrix, computed_slave_angles_matrix, planning_group, slave_group, planning_scene_ptr, slave_joint_pos_bounds)){
+                    std::cout<<"adding a state"<<std::endl;
 
-                        if(solve_IK_problem(current_slave_angles_matrix, qs_matrix, computed_slave_angles_matrix, planning_group, slave_group, planning_scene_ptr, slave_joint_pos_bounds)){
-                            std::cout<<"adding a state"<<std::endl;
+                    for(size_t i=0; i<7; i++){
+                        slave_angles_vector[i] = computed_slave_angles_matrix[i];
+                    }
+                    qs_state.setJointGroupPositions(slave_group, slave_angles_vector);
+                    qs_state.update();
+                    if(planning_scene_ptr->isStateValid(qs_state, "both_arms")){
+                        //将节点加入树中
+                        matrix_tree_element.head(7) = qs_matrix;
+                        matrix_tree_element.tail(7) = computed_slave_angles_matrix;
+                        _a_rrt_tree_matrix.push_back(matrix_tree_element);
+                        current_slave_angles_matrix = computed_slave_angles_matrix; //如果还在这个循环里执行，下一次计算IK的话slave从这个值为初始值开始计算
 
-                            for(size_t i=0; i<7; i++){
-                                slave_angles_vector[i] = computed_slave_angles_matrix[i];
-                            }
-                            qs_state.setJointGroupPositions(slave_group, slave_angles_vector);
-
-                            //将节点加入树中
-                            matrix_tree_element.head(7) = qs_matrix;
-                            matrix_tree_element.tail(7) = computed_slave_angles_matrix;
-                            _a_rrt_tree_matrix.push_back(matrix_tree_element);
-                            current_slave_angles_matrix = computed_slave_angles_matrix; //如果还在这个循环里执行，下一次计算IK的话slave从这个值为初始值开始计算
-
-                            std::pair<robot_state::RobotState, size_t> tmp(qs_state, qs_old_index);
-                            _a_rrt_tree_state.push_back(tmp);
-                            qs_old_index = _a_rrt_tree_state.size() - 1;
-                        }
+                        std::pair<robot_state::RobotState, size_t> tmp(qs_state, qs_old_index);
+                        _a_rrt_tree_state.push_back(tmp);
+                        qs_old_index = _a_rrt_tree_state.size() - 1;
+                    }
+                    else{
+                        reached_state_matrix = qs_old_matrix;
+                        break;
+                    }
 
                 }
                 else{
@@ -305,6 +314,9 @@ void DualCBiRRT::constraint_extend_b_tree(Eigen::Matrix<double, 7, 1> & random_s
 
     Eigen::Matrix<double, 14, 1> matrix_tree_element;
 
+    collision_detection::CollisionRequest collision_req;
+    collision_detection::CollisionResult collision_res;
+    collision_req.group_name = "both_arms";
 
     while (true){
         std::cout<<"extending"<<std::endl;
@@ -438,15 +450,16 @@ void DualCBiRRT::constraint_extend_b_tree(Eigen::Matrix<double, 7, 1> & random_s
             if(project_success){
 
 //                if(planning_scene_ptr->isStateValid(qs_state, planning_group_name)) {
-                if(true){
-                    if(solve_IK_problem(current_slave_angles_matrix, qs_matrix, computed_slave_angles_matrix, planning_group, slave_group, planning_scene_ptr, slave_joint_pos_bounds)){
-                        std::cout<<"adding a state"<<std::endl;
 
-                        for(size_t i=0; i<7; i++){
-                            slave_angles_vector[i] = computed_slave_angles_matrix[i];
-                        }
-                        qs_state.setJointGroupPositions(slave_group, slave_angles_vector);
+                if(solve_IK_problem(current_slave_angles_matrix, qs_matrix, computed_slave_angles_matrix, planning_group, slave_group, planning_scene_ptr, slave_joint_pos_bounds)){
+                    std::cout<<"adding a state"<<std::endl;
 
+                    for(size_t i=0; i<7; i++){
+                        slave_angles_vector[i] = computed_slave_angles_matrix[i];
+                    }
+                    qs_state.setJointGroupPositions(slave_group, slave_angles_vector);
+                    qs_state.update();
+                    if(planning_scene_ptr->isStateValid(qs_state, "both_arms")){
                         //将节点加入树中
                         matrix_tree_element.head(7) = qs_matrix;
                         matrix_tree_element.tail(7) = computed_slave_angles_matrix;
@@ -457,7 +470,10 @@ void DualCBiRRT::constraint_extend_b_tree(Eigen::Matrix<double, 7, 1> & random_s
                         _b_rrt_tree_state.push_back(tmp);
                         qs_old_index = _b_rrt_tree_state.size() - 1;
                     }
-
+                    else{
+                        reached_state_matrix = qs_old_matrix;
+                        break;
+                    }
                 }
                 else{
                     reached_state_matrix = qs_old_matrix;
@@ -473,6 +489,11 @@ void DualCBiRRT::constraint_extend_b_tree(Eigen::Matrix<double, 7, 1> & random_s
 }
 
 bool DualCBiRRT::plan(robot_state::RobotState & goal_state, robot_state::RobotState & start_state, planning_scene::PlanningScenePtr& planning_scene_ptr, const std::string & planning_group_name, const robot_state::JointModelGroup* planning_group, const robot_state::JointModelGroup* slave_group){
+
+    //创建一个碰撞检测器
+    const collision_detection::CollisionRobotConstPtr robot = planning_scene_ptr->getCollisionRobot();
+    const collision_detection::WorldPtr world = planning_scene_ptr->getWorldNonConst();
+    collision_detection::CollisionWorldFCL worldFcl(world);
 
 
     std::pair<robot_state::RobotState, size_t> a_tree_init_pair(start_state, -1);
@@ -740,13 +761,14 @@ bool DualCBiRRT::solve_IK_problem(Eigen::Matrix<double, 7, 1> slave_state_value_
         }
         else{
             count+=1;
-            if( pos_error.norm()<0.02 &&  rot_error_angle<0.1)
-            {
+            if(std::abs(pos_error[0]) < 0.01 && std::abs(pos_error[1])< 0.01 && std::abs(pos_error[2])< 0.01 &&  std::abs(euler_error[0]) < 0.1 && std::abs(euler_error[1]) < 0.1 && std::abs(euler_error[2]) < 0.1){
+//            if( pos_error.norm()<0.02 &&  rot_error_angle<0.1){
                 result_state_value_matrix = slave_state_value_matrix;
                 std::cout<<"computing IK success"<<std::endl;
                 std::cout<<"success_slave_state_value_matrix\n"<<slave_state_value_matrix.transpose()<<std::endl;
                 std::cout<<"success_slave_euler\n"<<slave_euler.transpose()<<std::endl;
                 std::string filenum = std::to_string(_draw_count++);
+
                 std::ofstream out1("/home/lijiashushu/ros_ws/src/baxter_moveit_application/draw_data/"+filenum+"euler_error_draw.txt");
                 if(out1){
                     std::cout<<"Open file success"<<std::endl;
@@ -755,6 +777,10 @@ bool DualCBiRRT::solve_IK_problem(Eigen::Matrix<double, 7, 1> slave_state_value_
                     std::cout<<"Open file fail"<<std::endl;
                 }
                 std::ofstream out2("/home/lijiashushu/ros_ws/src/baxter_moveit_application/draw_data/"+filenum+"rot_error_angle_draw.txt");
+                for(size_t i=0; i<euler_error_draw.size();i++){
+                    out1<<euler_error_draw[i]<<std::endl;
+                    out2<<rot_error_angle_draw[i]<<std::endl;
+                }
                 out1.close();
                 out2.close();
                 return true;

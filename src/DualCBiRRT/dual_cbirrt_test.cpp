@@ -44,8 +44,12 @@ int main(int argc, char** argv){
 
 
 //    std::vector<double> test_start_value = {0.178307,-1.36637,-0.718743,2.32057,-1.28874,1.62442,2.4651};//有障碍时手臂平方位置
-    std::vector<double> test_start_value = {0.17109754, -0.87923624, -0.08423487,  1.712199,   -0.81049842,  2.09320188,  2.58848987}; //无障碍时手臂平方位置
-    std::vector<double> slave_test_start_value = {0.0633710, 0.118378, 1.5027523, 2.2347026,-0.579105, 0.054547, -1.11615}; //无障碍时手臂平方位置
+//    std::vector<double> test_start_value = {0.17109754, -0.87923624, -0.08423487,  1.712199,   -0.81049842,  2.09320188,  2.58848987}; //无障碍时手臂平方位置
+//    std::vector<double> slave_test_start_value = {0.0633710, 0.118378, 1.5027523, 2.2347026,-0.579105, 0.054547, -1.11615}; //无障碍时手臂平方位置
+    std::vector<double> test_start_value = {0.178307,-1.36637,-0.718743,2.32057,-1.28874,1.62442,2.4651}; //有障碍物测试
+    std::vector<double> slave_test_start_value = {-0.644661 , 0.255123 ,  1.83284 ,  2.19888,  -0.36092  , 0.90258  , -1.1066}; //有障碍物测试
+
+
     std::vector<double> both_start_value;
     const robot_state::JointModelGroup* planning_group = start_state.getJointModelGroup("left_arm"); //
     const robot_state::JointModelGroup* slave_group = start_state.getJointModelGroup("right_arm"); //
@@ -77,9 +81,11 @@ int main(int argc, char** argv){
 
     robot_state::RobotState goal_state = planning_scene_for_operate->getCurrentStateNonConst();
 
-//    std::vector<double> test_goal_value = {0.0511426,-0.422846,-0.602817,1.92707,-0.888771,1.20479,2.70597};//有障碍时手臂平方位置
-    std::vector<double> test_goal_value = {-0.53121395, -1.14663671 , 0.21698349  ,2.33939883 ,-1.17448029  ,1.81105335,  2.82284528};//无障碍时手臂平方位置
-    std::vector<double> slave_test_goal_value = {-0.64966, 0.0056597, 1.453030, 2.2167859, 0.0142739, 0.7887366, -1.69753346};//无障碍时手臂平方位置
+//    std::vector<double> test_goal_value = {-0.53121395, -1.14663671 , 0.21698349  ,2.33939883 ,-1.17448029  ,1.81105335,  2.82284528};//无障碍时手臂平方位置
+//    std::vector<double> slave_test_goal_value = {-0.64966, 0.0056597, 1.453030, 2.2167859, 0.0142739, 0.7887366, -1.69753346};//无障碍时手臂平方位置
+
+    std::vector<double> test_goal_value = {0.0511426,-0.422846,-0.602817,1.92707,-0.888771,1.20479,2.70597}; //有障碍物测试
+    std::vector<double> slave_test_goal_value = {-0.614005,  0.611334 ,  1.40829,   1.80571, -0.631447,   1.11582,  -1.56488}; //有障碍物测试
 
     goal_state.setJointGroupPositions(planning_group, test_goal_value);
     goal_state.setJointGroupPositions(slave_group, slave_test_goal_value);
