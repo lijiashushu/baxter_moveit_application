@@ -127,7 +127,7 @@ int main(int argc, char** argv){
         std::vector<double> tmp1;
         std::vector<double> tmp2;
         result[i].copyJointGroupPositions(planning_group, tmp1);
-        result[i].copyJointGroupPositions(planning_group, tmp2);
+        result[i].copyJointGroupPositions(slave_group, tmp2);
         tmp1.insert(tmp1.end(), tmp2.begin(), tmp2.end());
         path_point_position_msg.positions = tmp1;
         path_point_msg.points.push_back(path_point_position_msg);

@@ -682,7 +682,6 @@ bool DualCBiRRT::solve_IK_problem(Eigen::Matrix<double, 7, 1> slave_state_value_
 
 
     //************************************计算 slave 的目标末端位置，欧拉角向量以及旋转矩阵************************************
-
     Eigen::Vector3d slave_goal_euler(master_euler[0], master_euler[1], master_euler[2] + 3.1415926);
     Eigen::Vector3d slave_goal_pos;
     Eigen::Vector3d distance(0, 0, 0.06);
@@ -699,22 +698,22 @@ bool DualCBiRRT::solve_IK_problem(Eigen::Matrix<double, 7, 1> slave_state_value_
     std::cout<<"slave_euler\n  "<<slave_euler.transpose() <<std::endl;
     //*********************计算 slave 的目标末端位置，欧拉角向量误差，定义任务空间误差，关节角度增量**********************
     Eigen::Vector3d pos_error = slave_goal_pos - slave_end_pos;
-    Eigen::Vector3d rot_error = slave_goal_euler - slave_euler;
+    Eigen::Matrix3d rot_error_matrix = slave_end_rot_matrix * slave_goal_rot_matrix.inverse();
+    Eigen::AngleAxisd rot_error_axis_angle(rot_error_matrix);
+    double rot_error_angle = rot_error_axis_angle.angle();
+    Eigen::Vector3d rot_error_3vector = rot_error_angle * rot_error_axis_angle.axis();
+    Eigen::Vector3d euler_error = slave_goal_euler - slave_euler;//画图测试一下欧拉角误差和轴角误差
+
+
     std::cout<<"init_slave_goal_pos\n  "<<slave_goal_pos.transpose() <<std::endl;
     std::cout<<"init_slave_end_pos\n  "<<slave_end_pos.transpose() <<std::endl;
     std::cout<<"init_pos_error\n  "<<pos_error.transpose() <<std::endl;
-    std::cout<<"init_rot_error\n  "<<rot_error.transpose() <<std::endl;
-
 
     Eigen::Vector3d last_pos_error = pos_error;
-    Eigen::Vector3d last_rot_error = rot_error;
-
-    Eigen::Matrix3d rot_error_matrix;
-    Eigen::AngleAxisd rot_error_axis_angle;
-    Eigen::Vector3d rot_error_3vector;
+    double last_rot_error_angle = rot_error_angle;
     Eigen::Matrix<double, 6, 1>  stack_error;
     Eigen::Matrix<double, 7, 1> joint_delta_vector;
-
+    //*****************************************************************************************
 
 
     //********************************性能优化函数**************************
@@ -729,6 +728,7 @@ bool DualCBiRRT::solve_IK_problem(Eigen::Matrix<double, 7, 1> slave_state_value_
     std::vector<Eigen::Matrix<double, 1, 3>> pos_error_draw;
     std::vector<Eigen::Matrix<double, 1, 3>> euler_error_draw;
     std::vector<Eigen::Matrix<double, 1, 7>> joint_angles_draw;
+    std::vector<double> rot_error_angle_draw;
 
 
     int count = 0;
@@ -740,59 +740,32 @@ bool DualCBiRRT::solve_IK_problem(Eigen::Matrix<double, 7, 1> slave_state_value_
         }
         else{
             count+=1;
-            if(std::abs(pos_error[0]) < 0.01 && std::abs(pos_error[1])< 0.01 && std::abs(pos_error[2])< 0.01 &&  std::abs(rot_error[0]) < 0.1 && std::abs(rot_error[1]) < 0.1 && std::abs(rot_error[2]) < 0.1)
+            if( pos_error.norm()<0.02 &&  rot_error_angle<0.1)
             {
                 result_state_value_matrix = slave_state_value_matrix;
                 std::cout<<"computing IK success"<<std::endl;
+                std::cout<<"success_slave_state_value_matrix\n"<<slave_state_value_matrix.transpose()<<std::endl;
                 std::cout<<"success_slave_euler\n"<<slave_euler.transpose()<<std::endl;
+                std::string filenum = std::to_string(_draw_count++);
+                std::ofstream out1("/home/lijiashushu/ros_ws/src/baxter_moveit_application/draw_data/"+filenum+"euler_error_draw.txt");
+                if(out1){
+                    std::cout<<"Open file success"<<std::endl;
+                }
+                else{
+                    std::cout<<"Open file fail"<<std::endl;
+                }
+                std::ofstream out2("/home/lijiashushu/ros_ws/src/baxter_moveit_application/draw_data/"+filenum+"rot_error_angle_draw.txt");
+                out1.close();
+                out2.close();
                 return true;
             } 
             else{
 
                 //保存作图数据
-                pos_error_draw.emplace_back(pos_error.transpose());
-                euler_error_draw.emplace_back(rot_error.transpose());
-                joint_angles_draw.emplace_back(slave_state_value_matrix.transpose());
-//                if(count == 1000){
-//                    std::string filenum = std::to_string(_draw_count++);
-//                    std::ofstream out1("/home/lijiashushu/ros_ws/src/baxter_moveit_application/draw_data/"+filenum+"pos_error_draw.txt");
-//                    if(out1){
-//                        std::cout<<"Open file success"<<std::endl;
-//                    }
-//                    else{
-//                        std::cout<<"Open file fail"<<std::endl;
-//                    }
-//                    std::ofstream out2("/home/lijiashushu/ros_ws/src/baxter_moveit_application/draw_data/"+filenum+"euler_error_draw.txt");
-//                    std::ofstream out3("/home/lijiashushu/ros_ws/src/baxter_moveit_application/draw_data/"+filenum+"joint_angles_draw.txt");
-//                    std::ofstream out4("/home/lijiashushu/ros_ws/src/baxter_moveit_application/draw_data/"+filenum+"joint_bounds.txt");
-//                    for (size_t i=0; i<pos_error_draw.size(); i++){
-//                        out1<<pos_error_draw[i]<<std::endl;
-//                        out2<<euler_error_draw[i]<<std::endl;
-//                        out3<<joint_angles_draw[i]<<std::endl;
-//                    }
-//                    for (size_t i=0; i<slave_joint_pos_bounds.first.size();i++){
-//                        if(i == slave_joint_pos_bounds.first.size()-1){
-//                            out4 << slave_joint_pos_bounds.first[i] <<std::endl;
-//                        }
-//                        else{
-//                            out4 << slave_joint_pos_bounds.first[i] <<" ";
-//                        }
-//                    }
-//                    for (size_t i=0; i<slave_joint_pos_bounds.second.size();i++){
-//                        if(i == slave_joint_pos_bounds.second.size()-1){
-//                            out4 << slave_joint_pos_bounds.second[i] <<std::endl;
-//                        }
-//                        else{
-//                            out4 << slave_joint_pos_bounds.second[i] <<" ";
-//                        }
-//                    }
-//                    out1.close();
-//                    out2.close();
-//                    out3.close();
-//                }
+                euler_error_draw.emplace_back(euler_error.transpose());
+                rot_error_angle_draw.emplace_back(rot_error_angle);
+
                 //计算消除末端在任务空间的误差所需要的速度
-                rot_error_matrix = slave_goal_rot_matrix * slave_end_rot_matrix.inverse();
-                rot_error_axis_angle = rot_error_matrix;
                 rot_error_3vector = rot_error_axis_angle.angle() * rot_error_axis_angle.axis();
                 stack_error.head(3) = pos_error;
                 stack_error.tail(3) = rot_error_3vector;
@@ -839,49 +812,50 @@ bool DualCBiRRT::solve_IK_problem(Eigen::Matrix<double, 7, 1> slave_state_value_
                 //更新末端误差
                 const Eigen::Affine3d & slave_end_pose_tmp = slave_state.getGlobalLinkTransform("right_gripper");
                 slave_end_rot_matrix = slave_end_pose_tmp.rotation();
-                slave_euler = slave_end_rot_matrix.eulerAngles(2,1,0);
                 slave_end_pos = slave_end_pose_tmp.translation();
+                slave_euler = slave_end_rot_matrix.eulerAngles(2,1,0);
 
                 last_pos_error = pos_error;
-                last_rot_error = rot_error;
+                last_rot_error_angle = rot_error_angle;
                 pos_error = slave_goal_pos - slave_end_pos;
-                rot_error = slave_goal_euler - slave_euler;
+                rot_error_matrix = slave_goal_rot_matrix * slave_end_rot_matrix.inverse();
+                rot_error_axis_angle = rot_error_matrix;
+                rot_error_angle = rot_error_axis_angle.angle();
+                euler_error = slave_goal_euler - slave_euler;
 
                 std::cout<<"last_pos_error\n  "<<last_pos_error.transpose() <<std::endl;
-                std::cout<<"last_rot_error\n  "<<last_rot_error.transpose() <<std::endl;
+                std::cout<<"last_rot_error\n  "<<last_rot_error_angle <<std::endl;
                 std::cout<<"pos_error\n  "<<pos_error.transpose() <<std::endl;
-                std::cout<<"rot_error\n  "<<rot_error.transpose() <<std::endl;
+                std::cout<<"rot_error\n  "<<rot_error_angle <<std::endl;
 
-                for(size_t i=0; i<3; i++){
-                    if(last_pos_error[i] > 0){
-                        if(pos_error[i] - last_pos_error[i] > 1)
-                        {
-                            std::cout<<"computing IK1 fail"<<std::endl;
+                for(size_t i=0; i<3; i++) {
+                    if (last_pos_error[i] > 0) {
+                        if (pos_error[i] - last_pos_error[i] > 1) {
+                            std::cout << "computing IK1 fail" << std::endl;
                             return false;
                         }
-                    }
-                    else{
-                        if(pos_error[i] - last_pos_error[i] < -1)
-                        {
-                            std::cout<<"computing IK2 fail"<<std::endl;
-                            return false;
-                        }
-                    }
-                    if(last_rot_error[i] > 0){
-                        if(rot_error[i] - last_rot_error[i] > 1)
-                        {
-                            std::cout<<"computing IK3 fail"<<std::endl;
-                            return false;
-                        }
-                    }
-                    else{
-                        if(rot_error[i] - last_rot_error[i] < -1)
-                        {
-                            std::cout<<"computing IK4 fail"<<std::endl;
+                    } else {
+                        if (pos_error[i] - last_pos_error[i] < -1) {
+                            std::cout << "computing IK2 fail" << std::endl;
                             return false;
                         }
                     }
                 }
+                if(last_rot_error_angle > 0){
+                    if(rot_error_angle - last_rot_error_angle > 1)
+                    {
+                        std::cout<<"computing IK3 fail"<<std::endl;
+                        return false;
+                    }
+                }
+                else{
+                    if(rot_error_angle - last_rot_error_angle < -1)
+                    {
+                        std::cout<<"computing IK4 fail"<<std::endl;
+                        return false;
+                    }
+                }
+
             }
         }
     }
