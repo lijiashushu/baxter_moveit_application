@@ -9,7 +9,10 @@
 #include <moveit/collision_detection/collision_world.h>
 #include <moveit/collision_detection_fcl/collision_world_fcl.h>
 #include <moveit/collision_detection/collision_common.h>
+#include <random_numbers/random_numbers.h>
+
 #define PI 3.1415926
+#define SEED 2
 
 DualCBiRRT::DualCBiRRT(double probability):_random_distribution(probability){
     _random_engine.seed(time(0));
@@ -25,10 +28,10 @@ DualCBiRRT::DualCBiRRT(double probability):_random_distribution(probability){
 
 DualCBiRRT::~DualCBiRRT(){}
 
-void DualCBiRRT::sample(robot_state::RobotState & goal_state, robot_state::RobotState & random_state, Eigen::Matrix<double, 7, 1> & random_state_value_matrix, const robot_state::JointModelGroup* planning_group) {
+void DualCBiRRT::sample(robot_state::RobotState & goal_state, robot_state::RobotState & random_state, Eigen::Matrix<double, 7, 1> & random_state_value_matrix, const robot_state::JointModelGroup* planning_group, random_numbers::RandomNumberGenerator &rng) {
     if(_random_distribution(_random_engine)){
         //伯努利分布
-        random_state.setToRandomPositions(planning_group);
+        random_state.setToRandomPositions(planning_group, rng);
     }
     else{
         random_state = goal_state;
@@ -70,7 +73,7 @@ size_t DualCBiRRT::near_b_tree(Eigen::Matrix<double, 7, 1> & random_state_value_
     return minum_index;
 }
 
-void DualCBiRRT::constraint_extend_a_tree(Eigen::Matrix<double, 7, 1> & random_state_value_matrix, Eigen::Matrix<double, 7, 1> & nearest_node_matrix, size_t nearst_node_index, Eigen::Matrix<double, 7, 1> & reached_state_matrix, const robot_state::JointModelGroup* planning_group, const std::string & planning_group_name, planning_scene::PlanningScenePtr & planning_scene_ptr, const robot_state::JointModelGroup* slave_group, std::pair<std::vector<double>, std::vector<double>>& slave_joint_pos_bounds){
+void DualCBiRRT::constraint_extend_a_tree(Eigen::Matrix<double, 7, 1> & random_state_value_matrix, Eigen::Matrix<double, 7, 1> & nearest_node_matrix, size_t nearst_node_index, Eigen::Matrix<double, 7, 1> & reached_state_matrix, const robot_state::JointModelGroup* planning_group, const std::string & planning_group_name, planning_scene::PlanningScenePtr & planning_scene_ptr, const robot_state::JointModelGroup* slave_group, std::pair<std::vector<double>, std::vector<double>>& slave_joint_pos_bounds, PerformanceIndexOneSample & perdex_one_sample){
     collision_detection::CollisionRequest collision_req;
     collision_detection::CollisionResult collision_res;
     collision_req.group_name = "both_arms";
@@ -88,18 +91,18 @@ void DualCBiRRT::constraint_extend_a_tree(Eigen::Matrix<double, 7, 1> & random_s
     task_delta_vector<< 0, 0, 0, 0, 0, 0;
     Eigen::Matrix<double, 7, 1> joint_delta_vector;
 
-    std::cout<<"new_projecting"<<std::endl;
-    std::cout<<"random_matrix"<<std::endl;
-    std::cout<<random_state_value_matrix<<std::endl;
-
-    std::cout<<"nearest_node_matrix"<<std::endl;
-    std::cout<<nearest_node_matrix<<std::endl;
-
-    std::cout<<"qs_matrix"<<std::endl;
-    std::cout<<qs_matrix<<std::endl;
-
-    std::cout<<"(qs_matrix == random_state_value_matrix)"<<std::endl;
-    std::cout<<(qs_matrix - random_state_value_matrix).norm()<<std::endl;
+//    std::cout<<"new_projecting"<<std::endl;
+//    std::cout<<"random_matrix"<<std::endl;
+//    std::cout<<random_state_value_matrix<<std::endl;
+//
+//    std::cout<<"nearest_node_matrix"<<std::endl;
+//    std::cout<<nearest_node_matrix<<std::endl;
+//
+//    std::cout<<"qs_matrix"<<std::endl;
+//    std::cout<<qs_matrix<<std::endl;
+//
+//    std::cout<<"(qs_matrix == random_state_value_matrix)"<<std::endl;
+//    std::cout<<(qs_matrix - random_state_value_matrix).norm()<<std::endl;
 
     //计算 slave 相关变量
     Eigen::Matrix<double, 7, 1> current_slave_angles_matrix = _a_rrt_tree_matrix[nearst_node_index].tail(7);
@@ -110,7 +113,7 @@ void DualCBiRRT::constraint_extend_a_tree(Eigen::Matrix<double, 7, 1> & random_s
 
     Eigen::Matrix<double, 14, 1> matrix_tree_element;
 
-
+    int performance_index_extend_num = 0;
     while (true){
         std::cout<<"extending"<<std::endl;
         if ((qs_matrix - random_state_value_matrix).norm() < 0.05){
@@ -131,12 +134,12 @@ void DualCBiRRT::constraint_extend_a_tree(Eigen::Matrix<double, 7, 1> & random_s
                 qs_matrix = qs_matrix + direction_matrix * _step_size;
             }
             else{
-                std::cout<<"????"<<std::endl;
                 qs_matrix = qs_matrix + direction_matrix * norm;
             }
-            std::cout<<"1"<<std::endl;
-            std::cout<<qs_matrix<<std::endl;
 
+            performance_index_extend_num++;
+            PerformanceIndexOneExtend perdex_one_extend;
+            perdex_one_extend.extend_num = performance_index_extend_num;
             //**********************************************向约束空间投影***************************************************
             double yaw_error = 0;
             double pitch_error = 0;
@@ -152,7 +155,6 @@ void DualCBiRRT::constraint_extend_a_tree(Eigen::Matrix<double, 7, 1> & random_s
 
             int project_count = 0;
             while (true){
-
                 project_count++;
                 std::cout<<"projecting"<<std::endl;
                 //先计算当前与约束的误差
@@ -188,10 +190,6 @@ void DualCBiRRT::constraint_extend_a_tree(Eigen::Matrix<double, 7, 1> & random_s
                     yaw_error = 0;
                 }
 
-                std::cout<<"pitch_error "<<pitch_error <<std::endl;
-                std::cout<<"yaw_error "<<yaw_error <<std::endl;
-                std::cout<<"total_error "<<total_error <<std::endl;
-
                 total_error = sqrt(pitch_error*pitch_error + yaw_error*yaw_error);
                 if(total_error < _constrain_delta){
                     project_success = true;
@@ -202,8 +200,6 @@ void DualCBiRRT::constraint_extend_a_tree(Eigen::Matrix<double, 7, 1> & random_s
                     required_eulerAngle[1] = end_rot_eulerAngle[1] + pitch_error;
                     required_eulerAngle[0] = end_rot_eulerAngle[0] + yaw_error;
 
-//                    std::cout<<"required_eulerAngle"<<std::endl;
-//                    std::cout<<required_eulerAngle<<std::endl;
 
                     Eigen::AngleAxisd roll_angle(Eigen::AngleAxisd(required_eulerAngle[2], Eigen::Vector3d::UnitX()));
                     Eigen::AngleAxisd pitch_angle(Eigen::AngleAxisd(required_eulerAngle[1], Eigen::Vector3d::UnitY()));
@@ -219,39 +215,33 @@ void DualCBiRRT::constraint_extend_a_tree(Eigen::Matrix<double, 7, 1> & random_s
                     task_delta_vector = task_delta_vector / 0.01;
 
                     end_jacobian = qs_state.getJacobian(planning_group);
-//                    std::cout<<"end_jacobian"<<std::endl;
-//                    std::cout<<end_jacobian<<std::endl;
                     joint_delta_vector = end_jacobian.transpose() * ((end_jacobian * end_jacobian.transpose()).inverse()) * task_delta_vector;
-
-                    std::cout<<"angles change norm"<<std::endl;
-                    std::cout<<joint_delta_vector * 0.01<<std::endl;
-
                     qs_matrix = qs_matrix + joint_delta_vector * 0.01;
 
-                    std::cout<<"1"<<std::endl;
-                    std::cout<<qs_matrix<<std::endl;
                     //因为本身qs相对于qs_old最大扩展了一个qstep,应该只是想让投影在一个qstep的范围以内，所以不要超过2*qstep，如果超过了说明距离太远，没有投影成功。
-
+//                    if (!qs_state.satisfiesBounds(planning_group, 0.05)){
                     if ((qs_matrix - qs_old_matrix).norm() > 2*_step_size || !qs_state.satisfiesBounds(planning_group, 0.05)){
                         project_success = false;
                         break;
                     }
                 }
-
             }
+            perdex_one_extend.constraint_project_times = project_count;
             //如果投影成功，qs_state肯定更新过
             if(project_success){
-
-                if(solve_IK_problem(current_slave_angles_matrix, qs_matrix, computed_slave_angles_matrix, planning_group, slave_group, planning_scene_ptr, slave_joint_pos_bounds)){
-                    std::cout<<"adding a state"<<std::endl;
-
+                perdex_one_extend.project_success = 1;
+                if(solve_IK_problem(current_slave_angles_matrix, qs_matrix, computed_slave_angles_matrix, planning_group, slave_group, planning_scene_ptr, slave_joint_pos_bounds, perdex_one_extend)){
+                    perdex_one_extend.ik_success = 1;
                     for(size_t i=0; i<7; i++){
                         slave_angles_vector[i] = computed_slave_angles_matrix[i];
                     }
                     qs_state.setJointGroupPositions(slave_group, slave_angles_vector);
                     qs_state.update();
                     if(planning_scene_ptr->isStateValid(qs_state, "both_arms")){
+                        perdex_one_extend.no_collide=1;
                         //将节点加入树中
+                        std::cout<<"adding a state"<<std::endl;
+                        perdex_one_extend.extend_success=1;
                         matrix_tree_element.head(7) = qs_matrix;
                         matrix_tree_element.tail(7) = computed_slave_angles_matrix;
                         _a_rrt_tree_matrix.push_back(matrix_tree_element);
@@ -262,25 +252,32 @@ void DualCBiRRT::constraint_extend_a_tree(Eigen::Matrix<double, 7, 1> & random_s
                         qs_old_index = _a_rrt_tree_state.size() - 1;
                     }
                     else{
+                        perdex_one_extend.no_collide=0;
                         reached_state_matrix = qs_old_matrix;
+                        perdex_one_sample.tree_a.push_back(perdex_one_extend);
                         break;
                     }
-
                 }
                 else{
+                    perdex_one_extend.ik_success = 0;
                     reached_state_matrix = qs_old_matrix;
+                    perdex_one_sample.tree_a.push_back(perdex_one_extend);
                     break;
                 }
             }
             else{
+                perdex_one_extend.project_success = 0;
                 reached_state_matrix = qs_old_matrix;
+                perdex_one_sample.tree_a.push_back(perdex_one_extend);
                 break;
             }
+            perdex_one_sample.tree_a.push_back(perdex_one_extend);
+
         }
     }
 }
 
-void DualCBiRRT::constraint_extend_b_tree(Eigen::Matrix<double, 7, 1> & random_state_value_matrix, Eigen::Matrix<double, 7, 1> & nearest_node_matrix, size_t nearst_node_index, Eigen::Matrix<double, 7, 1> & reached_state_matrix, const robot_state::JointModelGroup* planning_group, const std::string & planning_group_name, planning_scene::PlanningScenePtr & planning_scene_ptr, const robot_state::JointModelGroup* slave_group, std::pair<std::vector<double>, std::vector<double>>& slave_joint_pos_bounds){
+void DualCBiRRT::constraint_extend_b_tree(Eigen::Matrix<double, 7, 1> & random_state_value_matrix, Eigen::Matrix<double, 7, 1> & nearest_node_matrix, size_t nearst_node_index, Eigen::Matrix<double, 7, 1> & reached_state_matrix, const robot_state::JointModelGroup* planning_group, const std::string & planning_group_name, planning_scene::PlanningScenePtr & planning_scene_ptr, const robot_state::JointModelGroup* slave_group, std::pair<std::vector<double>, std::vector<double>>& slave_joint_pos_bounds, PerformanceIndexOneSample & perdex_one_sample){
     size_t qs_old_index = nearst_node_index;
     Eigen::Matrix<double, 7, 1> qs_matrix = nearest_node_matrix;
     Eigen::Matrix<double, 7, 1> qs_old_matrix = nearest_node_matrix;
@@ -294,18 +291,6 @@ void DualCBiRRT::constraint_extend_b_tree(Eigen::Matrix<double, 7, 1> & random_s
     task_delta_vector<< 0, 0, 0, 0, 0, 0;
     Eigen::Matrix<double, 7, 1> joint_delta_vector;
 
-    std::cout<<"new_projecting"<<std::endl;
-    std::cout<<"random_matrix"<<std::endl;
-    std::cout<<random_state_value_matrix<<std::endl;
-
-    std::cout<<"nearest_node_matrix"<<std::endl;
-    std::cout<<nearest_node_matrix<<std::endl;
-
-    std::cout<<"qs_matrix"<<std::endl;
-    std::cout<<qs_matrix<<std::endl;
-
-    std::cout<<"(qs_matrix == random_state_value_matrix)"<<std::endl;
-    std::cout<<(qs_matrix - random_state_value_matrix).norm()<<std::endl;
 
     //计算 slave 相关变量
     Eigen::Matrix<double, 7, 1> current_slave_angles_matrix = _b_rrt_tree_matrix[nearst_node_index].tail(7);
@@ -318,6 +303,8 @@ void DualCBiRRT::constraint_extend_b_tree(Eigen::Matrix<double, 7, 1> & random_s
     collision_detection::CollisionResult collision_res;
     collision_req.group_name = "both_arms";
 
+
+    int performance_index_extend_num = 0;
     while (true){
         std::cout<<"extending"<<std::endl;
         if ((qs_matrix - random_state_value_matrix).norm() < 0.05){
@@ -338,12 +325,11 @@ void DualCBiRRT::constraint_extend_b_tree(Eigen::Matrix<double, 7, 1> & random_s
                 qs_matrix = qs_matrix + direction_matrix * _step_size;
             }
             else{
-                std::cout<<"????"<<std::endl;
                 qs_matrix = qs_matrix + direction_matrix * norm;
             }
-            std::cout<<"1"<<std::endl;
-            std::cout<<qs_matrix<<std::endl;
-
+            performance_index_extend_num++;
+            PerformanceIndexOneExtend perdex_one_extend;
+            perdex_one_extend.extend_num = performance_index_extend_num;
             //**********************************************向约束空间投影***************************************************
             double yaw_error = 0;
             double pitch_error = 0;
@@ -359,7 +345,6 @@ void DualCBiRRT::constraint_extend_b_tree(Eigen::Matrix<double, 7, 1> & random_s
 
             int project_count = 0;
             while (true){
-
                 project_count++;
                 std::cout<<"projecting"<<std::endl;
                 //先计算当前与约束的误差
@@ -395,10 +380,6 @@ void DualCBiRRT::constraint_extend_b_tree(Eigen::Matrix<double, 7, 1> & random_s
                     yaw_error = 0;
                 }
 
-                std::cout<<"pitch_error "<<pitch_error <<std::endl;
-                std::cout<<"yaw_error "<<yaw_error <<std::endl;
-                std::cout<<"total_error "<<total_error <<std::endl;
-
                 total_error = sqrt(pitch_error*pitch_error + yaw_error*yaw_error);
                 if(total_error < _constrain_delta){
                     project_success = true;
@@ -409,8 +390,6 @@ void DualCBiRRT::constraint_extend_b_tree(Eigen::Matrix<double, 7, 1> & random_s
                     required_eulerAngle[1] = end_rot_eulerAngle[1] + pitch_error;
                     required_eulerAngle[0] = end_rot_eulerAngle[0] + yaw_error;
 
-//                    std::cout<<"required_eulerAngle"<<std::endl;
-//                    std::cout<<required_eulerAngle<<std::endl;
 
                     Eigen::AngleAxisd roll_angle(Eigen::AngleAxisd(required_eulerAngle[2], Eigen::Vector3d::UnitX()));
                     Eigen::AngleAxisd pitch_angle(Eigen::AngleAxisd(required_eulerAngle[1], Eigen::Vector3d::UnitY()));
@@ -426,41 +405,35 @@ void DualCBiRRT::constraint_extend_b_tree(Eigen::Matrix<double, 7, 1> & random_s
                     task_delta_vector = task_delta_vector / 0.01;
 
                     end_jacobian = qs_state.getJacobian(planning_group);
-//                    std::cout<<"end_jacobian"<<std::endl;
-//                    std::cout<<end_jacobian<<std::endl;
                     joint_delta_vector = end_jacobian.transpose() * ((end_jacobian * end_jacobian.transpose()).inverse()) * task_delta_vector;
-
-                    std::cout<<"angles change norm"<<std::endl;
-                    std::cout<<joint_delta_vector * 0.01<<std::endl;
-
                     qs_matrix = qs_matrix + joint_delta_vector * 0.01;
 
-                    std::cout<<"1"<<std::endl;
-                    std::cout<<qs_matrix<<std::endl;
                     //因为本身qs相对于qs_old最大扩展了一个qstep,应该只是想让投影在一个qstep的范围以内，所以不要超过2*qstep，如果超过了说明距离太远，没有投影成功。
-
+//                    if (!qs_state.satisfiesBounds(planning_group, 0.05)){
                     if ((qs_matrix - qs_old_matrix).norm() > 2*_step_size || !qs_state.satisfiesBounds(planning_group, 0.05)){
                         project_success = false;
                         break;
                     }
                 }
-
             }
+            perdex_one_extend.constraint_project_times = project_count;
             //如果投影成功，qs_state肯定更新过
             if(project_success){
-
+                perdex_one_extend.project_success = 1;
 //                if(planning_scene_ptr->isStateValid(qs_state, planning_group_name)) {
 
-                if(solve_IK_problem(current_slave_angles_matrix, qs_matrix, computed_slave_angles_matrix, planning_group, slave_group, planning_scene_ptr, slave_joint_pos_bounds)){
-                    std::cout<<"adding a state"<<std::endl;
-
+                if(solve_IK_problem(current_slave_angles_matrix, qs_matrix, computed_slave_angles_matrix, planning_group, slave_group, planning_scene_ptr, slave_joint_pos_bounds, perdex_one_extend)){
+                    perdex_one_extend.ik_success = 1;
                     for(size_t i=0; i<7; i++){
                         slave_angles_vector[i] = computed_slave_angles_matrix[i];
                     }
                     qs_state.setJointGroupPositions(slave_group, slave_angles_vector);
                     qs_state.update();
                     if(planning_scene_ptr->isStateValid(qs_state, "both_arms")){
+                        perdex_one_extend.no_collide = 1;
                         //将节点加入树中
+                        std::cout<<"adding a state"<<std::endl;
+                        perdex_one_extend.extend_success = 1;
                         matrix_tree_element.head(7) = qs_matrix;
                         matrix_tree_element.tail(7) = computed_slave_angles_matrix;
                         _b_rrt_tree_matrix.push_back(matrix_tree_element);
@@ -471,25 +444,35 @@ void DualCBiRRT::constraint_extend_b_tree(Eigen::Matrix<double, 7, 1> & random_s
                         qs_old_index = _b_rrt_tree_state.size() - 1;
                     }
                     else{
+                        perdex_one_extend.no_collide = 0;
                         reached_state_matrix = qs_old_matrix;
+                        perdex_one_sample.tree_b.push_back(perdex_one_extend);
                         break;
                     }
                 }
                 else{
+                    perdex_one_extend.ik_success = 0;
                     reached_state_matrix = qs_old_matrix;
+                    perdex_one_sample.tree_b.push_back(perdex_one_extend);
                     break;
                 }
             }
             else{
+                perdex_one_extend.project_success = 0;
                 reached_state_matrix = qs_old_matrix;
+                perdex_one_sample.tree_b.push_back(perdex_one_extend);
                 break;
             }
+            perdex_one_sample.tree_b.push_back(perdex_one_extend);
         }
     }
 }
 
 bool DualCBiRRT::plan(robot_state::RobotState & goal_state, robot_state::RobotState & start_state, planning_scene::PlanningScenePtr& planning_scene_ptr, const std::string & planning_group_name, const robot_state::JointModelGroup* planning_group, const robot_state::JointModelGroup* slave_group){
 
+
+    //创建一个确定的随机数生成器
+    random_numbers::RandomNumberGenerator rng(SEED);
     //创建一个碰撞检测器
     const collision_detection::CollisionRobotConstPtr robot = planning_scene_ptr->getCollisionRobot();
     const collision_detection::WorldPtr world = planning_scene_ptr->getWorldNonConst();
@@ -596,16 +579,18 @@ bool DualCBiRRT::plan(robot_state::RobotState & goal_state, robot_state::RobotSt
 
     bool extend_order = true; //两棵树轮流向采样的方向扩展
     for(int count=0; count < 100000; count++){
+        PerformanceIndexOneSample perdex_one_sample;
+        perdex_one_sample.sample_num = count;
         std::cout<<"count: "<<count<<std::endl;
         //先扩展a树
         if(extend_order){
 
-            sample(goal_state, random_state, random_state_value_matrix, planning_group);
+            sample(goal_state, random_state, random_state_value_matrix, planning_group, rng);
 
             nearest_node_index = near_a_tree(random_state_value_matrix, nearest_node_matrix);
-            constraint_extend_a_tree(random_state_value_matrix, nearest_node_matrix, nearest_node_index, a_tree_reached_matrix, planning_group, planning_group_name, planning_scene_ptr, slave_group, slave_joint_pos_bounds);
+            constraint_extend_a_tree(random_state_value_matrix, nearest_node_matrix, nearest_node_index, a_tree_reached_matrix, planning_group, planning_group_name, planning_scene_ptr, slave_group, slave_joint_pos_bounds, perdex_one_sample);
             nearest_node_index = near_b_tree(a_tree_reached_matrix, nearest_node_matrix);
-            constraint_extend_b_tree(a_tree_reached_matrix, nearest_node_matrix, nearest_node_index, b_tree_reached_matrix, planning_group, planning_group_name, planning_scene_ptr, slave_group, slave_joint_pos_bounds);
+            constraint_extend_b_tree(a_tree_reached_matrix, nearest_node_matrix, nearest_node_index, b_tree_reached_matrix, planning_group, planning_group_name, planning_scene_ptr, slave_group, slave_joint_pos_bounds, perdex_one_sample);
 
             if((a_tree_reached_matrix - b_tree_reached_matrix).norm() < 0.05)
             {
@@ -632,12 +617,12 @@ bool DualCBiRRT::plan(robot_state::RobotState & goal_state, robot_state::RobotSt
         }
         else{
 
-            sample(goal_state, random_state, random_state_value_matrix, planning_group);
+            sample(goal_state, random_state, random_state_value_matrix, planning_group, rng);
 
             nearest_node_index = near_b_tree(random_state_value_matrix, nearest_node_matrix);
-            constraint_extend_b_tree(random_state_value_matrix, nearest_node_matrix, nearest_node_index, b_tree_reached_matrix, planning_group, planning_group_name, planning_scene_ptr, slave_group, slave_joint_pos_bounds);
+            constraint_extend_b_tree(random_state_value_matrix, nearest_node_matrix, nearest_node_index, b_tree_reached_matrix, planning_group, planning_group_name, planning_scene_ptr, slave_group, slave_joint_pos_bounds, perdex_one_sample);
             nearest_node_index = near_a_tree(b_tree_reached_matrix, nearest_node_matrix);
-            constraint_extend_a_tree(b_tree_reached_matrix, nearest_node_matrix, nearest_node_index, a_tree_reached_matrix, planning_group, planning_group_name, planning_scene_ptr, slave_group, slave_joint_pos_bounds);
+            constraint_extend_a_tree(b_tree_reached_matrix, nearest_node_matrix, nearest_node_index, a_tree_reached_matrix, planning_group, planning_group_name, planning_scene_ptr, slave_group, slave_joint_pos_bounds, perdex_one_sample);
 
             if((a_tree_reached_matrix - b_tree_reached_matrix).norm() < 0.05)
             {
@@ -663,12 +648,12 @@ bool DualCBiRRT::plan(robot_state::RobotState & goal_state, robot_state::RobotSt
             }
 
         }
-
+        _performance_record.push_back(perdex_one_sample);
     }
     return false;
 }
 
-bool DualCBiRRT::solve_IK_problem(Eigen::Matrix<double, 7, 1> slave_state_value_matrix, Eigen::Matrix<double, 7, 1> & master_state_value_matrix, Eigen::Matrix<double, 7, 1> & result_state_value_matrix, const robot_state::JointModelGroup* planning_group, const robot_state::JointModelGroup* slave_group, planning_scene::PlanningScenePtr & planning_scene_ptr, std::pair<std::vector<double>, std::vector<double>>& slave_joint_pos_bounds){
+bool DualCBiRRT::solve_IK_problem(Eigen::Matrix<double, 7, 1> slave_state_value_matrix, Eigen::Matrix<double, 7, 1> & master_state_value_matrix, Eigen::Matrix<double, 7, 1> & result_state_value_matrix, const robot_state::JointModelGroup* planning_group, const robot_state::JointModelGroup* slave_group, planning_scene::PlanningScenePtr & planning_scene_ptr, std::pair<std::vector<double>, std::vector<double>>& slave_joint_pos_bounds , PerformanceIndexOneExtend & perdex_one_extend){
     //************************************获取函数参数，当前的master的各个关节值以及slave的各个关节值，存储在 RobotState 中*************************************
     robot_state::RobotState master_state = planning_scene_ptr->getCurrentStateNonConst();//用来保存这次计算所参考的master的状态，函数中不会更改
     robot_state::RobotState slave_state = planning_scene_ptr->getCurrentStateNonConst(); //用来保存计算到的当前的slave的状态，循环中多次更改
@@ -678,7 +663,6 @@ bool DualCBiRRT::solve_IK_problem(Eigen::Matrix<double, 7, 1> slave_state_value_
         master_joint_value_vector.push_back(master_state_value_matrix[i]);
         slave_joint_value_vector.push_back(slave_state_value_matrix[i]);
     }
-    std::cout<<"master_state_value_matrix\n"<<master_state_value_matrix.transpose()<<std::endl;
 
     master_state.setJointGroupPositions(planning_group, master_joint_value_vector);
     slave_state.setJointGroupPositions(slave_group,slave_joint_value_vector);
@@ -699,15 +683,12 @@ bool DualCBiRRT::solve_IK_problem(Eigen::Matrix<double, 7, 1> slave_state_value_
     Eigen::MatrixXd slave_end_jacobian;
     Eigen::MatrixXd slave_end_jacobian_mp_inverse;
     slave_end_jacobian = slave_state.getJacobian(slave_group);
-    std::cout<<"slave_current_euler\n  "<<slave_euler.transpose() <<std::endl;
 
 
     //************************************计算 slave 的目标末端位置，欧拉角向量以及旋转矩阵************************************
     Eigen::Vector3d slave_goal_euler(master_euler[0], master_euler[1], master_euler[2] + 3.1415926);
     Eigen::Vector3d slave_goal_pos;
     Eigen::Vector3d distance(0, 0, 0.06);
-    std::cout<<"distance\n  "<<distance.transpose() <<std::endl;
-    std::cout<<"slave_goal_euler\n  "<<slave_goal_euler.transpose() <<std::endl;
     slave_goal_pos = master_end_rot_matrix * distance + master_end_pos;
     Eigen::AngleAxisd goal_roll_angle(Eigen::AngleAxisd(slave_goal_euler[2], Eigen::Vector3d::UnitX()));
     Eigen::AngleAxisd goal_pitch_angle(Eigen::AngleAxisd(slave_goal_euler[1], Eigen::Vector3d::UnitY()));
@@ -715,8 +696,7 @@ bool DualCBiRRT::solve_IK_problem(Eigen::Matrix<double, 7, 1> slave_state_value_
     Eigen::Matrix3d slave_goal_rot_matrix;
     slave_goal_rot_matrix = goal_yaw_angle*goal_pitch_angle*goal_roll_angle;
     //*****************************************************************************************
-    std::cout<<"master_euler\n  "<<master_euler.transpose() <<std::endl;
-    std::cout<<"slave_euler\n  "<<slave_euler.transpose() <<std::endl;
+
     //*********************计算 slave 的目标末端位置，欧拉角向量误差，定义任务空间误差，关节角度增量**********************
     Eigen::Vector3d pos_error = slave_goal_pos - slave_end_pos;
     Eigen::Matrix3d rot_error_matrix = slave_end_rot_matrix * slave_goal_rot_matrix.inverse();
@@ -724,11 +704,6 @@ bool DualCBiRRT::solve_IK_problem(Eigen::Matrix<double, 7, 1> slave_state_value_
     double rot_error_angle = rot_error_axis_angle.angle();
     Eigen::Vector3d rot_error_3vector = rot_error_angle * rot_error_axis_angle.axis();
     Eigen::Vector3d euler_error = slave_goal_euler - slave_euler;//画图测试一下欧拉角误差和轴角误差
-
-
-    std::cout<<"init_slave_goal_pos\n  "<<slave_goal_pos.transpose() <<std::endl;
-    std::cout<<"init_slave_end_pos\n  "<<slave_end_pos.transpose() <<std::endl;
-    std::cout<<"init_pos_error\n  "<<pos_error.transpose() <<std::endl;
 
     Eigen::Vector3d last_pos_error = pos_error;
     double last_rot_error_angle = rot_error_angle;
@@ -760,42 +735,22 @@ bool DualCBiRRT::solve_IK_problem(Eigen::Matrix<double, 7, 1> slave_state_value_
             return false;
         }
         else{
-            count+=1;
+            count++;
             if(std::abs(pos_error[0]) < 0.01 && std::abs(pos_error[1])< 0.01 && std::abs(pos_error[2])< 0.01 &&  std::abs(euler_error[0]) < 0.1 && std::abs(euler_error[1]) < 0.1 && std::abs(euler_error[2]) < 0.1){
-//            if( pos_error.norm()<0.02 &&  rot_error_angle<0.1){
                 result_state_value_matrix = slave_state_value_matrix;
-                std::cout<<"computing IK success"<<std::endl;
-                std::cout<<"success_slave_state_value_matrix\n"<<slave_state_value_matrix.transpose()<<std::endl;
-                std::cout<<"success_slave_euler\n"<<slave_euler.transpose()<<std::endl;
-                std::string filenum = std::to_string(_draw_count++);
-
-                std::ofstream out1("/home/lijiashushu/ros_ws/src/baxter_moveit_application/draw_data/"+filenum+"euler_error_draw.txt");
-                if(out1){
-                    std::cout<<"Open file success"<<std::endl;
-                }
-                else{
-                    std::cout<<"Open file fail"<<std::endl;
-                }
-                std::ofstream out2("/home/lijiashushu/ros_ws/src/baxter_moveit_application/draw_data/"+filenum+"rot_error_angle_draw.txt");
-                for(size_t i=0; i<euler_error_draw.size();i++){
-                    out1<<euler_error_draw[i]<<std::endl;
-                    out2<<rot_error_angle_draw[i]<<std::endl;
-                }
-                out1.close();
-                out2.close();
+                perdex_one_extend.ik_project_times = count;
                 return true;
             } 
             else{
 
-                //保存作图数据
-                euler_error_draw.emplace_back(euler_error.transpose());
-                rot_error_angle_draw.emplace_back(rot_error_angle);
+//                //保存作图数据
+//                euler_error_draw.emplace_back(euler_error.transpose());
+//                rot_error_angle_draw.emplace_back(rot_error_angle);
 
                 //计算消除末端在任务空间的误差所需要的速度
                 rot_error_3vector = rot_error_axis_angle.angle() * rot_error_axis_angle.axis();
                 stack_error.head(3) = pos_error;
                 stack_error.tail(3) = rot_error_3vector;
-                std::cout<<"stack_error  "<<stack_error <<std::endl;
 
                 stack_error = (0.5 * stack_error) / 0.01;
                 //更新雅克比矩阵
@@ -806,11 +761,11 @@ bool DualCBiRRT::solve_IK_problem(Eigen::Matrix<double, 7, 1> slave_state_value_
 
                 slave_end_jacobian = slave_state.getJacobian(slave_group);
 
-                Eigen::JacobiSVD<Eigen::MatrixXd> svd_holder(slave_end_jacobian, Eigen::ComputeThinU | Eigen::ComputeThinV);
-                Eigen::MatrixXd U = svd_holder.matrixU();
-                Eigen::MatrixXd V = svd_holder.matrixV();
-                Eigen::MatrixXd D = svd_holder.singularValues();
-                std::cout<<"singularValues\n  "<<D.transpose() <<std::endl;
+//                Eigen::JacobiSVD<Eigen::MatrixXd> svd_holder(slave_end_jacobian, Eigen::ComputeThinU | Eigen::ComputeThinV);
+//                Eigen::MatrixXd U = svd_holder.matrixU();
+//                Eigen::MatrixXd V = svd_holder.matrixV();
+//                Eigen::MatrixXd D = svd_holder.singularValues();
+//                std::cout<<"singularValues\n  "<<D.transpose() <<std::endl;
 
 
 
@@ -826,9 +781,6 @@ bool DualCBiRRT::solve_IK_problem(Eigen::Matrix<double, 7, 1> slave_state_value_
 //                joint_delta_vector =  (slave_end_jacobian_mp_inverse * stack_error  - (Eigen::Matrix<double, 7, 7>::Identity() - slave_end_jacobian_mp_inverse*slave_end_jacobian) * delta_H) * 0.01;
                 joint_delta_vector = (slave_end_jacobian_mp_inverse * stack_error);
                 slave_state_value_matrix +=  0.01 * joint_delta_vector;
-                std::cout<<"joint_delta_vector\n  "<<0.01 * joint_delta_vector.transpose() <<std::endl;
-
-                std::cout<<"slave_state_value_matrix\n  "<<slave_state_value_matrix.transpose() <<std::endl;
 
                 //更新 slave RobotState, state 更新肯定没有问题
                 for(size_t i=0; i<7; i++){
@@ -849,20 +801,19 @@ bool DualCBiRRT::solve_IK_problem(Eigen::Matrix<double, 7, 1> slave_state_value_
                 rot_error_angle = rot_error_axis_angle.angle();
                 euler_error = slave_goal_euler - slave_euler;
 
-                std::cout<<"last_pos_error\n  "<<last_pos_error.transpose() <<std::endl;
-                std::cout<<"last_rot_error\n  "<<last_rot_error_angle <<std::endl;
-                std::cout<<"pos_error\n  "<<pos_error.transpose() <<std::endl;
-                std::cout<<"rot_error\n  "<<rot_error_angle <<std::endl;
-
                 for(size_t i=0; i<3; i++) {
                     if (last_pos_error[i] > 0) {
                         if (pos_error[i] - last_pos_error[i] > 1) {
                             std::cout << "computing IK1 fail" << std::endl;
+                            perdex_one_extend.ik_project_times = count;
+
                             return false;
                         }
                     } else {
                         if (pos_error[i] - last_pos_error[i] < -1) {
                             std::cout << "computing IK2 fail" << std::endl;
+                            perdex_one_extend.ik_project_times = count;
+
                             return false;
                         }
                     }
@@ -871,6 +822,8 @@ bool DualCBiRRT::solve_IK_problem(Eigen::Matrix<double, 7, 1> slave_state_value_
                     if(rot_error_angle - last_rot_error_angle > 1)
                     {
                         std::cout<<"computing IK3 fail"<<std::endl;
+                        perdex_one_extend.ik_project_times = count;
+
                         return false;
                     }
                 }
@@ -878,6 +831,7 @@ bool DualCBiRRT::solve_IK_problem(Eigen::Matrix<double, 7, 1> slave_state_value_
                     if(rot_error_angle - last_rot_error_angle < -1)
                     {
                         std::cout<<"computing IK4 fail"<<std::endl;
+
                         return false;
                     }
                 }
@@ -885,5 +839,67 @@ bool DualCBiRRT::solve_IK_problem(Eigen::Matrix<double, 7, 1> slave_state_value_
             }
         }
     }
-    
+
+}
+
+void DualCBiRRT::output_perdex() {
+    int sample_counts = _performance_record.size();
+    int extend_try = 0;
+    int constraint_project_success=0;
+    int ik_success = 0;
+    int extend_success = 0;
+    int constraint_project_compute_times = 0;
+    int ik_compute_times = 0;
+    int constraint_success_project_compute_times = 0;
+    int ik_success_compute_times = 0;
+
+
+    for (size_t i=0; i<sample_counts; i++){
+        for(size_t j=0; j<_performance_record[i].tree_a.size(); j++){
+            extend_try++;
+            constraint_project_compute_times += _performance_record[i].tree_a[j].constraint_project_times;
+            ik_compute_times += _performance_record[i].tree_a[j].ik_project_times;
+            if(_performance_record[i].tree_a[j].project_success)
+            {
+                constraint_project_success++;
+                constraint_success_project_compute_times += _performance_record[i].tree_a[j].constraint_project_times;
+                if(_performance_record[i].tree_a[j].ik_success){
+                    ik_success++;
+                    ik_success_compute_times += _performance_record[i].tree_a[j].ik_project_times;
+                    if(_performance_record[i].tree_a[j].extend_success){
+                        extend_success++;
+                    }
+                }
+            }
+        }
+        for(size_t j=0; j<_performance_record[i].tree_b.size(); j++){
+            extend_try++;
+            constraint_project_compute_times += _performance_record[i].tree_b[j].constraint_project_times;
+            ik_compute_times += _performance_record[i].tree_b[j].ik_project_times;
+            if(_performance_record[i].tree_b[j].project_success)
+            {
+                constraint_project_success++;
+                constraint_success_project_compute_times += _performance_record[i].tree_b[j].constraint_project_times;
+                if(_performance_record[i].tree_b[j].ik_success){
+                    ik_success++;
+                    ik_success_compute_times += _performance_record[i].tree_b[j].ik_project_times;
+                    if(_performance_record[i].tree_b[j].extend_success){
+                        extend_success++;
+                    }
+                }
+            }
+        }
+    }
+    std::cout<<"\n\n=========================================="<<std::endl;
+    std::cout<<"Sample numbers:  "<<sample_counts<<std::endl;
+    std::cout<<"extend_try numbers:  "<<extend_try<<std::endl;
+    std::cout<<"constraint_project_success numbers:  "<<constraint_project_success<<"  constraint_project_success rate:  "<<double(constraint_project_success)/double(extend_try)<<std::endl;
+    std::cout<<"ik_success numbers:  "<<ik_success<<"  ik_success rate:  "<<double(ik_success)/double(extend_try)<<std::endl;
+    std::cout<<"extend_success numbers:  "<<extend_success<<"  extend_success rate:  "<<double(extend_success)/double(extend_try)<<std::endl;
+    std::cout<<"constraint_project_compute_times:  "<<constraint_project_compute_times<<std::endl;
+    std::cout<<"average success constraint project compute times:  "<<double(constraint_success_project_compute_times)/double(constraint_project_success)<<std::endl;
+    std::cout<<"average ik compute times:  "<<double(ik_compute_times)/double(extend_try)<<std::endl;
+    std::cout<<"average success ik compute times:  "<<double(ik_success_compute_times)/double(ik_success)<<std::endl;
+    std::cout<<"==========================================\n\n"<<std::endl;
+
 }

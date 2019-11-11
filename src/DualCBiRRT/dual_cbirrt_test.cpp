@@ -119,7 +119,7 @@ int main(int argc, char** argv){
     if(my_planner.plan(goal_state, start_state, planning_scene_for_operate, "left_arm", planning_group, slave_group)){
         std::cout<<"???"<<std::endl;
     }
-
+    my_planner.output_perdex();
     std::vector<robot_state::RobotState> result = my_planner.planning_result;
     ROS_INFO("waypoints num is %d", int(result.size()));
 
