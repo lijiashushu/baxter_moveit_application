@@ -25,13 +25,15 @@
 
 #include <geometry_msgs/Pose.h>
 
+#include <fstream>
+
+#include <stdlib.h>
+
 int main(int argc, char** argv){
     ros::init(argc, argv, "cbirrt_test");
     ros::NodeHandle n;
     ros::AsyncSpinner spinner(1);
     spinner.start();
-
-    DualCBiRRT my_planner(1.0, 1);
 
     planning_scene_monitor::PlanningSceneMonitorPtr monitor_ptr = std::make_shared<planning_scene_monitor::PlanningSceneMonitor>("robot_description");
     monitor_ptr->requestPlanningSceneState("get_planning_scene");
@@ -43,27 +45,18 @@ int main(int argc, char** argv){
     //Z:180 Y:90 X:-90   2.94792  1.56999 -1.76536
 
 
-
 //    std::vector<double> test_start_value = {0.178307,-1.36637,-0.718743,2.32057,-1.28874,1.62442,2.4651};//有障碍时手臂平方位置
 //    std::vector<double> test_start_value = {0.17109754, -0.87923624, -0.08423487,  1.712199,   -0.81049842,  2.09320188,  2.58848987}; //无障碍时手臂平方位置
 //    std::vector<double> slave_test_start_value = {0.0633710, 0.118378, 1.5027523, 2.2347026,-0.579105, 0.054547, -1.11615}; //无障碍时手臂平方位置
     std::vector<double> test_start_value = {0.178307,-1.36637,-0.718743,2.32057,-1.28874,1.62442,2.4651}; //有障碍物测试
     std::vector<double> slave_test_start_value = {-0.644661 , 0.255123 ,  1.83284 ,  2.19888,  -0.36092  , 0.90258  , -1.1066}; //有障碍物测试
-//    std::vector<double> test_start_value = {-0.202391,-1.01283,-0.709538,1.16068,-1.21936,1.51294,1.59967}; //narrow障碍物的起始左臂位置
-//    std::vector<double> slave_test_start_value = {-0.0273947,-0.113638,2.14442,0.981496,-0.31,1.45411,-1.02899};//narrow障碍物的起始右臂位置
+//    std::vector<double> test_start_value = {0.297489,-0.529426,-0.20978,1.46024,-0.653363,2.00439,2.61156}; //narrow障碍物的起始左臂位置
+//    std::vector<double> slave_test_start_value = {0.139818,0.472495,1.33869,2.05365,-0.771299,0.118704,-1.31815};//narrow障碍物的起始右臂位置
+
     std::vector<double> both_start_value;
     const robot_state::JointModelGroup* planning_group = start_state.getJointModelGroup("left_arm"); //
     const robot_state::JointModelGroup* slave_group = start_state.getJointModelGroup("right_arm"); //
     const robot_state::JointModelGroup* both_group = start_state.getJointModelGroup("both_arms"); //
-
-
-    //获取当前的关节角度
-    std::vector<double> tmp_display;
-    start_state.copyJointGroupPositions(planning_group, tmp_display);
-    for(size_t i=0; i<tmp_display.size();i++){
-        std::cout<<tmp_display[i]<<",";
-    }
-    std::cout<<std::endl;
 
     start_state.setJointGroupPositions(planning_group, test_start_value);
     start_state.setJointGroupPositions(slave_group, slave_test_start_value);
@@ -91,13 +84,15 @@ int main(int argc, char** argv){
 
     robot_state::RobotState goal_state = planning_scene_for_operate->getCurrentStateNonConst();
 
+
 //    std::vector<double> test_goal_value = {-0.53121395, -1.14663671 , 0.21698349  ,2.33939883 ,-1.17448029  ,1.81105335,  2.82284528};//无障碍时手臂平方的目标左臂位置
 //    std::vector<double> slave_test_goal_value = {-0.64966, 0.0056597, 1.453030, 2.2167859, 0.0142739, 0.7887366, -1.69753346};//无障碍时手臂平方的目标右臂位置
 
     std::vector<double> test_goal_value = {0.0511426,-0.422846,-0.602817,1.92707,-0.888771,1.20479,2.70597}; //平板类似桌子的障碍物的目标左臂位置
     std::vector<double> slave_test_goal_value = {-0.614005,  0.611334 ,  1.40829,   1.80571, -0.631447,   1.11582,  -1.56488}; //平板类似桌子的障碍物的目标右臂位置
-//    std::vector<double> test_goal_value = {-0.272196,-0.455612,-0.542919,1.38227,-1.05738,1.39137,2.32208};//narrow障碍物的目标左臂位置
-//    std::vector<double> slave_test_goal_value = {-0.165811,0.500916,1.84184,1.18992,-0.567965,1.41339,-1.52962};//narrow障碍物的目标右臂位置
+//    std::vector<double> test_goal_value = {0.0168437,-0.597438,-0.58717,2.25003,-1.07713,1.14626,2.91677};//narrow障碍物的目标左臂位置
+//    std::vector<double> slave_test_goal_value = {-0.840541,0.522824,1.36928,2.01802,-0.580198,1.14264,-1.50451};//narrow障碍物的目标右臂位置
+
     goal_state.setJointGroupPositions(planning_group, test_goal_value);
     goal_state.setJointGroupPositions(slave_group, slave_test_goal_value);
 
@@ -125,101 +120,88 @@ int main(int argc, char** argv){
     Eigen::Vector3d slave_goal_euler2 = slave_goal_rot_matrix.eulerAngles(2,1,0);
     std::cout<<"slave_goal_euler2\n"<<slave_goal_euler2.transpose()<<std::endl;
 
+    std::ofstream out_file1;
+    out_file1.open("/home/lijiashushu/ros_ws/src/baxter_moveit_application/draw_data/no_dis.csv", std::ios::out | std::ios::trunc);
 
+    out_file1
+    <<"_seed"<<","
+    <<"sample_counts"<<","
+    <<"extend_try"<<","
+    <<"constraint_project_success"<<","
+    <<"constraint_project_success_rate"<<","
+    <<"ik_success"<<","
+    <<"ik_success_rate"<<","
+    <<"extend_success"<<","
+    <<"extend_success_rate"<<","
+    <<"average_success_constraint_project_compute_times"<<","
+    <<"average_ik_compute_times"<<","
+    <<"average_success_ik_compute_times"<<","
+    <<"total_sample_time"<<","
+    <<"total_extend_time"<<","
+    <<"total_project_time"<<","
+    <<"total_ik_time"<<","
+    <<"average_sample_time"<<","
+    <<"average_extend_time"<<","
+    <<"average_extend_project_time"<<","
+    <<"average_extend_ik_time"<<","
+    <<"average_extend_one_project_time"<<","
+    <<"average_extend_one_ik_time"<<","
+    <<std::endl;
 
-    if(my_planner.plan(goal_state, start_state, planning_scene_for_operate, "left_arm", planning_group, slave_group)){
-        std::cout<<"???"<<std::endl;
-    }
-    my_planner.output_perdex();
-    std::vector<robot_state::RobotState> result = my_planner.planning_result;
-    ROS_INFO("waypoints num is %d", int(result.size()));
+    std::ofstream out_file2;
+    out_file2.open("/home/lijiashushu/ros_ws/src/baxter_moveit_application/draw_data/yes_dis.csv", std::ios::out | std::ios::trunc);
 
+    out_file2
+    <<"_seed"<<","
+    <<"sample_counts"<<","
+    <<"extend_try"<<","
+    <<"constraint_project_success"<<","
+    <<"constraint_project_success_rate"<<","
+    <<"ik_success"<<","
+    <<"ik_success_rate"<<","
+    <<"extend_success"<<","
+    <<"extend_success_rate"<<","
+    <<"average_success_constraint_project_compute_times"<<","
+    <<"average_ik_compute_times"<<","
+    <<"average_success_ik_compute_times"<<","
+    <<"total_sample_time"<<","
+    <<"total_extend_time"<<","
+    <<"total_project_time"<<","
+    <<"total_ik_time"<<","
+    <<"average_sample_time"<<","
+    <<"average_extend_time"<<","
+    <<"average_extend_project_time"<<","
+    <<"average_extend_ik_time"<<","
+    <<"average_extend_one_project_time"<<","
+    <<"average_extend_one_ik_time"<<","
+    <<std::endl;
 
-    //*********************整体都是在添加轨迹显示的消息内容太*****************************
-    std::vector<geometry_msgs::Pose> result_pose;
-    moveit_msgs::RobotTrajectory result_msg;
-    trajectory_msgs::JointTrajectory path_point_msg;
-    trajectory_msgs::JointTrajectoryPoint path_point_position_msg; //只需要添加关节位置点
-    for(size_t i=0; i<result.size(); i++){
-        std::vector<double> tmp1;
-        std::vector<double> tmp2;
-        result[i].copyJointGroupPositions(planning_group, tmp1);
-        result[i].copyJointGroupPositions(slave_group, tmp2);
-        tmp1.insert(tmp1.end(), tmp2.begin(), tmp2.end());
-        path_point_position_msg.positions = tmp1;
-        path_point_msg.points.push_back(path_point_position_msg);
+    std::srand((unsigned)time(NULL));
 
-        //就这一部分是添加姿态
-        if(i%5==0) {
-            geometry_msgs::Pose tmp_pose_msg;
-            const Eigen::Affine3d end_pose = result[i].getGlobalLinkTransform("left_gripper");
-            Eigen::Quaterniond end_quaternion(end_pose.rotation());
-            tmp_pose_msg.position.x = end_pose(0, 3);
-            tmp_pose_msg.position.y = end_pose(1, 3);
-            tmp_pose_msg.position.z = end_pose(2, 3);
-            tmp_pose_msg.orientation.x = end_quaternion.x();
-            tmp_pose_msg.orientation.y = end_quaternion.y();
-            tmp_pose_msg.orientation.z = end_quaternion.z();
-            tmp_pose_msg.orientation.w = end_quaternion.w();
-            result_pose.push_back(tmp_pose_msg);
+    for(int ii = 0; ii<5; ii++){
+
+        int seed = std::rand();
+        DualCBiRRT my_planner1(1.0, seed, 0.00);
+        if(my_planner1.plan(goal_state, start_state, planning_scene_for_operate, "left_arm", planning_group, slave_group)){
+            ROS_INFO("my_planner1 success at time %d", ii);
         }
+        else{
+            ROS_INFO("my_planner1 fail at time %d", ii);
+        }
+        my_planner1.output_perdex_multi(out_file1);
+
+        DualCBiRRT my_planner2(1.0, seed, 0.05);
+        if(my_planner2.plan(goal_state, start_state, planning_scene_for_operate, "left_arm", planning_group, slave_group)){
+            ROS_INFO("my_planner2 success at time %d", ii);
+        }
+        else{
+            ROS_INFO("my_planner2 fail at time %d", ii);
+        }
+        my_planner2.output_perdex_multi(out_file2);
+
     }
-    //********************************************************************
-
-    //*********************显示规划的轨迹*****************************
-    const std::vector<std::string>& master_joint_names = planning_group->getVariableNames();
-    for(size_t i=0; i<master_joint_names.size(); i++){
-        path_point_msg.joint_names.push_back(master_joint_names[i]);
-    }
-    const std::vector<std::string>& slave_joint_names = slave_group->getVariableNames();
-    for(size_t i=0; i<slave_joint_names.size(); i++){
-        path_point_msg.joint_names.push_back(slave_joint_names[i]);
-    }
-
-    path_point_msg.header.stamp = ros::Time::now();
-    result_msg.joint_trajectory = path_point_msg;
-
-    visualization_msgs::Marker delete_all_markers;
-    namespace rvt = rviz_visual_tools;
-    moveit_visual_tools::MoveItVisualTools visual_tools("base");
-    visual_tools.deleteAllMarkers();
-    visual_tools.publishTrajectoryLine(result_msg, planning_group);
-    Eigen::Affine3d text_pose = Eigen::Affine3d::Identity();
-    text_pose.translation().z() = 1.75;
-    visual_tools.publishText(text_pose, "Simple RRT", rvt::WHITE, rvt::XLARGE);
-    for (std::size_t i = 0; i < result_pose.size(); ++i)
-        visual_tools.publishAxisLabeled(result_pose[i], "pt" + std::to_string(i), rvt::SMALL);
-    visual_tools.trigger();
-
-
-
-    // 创建一个DisplayTrajectory msg
-    moveit_msgs::DisplayTrajectory display_traj_msg;
-    moveit_msgs::RobotState start_state_msg;
-    sensor_msgs::JointState start_angles_msg;
-
-    //添加这个消息的第三个参数，开始的状态
-    for(size_t i=0; i<master_joint_names.size(); i++){
-        start_angles_msg.name.push_back(master_joint_names[i]);
-        start_angles_msg.position.push_back(test_start_value[i]);
-    }
-    for(size_t i=0; i<slave_joint_names.size(); i++){
-        start_angles_msg.name.push_back(slave_joint_names[i]);
-        start_angles_msg.position.push_back(slave_test_start_value[i]);
-    }
-    start_state_msg.joint_state = start_angles_msg;
-    display_traj_msg.trajectory_start = start_state_msg;
-
-    //添加这个消息的第二个参数，开始的状态，可能显示多条轨迹所以是向量
-    display_traj_msg.trajectory.push_back(result_msg);
-
-    ros::Publisher display_traj_publisher = n.advertise<moveit_msgs::DisplayTrajectory>("/move_group/display_planned_path", 1);
-    while (display_traj_publisher.getNumSubscribers() < 1)
-    {
-        sleep_t.sleep();
-    }
-    display_traj_publisher.publish(display_traj_msg);
-    ros::Duration(1).sleep();
+    out_file1.close();
+    out_file2.close();
 
 
     return 0;

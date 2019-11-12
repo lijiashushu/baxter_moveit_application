@@ -26,6 +26,9 @@
 #include <eigen3/Eigen/Core>
 
 #include <limits.h>
+#include <fstream>
+
+
 
 struct PerformanceIndexOneExtend{
     int extend_num;
@@ -35,6 +38,9 @@ struct PerformanceIndexOneExtend{
     int ik_project_times;
     int ik_success;
     int no_collide;
+    double extend_total_spend_time = 0;
+    double project_total_spend_time = 0;
+    double ik_total_spend_time = 0;
 
     PerformanceIndexOneExtend(){
         int tmp_max = std::numeric_limits<int>::max();
@@ -45,39 +51,39 @@ struct PerformanceIndexOneExtend{
         ik_project_times = 0;
         ik_success = 0;
         no_collide = 0;
+        extend_total_spend_time = 0;
+        project_total_spend_time = 0;
+        ik_total_spend_time = 0;
     }
 
 };
+
 struct PerformanceIndexOneSample{
     int sample_num;
+    double spend_time;
     std::vector<PerformanceIndexOneExtend> tree_a;
     std::vector<PerformanceIndexOneExtend> tree_b;
 };
 
-
-
-
-
-
 class DualCBiRRT{
 public:
-    DualCBiRRT(double probability);
+    DualCBiRRT(double probability, int seed, double alpha);
     ~DualCBiRRT();
 
     void sample(robot_state::RobotState & goal_state, robot_state::RobotState & random_state, Eigen::Matrix<double, 7, 1> & random_state_value_matrix, const robot_state::JointModelGroup* planning_group, random_numbers::RandomNumberGenerator &rng);
 
-    size_t near_a_tree(Eigen::Matrix<double, 7, 1> & random_state_value_matrix, Eigen::Matrix<double, 7, 1> & nearest_node_matrix);
-    size_t near_b_tree(Eigen::Matrix<double, 7, 1> & random_state_value_matrix, Eigen::Matrix<double, 7, 1> & nearest_node_matrix);
+    size_t near_tree(Eigen::Matrix<double, 7, 1> & random_state_value_matrix, Eigen::Matrix<double, 7, 1> & nearest_node_matrix, bool if_tree_a);
 
 
     bool plan(robot_state::RobotState & goal_state, robot_state::RobotState & start_state, planning_scene::PlanningScenePtr& planning_scene_ptr, const std::string & planning_group_name, const robot_state::JointModelGroup* planning_group, const robot_state::JointModelGroup* slave_group);
 
-    void constraint_extend_a_tree(Eigen::Matrix<double, 7, 1> & random_state_value_matrix, Eigen::Matrix<double, 7, 1> & nearest_node_matrix, size_t nearst_node_index, Eigen::Matrix<double, 7, 1> & reached_state_matrix, const robot_state::JointModelGroup* planning_group, const std::string & planning_group_name, planning_scene::PlanningScenePtr & planning_scene_ptr, const robot_state::JointModelGroup* slave_group, std::pair<std::vector<double>, std::vector<double>>& slave_joint_pos_bounds, PerformanceIndexOneSample & perdex_one_sample);
-    void constraint_extend_b_tree(Eigen::Matrix<double, 7, 1> & random_state_value_matrix, Eigen::Matrix<double, 7, 1> & nearest_node_matrix, size_t nearst_node_index, Eigen::Matrix<double, 7, 1> & reached_state_matrix, const robot_state::JointModelGroup* planning_group, const std::string & planning_group_name, planning_scene::PlanningScenePtr & planning_scene_ptr, const robot_state::JointModelGroup* slave_group, std::pair<std::vector<double>, std::vector<double>>& slave_joint_pos_bounds, PerformanceIndexOneSample & perdex_one_sample);
+    void constraint_extend_tree(Eigen::Matrix<double, 7, 1> & random_state_value_matrix, Eigen::Matrix<double, 7, 1> & nearest_node_matrix, size_t nearst_node_index, Eigen::Matrix<double, 7, 1> & reached_state_matrix, const robot_state::JointModelGroup* planning_group, const std::string & planning_group_name, planning_scene::PlanningScenePtr & planning_scene_ptr, const robot_state::JointModelGroup* slave_group, std::pair<std::vector<double>, std::vector<double>>& slave_joint_pos_bounds, PerformanceIndexOneSample & perdex_one_sample, collision_detection::CollisionWorldFCL & world_FCL, const collision_detection::CollisionRobotConstPtr & robot, bool if_tree_a);
 
-    bool solve_IK_problem(Eigen::Matrix<double, 7, 1> slave_state_value_matrix, Eigen::Matrix<double, 7, 1> & master_state_value_matrix, Eigen::Matrix<double, 7, 1> & result_state_value_matrix, const robot_state::JointModelGroup* planning_group, const robot_state::JointModelGroup* slave_group, planning_scene::PlanningScenePtr & planning_scene_ptr, std::pair<std::vector<double>, std::vector<double>>& slave_joint_pos_bounds, PerformanceIndexOneExtend & perdex_one_extend);
+    bool solve_IK_problem(Eigen::Matrix<double, 7, 1> slave_state_value_matrix, Eigen::Matrix<double, 7, 1> & master_state_value_matrix, Eigen::Matrix<double, 7, 1> & result_state_value_matrix, const robot_state::JointModelGroup* planning_group, const robot_state::JointModelGroup* slave_group, planning_scene::PlanningScenePtr & planning_scene_ptr, std::pair<std::vector<double>, std::vector<double>>& slave_joint_pos_bounds, PerformanceIndexOneExtend & perdex_one_extend, collision_detection::CollisionWorldFCL & world_FCL, const collision_detection::CollisionRobotConstPtr & robot);
+    bool solve_IK_problem_no_plan(Eigen::Matrix<double, 7, 1> slave_state_value_matrix, Eigen::Matrix<double, 7, 1> & master_state_value_matrix, Eigen::Matrix<double, 7, 1> & result_state_value_matrix, const robot_state::JointModelGroup* planning_group, const robot_state::JointModelGroup* slave_group, planning_scene::PlanningScenePtr & planning_scene_ptr, std::pair<std::vector<double>, std::vector<double>>& slave_joint_pos_bounds);
 
     void output_perdex();
+    void output_perdex_multi(std::ofstream & outFILE);
 
     std::vector<robot_state::RobotState> planning_result;
 private:
@@ -101,6 +107,9 @@ private:
     double _yaw_max;
 
     int _draw_count;
+
+    int _seed;
+    double _alpha;
     
     std::vector<PerformanceIndexOneSample> _performance_record;
 

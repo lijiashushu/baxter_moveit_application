@@ -26,46 +26,53 @@ int main(int argc, char** argv){
     planning_scene_monitor::LockedPlanningSceneRW ps(monitor_ptr);
 
     robot_state::RobotState & robot_state_write = ps->getCurrentStateNonConst();
-    const robot_state::JointModelGroup* two_arm = robot_state_write.getJointModelGroup("both_arms");
-    std::vector<double> original_values;
-    robot_state_write.copyJointGroupPositions(two_arm, original_values);
-    for(std::vector<double>::iterator it=original_values.begin(); it!=original_values.end();it++){
-        std::cout<<*it<<",";
-    }
-    std::cout<<std::endl;
+//    const robot_state::JointModelGroup* two_arm = robot_state_write.getJointModelGroup("both_arms");
+//    std::vector<double> original_values;
+//    robot_state_write.copyJointGroupPositions(two_arm, original_values);
+//    for(std::vector<double>::iterator it=original_values.begin(); it!=original_values.end();it++){
+//        std::cout<<*it<<",";
+//    }
+//    std::cout<<std::endl;
 
-    std::vector<double> test_values = {-0.670559,0.847365,-2.18348,1.09974,0.9986,-1.48732,1.56971,0.421259,0.36132,1.78139,0.905517,2.71258,1.30217,1.63765};
-    robot_state_write.setJointGroupPositions(two_arm, test_values);
-    robot_state_write.update();
-    std::vector<double> new_values;
-    robot_state_write.copyJointGroupPositions(two_arm, new_values);
-    for(std::size_t i=0; i<new_values.size(); i++){
-        ROS_INFO("new value %d is %f", int(i), new_values[i]);
-    }
-    moveit_msgs::PlanningScene planning_scene;
-    ps->getPlanningSceneMsg(planning_scene);
-    planning_scene.is_diff = true;
-    ros::Publisher planning_scene_diff_publisher = n.advertise<moveit_msgs::PlanningScene>("planning_scene", 1);
-    ros::WallDuration sleep_t(0.5);
-    while (planning_scene_diff_publisher.getNumSubscribers() < 1)
-    {
-        sleep_t.sleep();
-    }
-    planning_scene_diff_publisher.publish(planning_scene);
-    ros::Duration(1).sleep();
+//    std::vector<double> test_values = {-0.670559,0.847365,-2.18348,1.09974,0.9986,-1.48732,1.56971,0.421259,0.36132,1.78139,0.905517,2.71258,1.30217,1.63765};
+//    robot_state_write.setJointGroupPositions(two_arm, test_values);
+//    robot_state_write.update();
+//    std::vector<double> new_values;
+//    robot_state_write.copyJointGroupPositions(two_arm, new_values);
+//    for(std::size_t i=0; i<new_values.size(); i++){
+//        ROS_INFO("new value %d is %f", int(i), new_values[i]);
+//    }
+//    moveit_msgs::PlanningScene planning_scene;
+//    ps->getPlanningSceneMsg(planning_scene);
+//    planning_scene.is_diff = true;
+//    ros::Publisher planning_scene_diff_publisher = n.advertise<moveit_msgs::PlanningScene>("planning_scene", 1);
+//    ros::WallDuration sleep_t(0.5);
+//    while (planning_scene_diff_publisher.getNumSubscribers() < 1)
+//    {
+//        sleep_t.sleep();
+//    }
+//    planning_scene_diff_publisher.publish(planning_scene);
+//    ros::Duration(1).sleep();
+//
+//    planning_scene::PlanningScenePtr ps1 = ps->diff();
+//    ps1->decoupleParent();
 
-    planning_scene::PlanningScenePtr ps1 = ps->diff();
-    ps1->decoupleParent();
-
-    const collision_detection::CollisionRobotConstPtr robot = ps1->getCollisionRobot();
-    const collision_detection::WorldPtr world = ps1->getWorldNonConst();
+    const collision_detection::CollisionRobotConstPtr robot = ps->getCollisionRobot();
+    const collision_detection::WorldPtr world = ps->getWorldNonConst();
     collision_detection::CollisionWorldFCL worldFcl(world);
+
+
+    const robot_state::JointModelGroup* left_arm = robot_state_write.getJointModelGroup("left_arm");
+    const std::set<const robot_model::LinkModel*> left_link_model = left_arm->getUpdatedLinkModelsSet();
+
 
     collision_detection::DistanceRequest dis_req;
     collision_detection::DistanceResult dis_res;
-    dis_req.group_name = "both_arms";
+    dis_req.group_name = "left_arm";
+    dis_req.active_components_only = &left_link_model;
     dis_req.enable_nearest_points = true;
     dis_req.type = collision_detection::DistanceRequestType::SINGLE;
+
     worldFcl.distanceRobot(dis_req, dis_res, *robot, robot_state_write);
 
     ROS_INFO("The test state is %s in collision", dis_res.collision? "" : "not");
@@ -83,11 +90,11 @@ int main(int argc, char** argv){
     std::cout<<second_point<<std::endl;
     ROS_INFO("normal");
     std::cout<<normal<<std::endl;
-    const robot_state::JointModelGroup* right_arm = robot_state_write.getJointModelGroup("right_arm");
+
     const robot_state::LinkModel* collision_link = robot_state_write.getLinkModel(min_distance.link_names[1]);
     Eigen::MatrixXd result_jac;
     second_point[2]+=0.1;
-    if(robot_state_write.getJacobian(right_arm, collision_link, second_point, result_jac)){
+    if(robot_state_write.getJacobian(left_arm, collision_link, second_point, result_jac)){
         ROS_INFO("Computed jacobian succesully!!");
         std::cout<<result_jac<<std::endl;
     }

@@ -31,7 +31,7 @@ int main(int argc, char** argv){
     ros::AsyncSpinner spinner(1);
     spinner.start();
 
-    DualCBiRRT my_planner(1.0);
+    DualCBiRRT my_planner(1.0, 1);
 
     planning_scene_monitor::PlanningSceneMonitorPtr monitor_ptr = std::make_shared<planning_scene_monitor::PlanningSceneMonitor>("robot_description");
     monitor_ptr->requestPlanningSceneState("get_planning_scene");
@@ -47,25 +47,27 @@ int main(int argc, char** argv){
     const robot_state::JointModelGroup* slave_group = start_state.getJointModelGroup("right_arm"); //
 
 //    std::vector<double> test_start_value = {0.178307,-1.36637,-0.718743,2.32057,-1.28874,1.62442,2.4651};//有障碍时手臂平方位置
-    std::vector<double> test_start_value = {0.0511426,-0.422846,-0.602817,1.92707,-0.888771,1.20479,2.70597}; //无障碍时手臂平方位置
-    //Python程序中规划出来的一条路径，左臂的路径点
-    std::vector<double> test_start_value1 = {0.17109754, -0.87923624, -0.08423487,  1.712199,   -0.81049842,  2.09320188,  2.58848987};
-    std::vector<double> test_start_value2 = {0.0486490, -0.925857, -0.031717, 1.82155, -0.873958, 2.0440, 2.6293};
-    std::vector<double> test_start_value3 = {-0.0737993, -0.972479, 0.02080, 1.93090, -0.937419, 1.994816, 2.670209};
-    std::vector<double> test_start_value4 = {-0.1962478, -1.01910, 0.073317, 2.040257, -1.000879, 1.94562, 2.711069};
-    std::vector<double> test_start_value5 = {-0.3186963,-1.06572, 0.125835, 2.14960, -1.064340, 1.89643, 2.75192994};
-    std::vector<double> test_start_value6 = {-0.441144, -1.11234, 0.1783532110, 2.25896, -1.127800, 1.847237, 2.79278};
-    std::vector<double> test_start_value7 = {-0.531213, -1.14663, 0.21698349, 2.3393988, -1.17448, 1.81105, 2.82284};
+//    std::vector<double> test_start_value = {0.0511426,-0.422846,-0.602817,1.92707,-0.888771,1.20479,2.70597}; //无障碍时手臂平方位置
+    std::vector<double> test_start_value = {-0.202391,-1.01283,-0.709538,1.16068,-1.21936,1.51294,1.59967};
 
-    //求解测试数据，master 为Python程序规划出来的一个中间值，slave_test_start_value 为起始值所对应的slave
+    //Python程序中规划出来的一条路径，左臂的路径点
+//    std::vector<double> test_start_value1 = {0.17109754, -0.87923624, -0.08423487,  1.712199,   -0.81049842,  2.09320188,  2.58848987};
+//    std::vector<double> test_start_value2 = {0.0486490, -0.925857, -0.031717, 1.82155, -0.873958, 2.0440, 2.6293};
+//    std::vector<double> test_start_value3 = {-0.0737993, -0.972479, 0.02080, 1.93090, -0.937419, 1.994816, 2.670209};
+//    std::vector<double> test_start_value4 = {-0.1962478, -1.01910, 0.073317, 2.040257, -1.000879, 1.94562, 2.711069};
+//    std::vector<double> test_start_value5 = {-0.3186963,-1.06572, 0.125835, 2.14960, -1.064340, 1.89643, 2.75192994};
+//    std::vector<double> test_start_value6 = {-0.441144, -1.11234, 0.1783532110, 2.25896, -1.127800, 1.847237, 2.79278};
+//    std::vector<double> test_start_value7 = {-0.531213, -1.14663, 0.21698349, 2.3393988, -1.17448, 1.81105, 2.82284};
+//
+//    //求解测试数据，master 为Python程序规划出来的一个中间值，slave_test_start_value 为起始值所对应的slave
     std::vector<double> slave_test_start_value = {0.0633710, 0.118378, 1.5027523, 2.2347026,-0.579105, 0.054547, -1.11615}; //无障碍时手臂平方位置
-    std::vector<double> slave_test_start_value1 = {0.0633710, 0.118378, 1.5027523, 2.2347026,-0.579105, 0.054547, -1.11615}; //无障碍时手臂平方位置
-    std::vector<double> slave_test_start_value2 = {-0.058366, 0.147221, 1.53129, 2.249083, -0.570693, 0.172382, -1.13613}; //无障碍时手臂平方位置
-    std::vector<double> slave_test_start_value3 = {-0.199218, 0.156825, 1.542521, 2.25921, -0.45628, 0.298873, -1.247}; //无障碍时手臂平方位置
-    std::vector<double> slave_test_start_value4 = {-0.33346, 0.138231, 1.535831, 2.257525, -0.3103194, 0.42443, -1.3833}; //无障碍时手臂平方位置
-    std::vector<double> slave_test_start_value5 = {-0.45842, 0.099539, 1.515060, 2.246829,-0.172911, 0.554020, -1.511326}; //无障碍时手臂平方位置
-    std::vector<double> slave_test_start_value6 = {-0.57288, 0.04948, 1.483388, 2.230481, -0.05868, 0.68841, -1.6222}; //无障碍时手臂平方位置
-    std::vector<double> slave_test_start_value7 = {-0.64966, 0.0056597, 1.45303, 2.216785, 0.014273, 0.788736, -1.697533}; //无障碍时手臂平方位置
+//    std::vector<double> slave_test_start_value1 = {0.0633710, 0.118378, 1.5027523, 2.2347026,-0.579105, 0.054547, -1.11615}; //无障碍时手臂平方位置
+//    std::vector<double> slave_test_start_value2 = {-0.058366, 0.147221, 1.53129, 2.249083, -0.570693, 0.172382, -1.13613}; //无障碍时手臂平方位置
+//    std::vector<double> slave_test_start_value3 = {-0.199218, 0.156825, 1.542521, 2.25921, -0.45628, 0.298873, -1.247}; //无障碍时手臂平方位置
+//    std::vector<double> slave_test_start_value4 = {-0.33346, 0.138231, 1.535831, 2.257525, -0.3103194, 0.42443, -1.3833}; //无障碍时手臂平方位置
+//    std::vector<double> slave_test_start_value5 = {-0.45842, 0.099539, 1.515060, 2.246829,-0.172911, 0.554020, -1.511326}; //无障碍时手臂平方位置
+//    std::vector<double> slave_test_start_value6 = {-0.57288, 0.04948, 1.483388, 2.230481, -0.05868, 0.68841, -1.6222}; //无障碍时手臂平方位置
+//    std::vector<double> slave_test_start_value7 = {-0.64966, 0.0056597, 1.45303, 2.216785, 0.014273, 0.788736, -1.697533}; //无障碍时手臂平方位置
 
 //    std::vector<double> test_start_value = {-0.1962478, -1.019100, 0.073317, 2.0402, -1.00087, 1.94562, 2.7110    }; //测试的中间位置
 //    std::vector<double> test_start_value = {-0.623942,-0.650041,-0.208132,1.99769,-1.4868,1.4407,2.90019}; //测试的中间位置
@@ -119,7 +121,8 @@ int main(int argc, char** argv){
     //********************************************************************************
 
 
-    if(my_planner.solve_IK_problem(slave_start_matrix, master_matrix, slave_computed_matrix, planning_group, slave_group, planning_scene_for_operate, slave_joint_pos_bounds)){
+
+    if(my_planner.solve_IK_problem_no_plan(slave_start_matrix, master_matrix, slave_computed_matrix, planning_group, slave_group, planning_scene_for_operate, slave_joint_pos_bounds)){
         std::cout<<"IK success !!!"<<std::endl;
         for(size_t i=0; i<7; i++){
             slave_computed_vector.push_back(slave_computed_matrix[i]);
@@ -127,6 +130,11 @@ int main(int argc, char** argv){
         start_state.setJointGroupPositions(planning_group, test_start_value);
         start_state.setJointGroupPositions(slave_group, slave_computed_vector);
     }
+    std::cout<<"slave ik result"<<std::endl;
+    for(size_t i=0; i<slave_computed_vector.size();i++){
+        std::cout<<slave_computed_vector[i]<<",";
+    }
+    std::cout<<std::endl;
 
 
     planning_scene_for_operate->setCurrentState(start_state);
