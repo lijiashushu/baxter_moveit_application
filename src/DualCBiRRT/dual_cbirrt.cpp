@@ -19,10 +19,14 @@ DualCBiRRT::DualCBiRRT(double probability, int seed, double alpha):_random_distr
     _random_engine.seed(time(0));
     _step_size = 0.03;
     _constrain_delta = 0.1; //弧度值
+    _pos_constrain_delta = 0.02;
+
     _pitch_min =  1.56999 - 0.00025;
     _pitch_max =  1.56999 + 0.00025 ;
     _yaw_min = 2.94792  - 0.00025;
     _yaw_max = 2.94792  + 0.00025;
+    _roll_min = -2.15991 - 1.05;
+    _roll_max = -2.15991 + 1.05;
 
     _draw_count = 0;
 }
@@ -147,6 +151,7 @@ void DualCBiRRT::constraint_extend_tree(Eigen::Matrix<double, 7, 1> & random_sta
             //**********************************************向约束空间投影***************************************************
             double yaw_error = 0;
             double pitch_error = 0;
+            double roll_error=0;
             double total_error = 0;
             bool project_success = true;
             Eigen::Vector3d end_rot_eulerAngle;
@@ -230,6 +235,17 @@ void DualCBiRRT::constraint_extend_tree(Eigen::Matrix<double, 7, 1> & random_sta
 
                 end_rot_eulerAngle = end_rot_matrix.eulerAngles(2,1,0);
 
+
+                if(end_rot_eulerAngle[2] < _roll_min){
+                    roll_error = _roll_min - end_rot_eulerAngle[2];
+                }
+                else if(end_rot_eulerAngle[2] > _roll_max){
+                    roll_error = _roll_max - end_rot_eulerAngle[2];
+                }
+                else{
+                    roll_error = 0;
+                }
+
                 if(end_rot_eulerAngle[1] < _pitch_min){
                     pitch_error = _pitch_min - end_rot_eulerAngle[1];
                 }
@@ -250,13 +266,15 @@ void DualCBiRRT::constraint_extend_tree(Eigen::Matrix<double, 7, 1> & random_sta
                     yaw_error = 0;
                 }
 
-                total_error = sqrt(pitch_error*pitch_error + yaw_error*yaw_error);
+//                std::cout<<"end_rot_eulerAngle:  "<<end_rot_eulerAngle.transpose()<<std::endl;
+
+                total_error = sqrt(roll_error*roll_error + pitch_error*pitch_error + yaw_error*yaw_error);
                 if(total_error < _constrain_delta){
                     project_success = true;
                     break;
                 }
                 else{
-                    required_eulerAngle[2] = end_rot_eulerAngle[2];
+                    required_eulerAngle[2] = end_rot_eulerAngle[2] + roll_error;
                     required_eulerAngle[1] = end_rot_eulerAngle[1] + pitch_error;
                     required_eulerAngle[0] = end_rot_eulerAngle[0] + yaw_error;
 
@@ -273,6 +291,12 @@ void DualCBiRRT::constraint_extend_tree(Eigen::Matrix<double, 7, 1> & random_sta
                     task_delta_vector[4] = error_axis[1] * error_angle;
                     task_delta_vector[5] = error_axis[2] * error_angle;
                     task_delta_vector = task_delta_vector / 0.01;
+
+//                    std::cout<<"required_eulerAngle:  "<<required_eulerAngle.transpose()<<std::endl;
+//                    std::cout<<"error_axis_angle_angle:  "<<error_axis_angle.angle()<<std::endl;
+//                    std::cout<<"error_axis_angle_axis:  "<<error_axis_angle.axis().transpose()<<std::endl;
+
+
 
                     end_jacobian = qs_state.getJacobian(planning_group);
                     end_jacobian_pinv = end_jacobian.transpose() * ((end_jacobian * end_jacobian.transpose()).inverse());
@@ -295,7 +319,7 @@ void DualCBiRRT::constraint_extend_tree(Eigen::Matrix<double, 7, 1> & random_sta
             if(project_success){
                 perdex_one_extend.project_success = 1;
                 ik_start_time =  ros::Time::now();
-                bool ik_result = solve_IK_problem(current_slave_angles_matrix, qs_matrix, computed_slave_angles_matrix, planning_group, slave_group, planning_scene_ptr, slave_joint_pos_bounds, perdex_one_extend, world_FCL, robot);
+                bool ik_result = solve_IK_problem_new_euler(current_slave_angles_matrix, qs_matrix, computed_slave_angles_matrix, planning_group, slave_group, planning_scene_ptr, slave_joint_pos_bounds, perdex_one_extend, world_FCL, robot);
                 ik_end_time = ros::Time::now();
                 perdex_one_extend.ik_total_spend_time = double((ik_end_time - ik_start_time).nsec) / 1000000000;
                 if(ik_result){
@@ -379,7 +403,8 @@ void DualCBiRRT::constraint_extend_tree(Eigen::Matrix<double, 7, 1> & random_sta
             }
             else{
                 perdex_one_sample.tree_b.push_back(perdex_one_extend);
-            }        }
+            }
+        }
 
     }
 }
@@ -661,6 +686,7 @@ bool DualCBiRRT::solve_IK_problem(Eigen::Matrix<double, 7, 1> slave_state_value_
 
 
     //************************************计算 slave 的目标末端位置，欧拉角向量以及旋转矩阵************************************
+    //最开始的闭环约束方式
     Eigen::Vector3d slave_goal_euler(master_euler[0], master_euler[1], master_euler[2] + 3.1415926);
     Eigen::Vector3d slave_goal_pos;
     Eigen::Vector3d distance(0, 0, 0.06);
@@ -670,6 +696,14 @@ bool DualCBiRRT::solve_IK_problem(Eigen::Matrix<double, 7, 1> slave_state_value_
     Eigen::AngleAxisd goal_yaw_angle(Eigen::AngleAxisd(slave_goal_euler[0], Eigen::Vector3d::UnitZ()));
     Eigen::Matrix3d slave_goal_rot_matrix;
     slave_goal_rot_matrix = goal_yaw_angle*goal_pitch_angle*goal_roll_angle;
+
+    //假设爪子可以在末端点位置保持不变的情况下，改变朝向角度
+//    Eigen::Vector3d slave_goal_pos = master_end_pos;
+//    slave_goal_pos[1] = master_end_pos[1] + 0.06; //位置约束直接考虑在世界坐标系
+    //朝向假设可以有左右个60度的幅度
+
+
+
     //*****************************************************************************************
 
     //*********************计算 slave 的目标末端位置，欧拉角向量误差，定义任务空间误差，关节角度增量**********************
@@ -1006,6 +1040,547 @@ bool DualCBiRRT::solve_IK_problem_no_plan(Eigen::Matrix<double, 7, 1> slave_stat
     }
 
 }
+
+bool DualCBiRRT::solve_IK_problem_new(Eigen::Matrix<double, 7, 1> slave_state_value_matrix, Eigen::Matrix<double, 7, 1> & master_state_value_matrix, Eigen::Matrix<double, 7, 1> & result_state_value_matrix, const robot_state::JointModelGroup* planning_group, const robot_state::JointModelGroup* slave_group, planning_scene::PlanningScenePtr & planning_scene_ptr, std::pair<std::vector<double>, std::vector<double>>& slave_joint_pos_bounds , PerformanceIndexOneExtend & perdex_one_extend, collision_detection::CollisionWorldFCL & world_FCL, const collision_detection::CollisionRobotConstPtr & robot){
+    //************************************获取函数参数，当前的master的各个关节值以及slave的各个关节值，存储在 RobotState 中*************************************
+    robot_state::RobotState master_state = planning_scene_ptr->getCurrentStateNonConst();//用来保存这次计算所参考的master的状态，函数中不会更改
+    robot_state::RobotState slave_state = planning_scene_ptr->getCurrentStateNonConst(); //用来保存计算到的当前的slave的状态，循环中多次更改
+    std::vector<double> master_joint_value_vector;
+    std::vector<double> slave_joint_value_vector;
+    for(size_t i=0; i<7; i++){
+        master_joint_value_vector.push_back(master_state_value_matrix[i]);
+        slave_joint_value_vector.push_back(slave_state_value_matrix[i]);
+    }
+
+    master_state.setJointGroupPositions(planning_group, master_joint_value_vector);
+    master_state.update();
+    slave_state.setJointGroupPositions(slave_group,slave_joint_value_vector);
+    slave_state.update();
+    //*******************************************************************************************************************************************
+
+    //************************************计算距离障碍物最近距离信息**************************************
+    const std::set<const robot_model::LinkModel*> planning_link_model = slave_group->getUpdatedLinkModelsSet();
+    collision_detection::DistanceRequest dis_req;
+    collision_detection::DistanceResult dis_res;
+    dis_req.group_name = "right_arm";
+    dis_req.active_components_only = &planning_link_model;
+    dis_req.enable_nearest_points = true;
+    dis_req.type = collision_detection::DistanceRequestType::SINGLE;
+    world_FCL.distanceRobot(dis_req, dis_res, *robot, slave_state);
+    collision_detection::DistanceResultsData min_distance = dis_res.minimum_distance;
+    double minimum_dis_value = min_distance.distance;
+    Eigen::Vector3d away_from_collision_normal = min_distance.normal;
+    Eigen::Vector3d robot_minimum_dis_point = min_distance.nearest_points[1];
+    std::string link_name = min_distance.link_names[1];
+
+    Eigen::MatrixXd minimum_collision_dis_jac;
+    Eigen::MatrixXd minimum_collision_dis_jac_pinv;
+    Eigen::Matrix<double, 6, 1> avoid_obstacle_vel;
+    if(!(link_name =="")){
+        const robot_state::LinkModel* collision_link = slave_state.getLinkModel(link_name);
+        if(slave_state.getJacobian(slave_group, collision_link, robot_minimum_dis_point, minimum_collision_dis_jac)){
+            ROS_INFO("Computed minum_collision_dis_jac jacobian succesully!!");
+        }
+        else{
+            ROS_INFO("Computed minum_collision_dis_jac jacobian fail!!");
+            exit(1);
+        }
+        minimum_collision_dis_jac_pinv = minimum_collision_dis_jac.transpose()*((minimum_collision_dis_jac*minimum_collision_dis_jac.transpose()).inverse());
+        double alpha;
+        if(minimum_dis_value > 1.0 || minimum_dis_value < 0.05){
+            alpha = 0;
+        }
+        else{
+            alpha = _alpha * (1 / minimum_dis_value);
+        }
+        avoid_obstacle_vel.head(3) = alpha * away_from_collision_normal;
+        avoid_obstacle_vel.tail(3) = Eigen::Vector3d::Zero();
+        avoid_obstacle_vel /= 0.01;
+    }
+    else{
+
+        minimum_collision_dis_jac = Eigen::Matrix<double,6,7>::Zero();
+        minimum_collision_dis_jac_pinv = Eigen::Matrix<double,7,6>::Zero();
+        avoid_obstacle_vel = Eigen::Matrix<double,6,1>::Zero();
+    }
+    //****************************************************************************************************
+
+    //*********************利用 RobotState 得到 master 的位置向量以及欧拉角向量*************************************
+    const Eigen::Affine3d & master_end_pose = master_state.getGlobalLinkTransform("left_gripper");
+    auto master_end_rot_matrix = master_end_pose.rotation();
+    Eigen::Vector3d master_euler = master_end_rot_matrix.eulerAngles(2,1,0);
+    Eigen::Vector3d master_end_pos = master_end_pose.translation();
+    //********************************************************************************************************
+
+    //*********************利用 RobotState 得到 slave 的位置向量、欧拉角向量、旋转矩阵、以及雅克比矩阵、雅克比伪逆矩阵*************************************
+    const Eigen::Affine3d & slave_end_pose = slave_state.getGlobalLinkTransform("right_gripper");
+    auto slave_end_rot_matrix = slave_end_pose.rotation();
+    Eigen::Vector3d slave_euler = slave_end_rot_matrix.eulerAngles(2,1,0);
+    Eigen::Vector3d slave_end_pos = slave_end_pose.translation();
+    Eigen::MatrixXd slave_end_jacobian;
+    Eigen::MatrixXd slave_end_jacobian_mp_inverse;
+    slave_end_jacobian = slave_state.getJacobian(slave_group);
+
+
+    //*********************计算 slave 的目标末端位置，欧拉角向量误差，定义任务空间误差，关节角度增量**********************
+    //假设爪子可以在末端点位置保持不变的情况下，改变朝向角度
+//    Eigen::Vector3d slave_goal_pos(master_end_pos[0], master_end_pos[1]-0.06, master_end_pos[2]);//位置约束直接考虑在世界坐标系
+    Eigen::Vector3d slave_goal_pos;
+    Eigen::Vector3d distance(0, 0, 0.06);
+    slave_goal_pos = master_end_rot_matrix * distance + master_end_pos;
+    Eigen::Vector3d slave_goal_euler_max(_yaw_max, _pitch_max, _roll_max + 3.1415926);
+    Eigen::Vector3d slave_goal_euler_min(_yaw_min, _pitch_min, _roll_min + 3.1415926); //朝向假设可以有左右各60度的幅度
+    Eigen::Vector3d slave_goal_euler = slave_euler;
+    Eigen::Matrix3d slave_goal_rot_matrix;
+
+    Eigen::Vector3d pos_error = slave_goal_pos - slave_end_pos;
+    Eigen::Vector3d rot_error(0, 0, 0);
+    Eigen::Vector3d last_pos_error = slave_goal_pos - slave_end_pos;
+    double angle_error;
+    Eigen::Vector3d axis_error;
+    double last_angle_error = std::numeric_limits<double>::max();
+
+    for(size_t i=0; i<3; i++){
+        if(slave_euler[i] > slave_goal_euler_max[i]){
+            rot_error[i] = slave_goal_euler_max[i] - slave_euler[i];
+        }
+        else if(slave_euler[i] < slave_goal_euler_min[i]){
+            rot_error[i] = slave_goal_euler_min[i] - slave_euler[i];
+        }
+        else{
+            rot_error[i] = 0;
+        }
+    }
+    slave_goal_euler = slave_euler + rot_error;
+    std::cout<<"Current euler: "<<slave_euler.transpose()<<std::endl;
+    std::cout<<"goal 1 "<<slave_goal_euler.transpose()<<std::endl;
+    std::cout<<"error 1 "<<(slave_goal_euler - slave_euler).transpose()<<std::endl;
+
+    Eigen::AngleAxisd goal_roll_angle(Eigen::AngleAxisd(slave_goal_euler[2], Eigen::Vector3d::UnitX()));
+    Eigen::AngleAxisd goal_pitch_angle(Eigen::AngleAxisd(slave_goal_euler[1], Eigen::Vector3d::UnitY()));
+    Eigen::AngleAxisd goal_yaw_angle(Eigen::AngleAxisd(slave_goal_euler[0], Eigen::Vector3d::UnitZ()));
+    slave_goal_rot_matrix = goal_yaw_angle*goal_pitch_angle*goal_roll_angle;
+
+    Eigen::Matrix3d tmptest;
+    tmptest = slave_goal_rot_matrix * (slave_end_rot_matrix.inverse());
+    Eigen::AngleAxisd rot_error_axis_angle(tmptest);
+    std::cout<<"rot_velocity1 :  "<<rot_error_axis_angle.angle() * rot_error_axis_angle.axis().transpose()<<std::endl;
+
+
+    slave_goal_euler = master_euler;
+    slave_goal_euler[2] += 3.1415926;
+
+    std::cout<<"goal 2: "<<slave_goal_euler.transpose()<<std::endl;
+    std::cout<<"error 2 "<<(slave_goal_euler - slave_euler).transpose()<<std::endl;
+
+    Eigen::AngleAxisd tmp_goal_roll_angle(Eigen::AngleAxisd(slave_goal_euler[2], Eigen::Vector3d::UnitX()));
+    Eigen::AngleAxisd tmp_goal_pitch_angle(Eigen::AngleAxisd(slave_goal_euler[1], Eigen::Vector3d::UnitY()));
+    Eigen::AngleAxisd tmp_goal_yaw_angle(Eigen::AngleAxisd(slave_goal_euler[0], Eigen::Vector3d::UnitZ()));
+    slave_goal_rot_matrix = tmp_goal_yaw_angle*tmp_goal_pitch_angle*tmp_goal_roll_angle;
+
+    Eigen::Matrix3d tmptest2;
+    tmptest2 = slave_goal_rot_matrix * (slave_end_rot_matrix.inverse());
+    Eigen::AngleAxisd rot_error_axis_angle2(tmptest2);
+    std::cout<<"rot_velocity2:  "<<rot_error_axis_angle2.angle() * rot_error_axis_angle2.axis().transpose()<<std::endl;
+
+
+    Eigen::Matrix3d rot_error_matrix;
+//    Eigen::AngleAxisd rot_error_axis_angle;
+    Eigen::Vector3d rot_error_3vector(0, 0, 0);
+
+    Eigen::Matrix<double, 6, 1>  stack_error;
+    Eigen::Matrix<double, 7, 1> joint_delta_vector;
+    //*****************************************************************************************
+
+
+    //********************************性能优化函数**************************
+    Eigen::Matrix<double, 7, 1>  delta_H;
+    Eigen::Matrix<double, 7, 1>  max_min_square;
+    double compute_tmp;
+    for(size_t i=0; i<7 ;i++){
+        compute_tmp = slave_joint_pos_bounds.first[i] - slave_joint_pos_bounds.second[i];
+        max_min_square[i] = compute_tmp * compute_tmp;
+    }
+    //********************************************************************
+    std::vector<Eigen::Matrix<double, 1, 3>> pos_error_draw;
+    std::vector<Eigen::Matrix<double, 1, 3>> euler_error_draw;
+    std::vector<Eigen::Matrix<double, 1, 7>> joint_angles_draw;
+    std::vector<double> rot_error_angle_draw;
+
+
+    int count = 0;
+    while (true){
+        std::cout<<"computing IK "<<count<<std::endl;
+        if(count > 2000){
+            std::cout<<"computing IK fail"<<std::endl;
+            return false;
+        }
+        else{
+
+            pos_error = slave_goal_pos - slave_end_pos;
+            rot_error_matrix = slave_goal_rot_matrix * (slave_end_rot_matrix.inverse());
+            Eigen::AngleAxisd rot_error_axis_angle(rot_error_matrix);
+            angle_error = rot_error_axis_angle.angle();
+            axis_error = rot_error_axis_angle.axis();
+
+            //判断是否失败（这次投影计算后的误差比上次还大）
+            for(size_t i=0; i<3; i++){
+                if (last_pos_error[i] > 0) {
+                    if (pos_error[i] - last_pos_error[i] > 0.5) {
+                        std::cout << "computing IK1 fail" << std::endl;
+                        perdex_one_extend.ik_project_times = count;
+                        return false;
+                    }
+                }
+                else {
+                    if (pos_error[i] - last_pos_error[i] < -0.5) {
+                        std::cout << "computing IK2 fail" << std::endl;
+                        perdex_one_extend.ik_project_times = count;
+                        return false;
+                    }
+                }
+                if (last_angle_error > 0) {
+                    if (angle_error - last_angle_error  > 0.5) {
+                        std::cout << "computing IK3 fail" << std::endl;
+                        perdex_one_extend.ik_project_times = count;
+                        return false;
+                    }
+                }
+                else {
+                    if (angle_error - last_angle_error < -0.5) {
+                        std::cout << "computing IK4 fail" << std::endl;
+                        perdex_one_extend.ik_project_times = count;
+                        return false;
+                    }
+                }
+            }
+            last_pos_error = pos_error;
+            last_angle_error = angle_error;
+
+            //判断是否在可接受的范围内
+            if(std::abs(angle_error) < _constrain_delta && pos_error.norm() < _pos_constrain_delta){
+                result_state_value_matrix = slave_state_value_matrix;
+                std::cout << "computing IK success" << std::endl;
+                perdex_one_extend.ik_project_times = count;
+                return true;
+            }
+            else{
+
+                rot_error_3vector = angle_error * axis_error;
+                stack_error.head(3) = pos_error;
+                stack_error.tail(3) = rot_error_3vector;
+
+                stack_error = (0.5 * stack_error) / 0.01;
+                //更新雅克比矩阵
+
+                slave_end_jacobian = slave_state.getJacobian(slave_group);
+                slave_end_jacobian_mp_inverse = (slave_end_jacobian.transpose() * ((slave_end_jacobian * slave_end_jacobian.transpose()).inverse())).eval();
+
+                //计算关节增量
+//                joint_delta_vector =  (slave_end_jacobian_mp_inverse * stack_error  - (Eigen::Matrix<double, 7, 7>::Identity() - slave_end_jacobian_mp_inverse*slave_end_jacobian) * delta_H) * 0.01;
+//                joint_delta_vector = (slave_end_jacobian_mp_inverse * stack_error);
+                joint_delta_vector = (slave_end_jacobian_mp_inverse * stack_error); //+ (Eigen::Matrix<double, 7, 7>::Identity() - slave_end_jacobian_mp_inverse * slave_end_jacobian)*minimum_collision_dis_jac_pinv*avoid_obstacle_vel;;
+
+                slave_state_value_matrix +=  0.01 * joint_delta_vector;
+
+                //更新 slave RobotState, state 更新肯定没有问题
+                for(size_t i=0; i<7; i++){
+                    slave_joint_value_vector[i] = slave_state_value_matrix[i];
+                }
+                slave_state.setJointGroupPositions(slave_group, slave_joint_value_vector);
+                slave_state.update();
+                //更新末端误差
+                const Eigen::Affine3d & slave_end_pose_tmp = slave_state.getGlobalLinkTransform("right_gripper");
+                slave_end_rot_matrix = slave_end_pose_tmp.rotation();
+                slave_end_pos = slave_end_pose_tmp.translation();
+            }
+            count++;
+
+        }
+    }
+
+}
+
+bool DualCBiRRT::solve_IK_problem_new_euler(Eigen::Matrix<double, 7, 1> slave_state_value_matrix, Eigen::Matrix<double, 7, 1> & master_state_value_matrix, Eigen::Matrix<double, 7, 1> & result_state_value_matrix, const robot_state::JointModelGroup* planning_group, const robot_state::JointModelGroup* slave_group, planning_scene::PlanningScenePtr & planning_scene_ptr, std::pair<std::vector<double>, std::vector<double>>& slave_joint_pos_bounds , PerformanceIndexOneExtend & perdex_one_extend, collision_detection::CollisionWorldFCL & world_FCL, const collision_detection::CollisionRobotConstPtr & robot){
+    //************************************获取函数参数，当前的master的各个关节值以及slave的各个关节值，存储在 RobotState 中*************************************
+    robot_state::RobotState master_state = planning_scene_ptr->getCurrentStateNonConst();//用来保存这次计算所参考的master的状态，函数中不会更改
+    robot_state::RobotState slave_state = planning_scene_ptr->getCurrentStateNonConst(); //用来保存计算到的当前的slave的状态，循环中多次更改
+    std::vector<double> master_joint_value_vector;
+    std::vector<double> slave_joint_value_vector;
+    for(size_t i=0; i<7; i++){
+        master_joint_value_vector.push_back(master_state_value_matrix[i]);
+        slave_joint_value_vector.push_back(slave_state_value_matrix[i]);
+    }
+
+    master_state.setJointGroupPositions(planning_group, master_joint_value_vector);
+    master_state.update();
+    slave_state.setJointGroupPositions(slave_group,slave_joint_value_vector);
+    slave_state.update();
+    //*******************************************************************************************************************************************
+
+    //************************************计算距离障碍物最近距离信息**************************************
+    const std::set<const robot_model::LinkModel*> planning_link_model = slave_group->getUpdatedLinkModelsSet();
+    collision_detection::DistanceRequest dis_req;
+    collision_detection::DistanceResult dis_res;
+    dis_req.group_name = "right_arm";
+    dis_req.active_components_only = &planning_link_model;
+    dis_req.enable_nearest_points = true;
+    dis_req.type = collision_detection::DistanceRequestType::SINGLE;
+    world_FCL.distanceRobot(dis_req, dis_res, *robot, slave_state);
+    collision_detection::DistanceResultsData min_distance = dis_res.minimum_distance;
+    double minimum_dis_value = min_distance.distance;
+    Eigen::Vector3d away_from_collision_normal = min_distance.normal;
+    Eigen::Vector3d robot_minimum_dis_point = min_distance.nearest_points[1];
+    std::string link_name = min_distance.link_names[1];
+
+    Eigen::MatrixXd minimum_collision_dis_jac;
+    Eigen::MatrixXd minimum_collision_dis_jac_pinv;
+    Eigen::Matrix<double, 6, 1> avoid_obstacle_vel;
+    if(!(link_name =="")){
+        const robot_state::LinkModel* collision_link = slave_state.getLinkModel(link_name);
+        if(slave_state.getJacobian(slave_group, collision_link, robot_minimum_dis_point, minimum_collision_dis_jac)){
+            ROS_INFO("Computed minum_collision_dis_jac jacobian succesully!!");
+        }
+        else{
+            ROS_INFO("Computed minum_collision_dis_jac jacobian fail!!");
+            exit(1);
+        }
+        minimum_collision_dis_jac_pinv = minimum_collision_dis_jac.transpose()*((minimum_collision_dis_jac*minimum_collision_dis_jac.transpose()).inverse());
+        double alpha;
+        if(minimum_dis_value > 1.0 || minimum_dis_value < 0.05){
+            alpha = 0;
+        }
+        else{
+            alpha = _alpha * (1 / minimum_dis_value);
+        }
+        avoid_obstacle_vel.head(3) = alpha * away_from_collision_normal;
+        avoid_obstacle_vel.tail(3) = Eigen::Vector3d::Zero();
+        avoid_obstacle_vel /= 0.01;
+    }
+    else{
+
+        minimum_collision_dis_jac = Eigen::Matrix<double,6,7>::Zero();
+        minimum_collision_dis_jac_pinv = Eigen::Matrix<double,7,6>::Zero();
+        avoid_obstacle_vel = Eigen::Matrix<double,6,1>::Zero();
+    }
+    //****************************************************************************************************
+
+    //*********************利用 RobotState 得到 master 的位置向量以及欧拉角向量*************************************
+    const Eigen::Affine3d & master_end_pose = master_state.getGlobalLinkTransform("left_gripper");
+    auto master_end_rot_matrix = master_end_pose.rotation();
+    Eigen::Vector3d master_euler = master_end_rot_matrix.eulerAngles(2,1,0);
+    Eigen::Vector3d master_end_pos = master_end_pose.translation();
+    //********************************************************************************************************
+
+    //*********************利用 RobotState 得到 slave 的位置向量、欧拉角向量、旋转矩阵、以及雅克比矩阵、雅克比伪逆矩阵*************************************
+    const Eigen::Affine3d & slave_end_pose = slave_state.getGlobalLinkTransform("right_gripper");
+    auto slave_end_rot_matrix = slave_end_pose.rotation();
+    Eigen::Vector3d slave_euler = slave_end_rot_matrix.eulerAngles(2,1,0);
+    Eigen::Vector3d slave_end_pos = slave_end_pose.translation();
+    Eigen::MatrixXd slave_end_jacobian;
+    Eigen::MatrixXd slave_end_jacobian_mp_inverse;
+    slave_end_jacobian = slave_state.getJacobian(slave_group);
+    Eigen::Matrix<double, 6, 6> Erpy = Eigen::Matrix<double, 6, 6>::Zero();
+    Erpy.topLeftCorner<3,3>() = Eigen::Matrix<double, 3, 3>::Identity();
+    Eigen::Matrix<double, 3, 3> Erpy_right_bottom;
+    Erpy_right_bottom(0, 0) = 0;
+    Erpy_right_bottom(1, 0) = 0;
+    Erpy_right_bottom(2, 0) = 1;
+    double sin0, cos0, sin1, cos1, sin2, cos2;
+
+
+
+    //*********************计算 slave 的目标末端位置，欧拉角向量误差，定义任务空间误差，关节角度增量**********************
+    //假设爪子可以在末端点位置保持不变的情况下，改变朝向角度
+//    Eigen::Vector3d slave_goal_pos(master_end_pos[0], master_end_pos[1]-0.06, master_end_pos[2]);//位置约束直接考虑在世界坐标系
+    Eigen::Vector3d slave_goal_pos;
+    Eigen::Vector3d distance(0, 0, 0.06);
+    slave_goal_pos = master_end_rot_matrix * distance + master_end_pos;
+    Eigen::Vector3d slave_goal_euler_max(_yaw_max, _pitch_max, _roll_max + 3.1415926);
+    Eigen::Vector3d slave_goal_euler_min(_yaw_min, _pitch_min, _roll_min + 3.1415926); //朝向假设可以有左右各60度的幅度
+    Eigen::Vector3d slave_goal_euler = slave_euler;
+    Eigen::Matrix3d slave_goal_rot_matrix;
+
+    Eigen::Vector3d pos_error = slave_goal_pos - slave_end_pos;
+    Eigen::Vector3d rot_error(0, 0, 0);
+    Eigen::Vector3d last_pos_error = slave_goal_pos - slave_end_pos;
+    double angle_error;
+    Eigen::Vector3d axis_error;
+    double last_angle_error = std::numeric_limits<double>::max();
+
+
+    slave_goal_euler = slave_euler + rot_error;
+    std::cout<<"Current euler: "<<slave_euler.transpose()<<std::endl;
+    std::cout<<"goal 1 "<<slave_goal_euler.transpose()<<std::endl;
+    std::cout<<"error 1 "<<(slave_goal_euler - slave_euler).transpose()<<std::endl;
+
+    Eigen::Matrix3d rot_error_matrix;
+    Eigen::AngleAxisd rot_error_axis_angle;
+    Eigen::Vector3d rot_error_3vector(0, 0, 0);
+
+    Eigen::Matrix<double, 6, 1>  stack_error;
+    Eigen::Matrix<double, 7, 1> joint_delta_vector;
+    //*****************************************************************************************
+
+
+    //********************************性能优化函数**************************
+    Eigen::Matrix<double, 7, 1>  delta_H;
+    Eigen::Matrix<double, 7, 1>  max_min_square;
+    double compute_tmp;
+    for(size_t i=0; i<7 ;i++){
+        compute_tmp = slave_joint_pos_bounds.first[i] - slave_joint_pos_bounds.second[i];
+        max_min_square[i] = compute_tmp * compute_tmp;
+    }
+    //********************************************************************
+    std::vector<Eigen::Matrix<double, 1, 3>> pos_error_draw;
+    std::vector<Eigen::Matrix<double, 1, 3>> euler_error_draw;
+    std::vector<Eigen::Matrix<double, 1, 7>> joint_angles_draw;
+    std::vector<double> rot_error_angle_draw;
+
+
+    int count = 0;
+    while (true){
+        std::cout<<"computing IK "<<count<<std::endl;
+        if(count > 2000){
+            std::cout<<"computing IK fail"<<std::endl;
+            return false;
+        }
+        else{
+
+            pos_error = slave_goal_pos - slave_end_pos;
+
+            for(size_t i=0; i<3; i++){
+                if(slave_euler[i] > slave_goal_euler_max[i]){
+                    rot_error[i] = slave_goal_euler_max[i] - slave_euler[i];
+                }
+                else if(slave_euler[i] < slave_goal_euler_min[i]){
+                    rot_error[i] = slave_goal_euler_min[i] - slave_euler[i];
+                }
+                else{
+                    rot_error[i] = 0;
+                }
+            }
+
+            sin0 = std::sin(slave_euler[0]);
+            cos0 = std::cos(slave_euler[0]);
+            sin1 = std::sin(slave_euler[1]);
+            cos1 = std::cos(slave_euler[1]);
+            sin2 = std::sin(slave_euler[2]);
+            cos2 = std::cos(slave_euler[2]);
+            Erpy_right_bottom(0, 2) = cos0 / cos1;
+            Erpy_right_bottom(0, 1) = sin0 / cos1;
+            Erpy_right_bottom(1, 2) = -sin0;
+            Erpy_right_bottom(1, 1) = cos0;
+            Erpy_right_bottom(2, 2) = cos0 * sin1 / cos1;
+            Erpy_right_bottom(2, 1) = sin0 * sin1 / cos1;
+            Erpy.bottomRightCorner<3, 3>() = Erpy_right_bottom;
+
+            slave_goal_euler = slave_euler + rot_error;
+            Eigen::AngleAxisd goal_roll_angle(Eigen::AngleAxisd(slave_goal_euler[2], Eigen::Vector3d::UnitX()));
+            Eigen::AngleAxisd goal_pitch_angle(Eigen::AngleAxisd(slave_goal_euler[1], Eigen::Vector3d::UnitY()));
+            Eigen::AngleAxisd goal_yaw_angle(Eigen::AngleAxisd(slave_goal_euler[0], Eigen::Vector3d::UnitZ()));
+            slave_goal_rot_matrix = goal_yaw_angle*goal_pitch_angle*goal_roll_angle;
+            rot_error_matrix = slave_goal_rot_matrix * (slave_end_rot_matrix.inverse());
+            rot_error_axis_angle = rot_error_matrix;
+            Eigen::MatrixXd test1 = Erpy_right_bottom*(rot_error_axis_angle.angle() * rot_error_axis_angle.axis());
+
+            std::cout<<"slave_goal_euler_max "<<slave_goal_euler_max.transpose()<<std::endl;
+            std::cout<<"slave_goal_euler_min "<<slave_goal_euler_min.transpose()<<std::endl;
+            std::cout<<"slave_goal_pos "<<slave_goal_pos.transpose()<<std::endl;
+            std::cout<<"slave_end_pos "<<slave_end_pos.transpose()<<std::endl;
+            std::cout<<"slave_euler "<<slave_euler.transpose()<<std::endl;
+            std::cout<<"slave_goal_euler "<<slave_goal_euler.transpose()<<std::endl;
+            std::cout<<"rot_error "<<rot_error.transpose()<<std::endl;
+            std::cout<<"pos_error "<<pos_error.transpose()<<std::endl;
+//            std::cout<<"w to rpy "<<test1.transpose()<<std::endl;
+//            std::cout << "Erpy_right_bottom" << std::endl;
+//            std::cout << Erpy_right_bottom << std::endl;
+//            std::cout << "Erpy_right_bottom_inverse" << std::endl;
+//            std::cout << Erpy_right_bottom.inverse()<< std::endl;
+            //判断是否失败（这次投影计算后的误差比上次还大）
+            for(size_t i=0; i<3; i++){
+                if (last_pos_error[i] > 0) {
+                    if (pos_error[i] - last_pos_error[i] > 0.5) {
+                        std::cout << "computing IK1 fail" << std::endl;
+                        perdex_one_extend.ik_project_times = count;
+                        return false;
+                    }
+                }
+                else {
+                    if (pos_error[i] - last_pos_error[i] < -0.5) {
+                        std::cout << "computing IK2 fail" << std::endl;
+                        perdex_one_extend.ik_project_times = count;
+                        return false;
+                    }
+                }
+            }
+            last_pos_error = pos_error;
+            last_angle_error = angle_error;
+
+            //判断是否在可接受的范围内
+
+            if(rot_error.norm() < _constrain_delta && pos_error.norm() < _pos_constrain_delta){
+                result_state_value_matrix = slave_state_value_matrix;
+                std::cout << "computing IK success" << std::endl;
+                perdex_one_extend.ik_project_times = count;
+                return true;
+            }
+            else{
+
+                stack_error.head(3) = pos_error;
+                stack_error.tail(3) = rot_error;
+
+                stack_error = (0.1 * stack_error) / 0.01;
+                //更新雅克比矩阵
+                
+                sin0 = std::sin(slave_euler[0]);
+                cos0 = std::cos(slave_euler[0]);
+                sin1 = std::sin(slave_euler[1]);
+                cos1 = std::cos(slave_euler[1]);
+                sin2 = std::sin(slave_euler[2]);
+                cos2 = std::cos(slave_euler[2]);
+                Erpy_right_bottom(0, 2) = cos0 / cos1;
+                Erpy_right_bottom(0, 1) = sin0 / cos1;
+                Erpy_right_bottom(1, 2) = -sin0;
+                Erpy_right_bottom(1, 1) = cos0;
+                Erpy_right_bottom(2, 2) = cos0 * sin1 / cos1;
+                Erpy_right_bottom(2, 1) = sin0 * sin1 / cos1;
+                Erpy.bottomRightCorner<3, 3>() = Erpy_right_bottom;
+                slave_end_jacobian = (slave_state.getJacobian(slave_group));
+                slave_end_jacobian_mp_inverse = (slave_end_jacobian.transpose() * ((slave_end_jacobian * slave_end_jacobian.transpose()).inverse())).eval();
+
+                std::cout << "Erpy" << std::endl;
+                std::cout << Erpy << std::endl;
+                //计算关节增量
+//                joint_delta_vector =  (slave_end_jacobian_mp_inverse * stack_error  - (Eigen::Matrix<double, 7, 7>::Identity() - slave_end_jacobian_mp_inverse*slave_end_jacobian) * delta_H) * 0.01;
+//                joint_delta_vector = (slave_end_jacobian_mp_inverse * stack_error);
+                joint_delta_vector = (slave_end_jacobian_mp_inverse * (Erpy.inverse() * stack_error)); //+ (Eigen::Matrix<double, 7, 7>::Identity() - slave_end_jacobian_mp_inverse * slave_end_jacobian)*minimum_collision_dis_jac_pinv*avoid_obstacle_vel;;
+                slave_state_value_matrix +=  0.01 * joint_delta_vector;
+
+                //更新 slave RobotState, state 更新肯定没有问题
+                for(size_t i=0; i<7; i++){
+                    slave_joint_value_vector[i] = slave_state_value_matrix[i];
+                }
+                slave_state.setJointGroupPositions(slave_group, slave_joint_value_vector);
+                slave_state.update();
+                //更新末端误差
+                const Eigen::Affine3d & slave_end_pose_tmp = slave_state.getGlobalLinkTransform("right_gripper");
+                slave_end_rot_matrix = slave_end_pose_tmp.rotation();
+                slave_euler = slave_end_rot_matrix.eulerAngles(2,1,0);
+                slave_end_pos = slave_end_pose_tmp.translation();
+
+                std::cout << "rot matrix" << std::endl;
+                std::cout << slave_end_rot_matrix << std::endl;
+                std::cout << "rot euler" << std::endl;
+                std::cout << slave_euler << std::endl;
+            }
+            count++;
+
+        }
+    }
+
+}
+
 
 void DualCBiRRT::output_perdex() {
     int sample_counts = _performance_record.size();

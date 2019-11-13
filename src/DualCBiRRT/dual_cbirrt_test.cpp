@@ -30,8 +30,9 @@ int main(int argc, char** argv){
     ros::NodeHandle n;
     ros::AsyncSpinner spinner(1);
     spinner.start();
+//    std::srand((unsigned)time(NULL));
 
-    DualCBiRRT my_planner(1.0, 1);
+    DualCBiRRT my_planner(1.0, 1, 0.00);
 
     planning_scene_monitor::PlanningSceneMonitorPtr monitor_ptr = std::make_shared<planning_scene_monitor::PlanningSceneMonitor>("robot_description");
     monitor_ptr->requestPlanningSceneState("get_planning_scene");
@@ -64,6 +65,17 @@ int main(int argc, char** argv){
         std::cout<<tmp_display[i]<<",";
     }
     std::cout<<std::endl;
+
+    const Eigen::Affine3d & left_end_pose_tmp = start_state.getGlobalLinkTransform("left_gripper");
+    auto left_end_rot_matrix_tmp = left_end_pose_tmp.rotation();
+    auto left_euler_tmp = left_end_rot_matrix_tmp.eulerAngles(2,1,0);
+    std::cout<<"left_euler  "<<left_euler_tmp.transpose()<<std::endl;
+
+    const Eigen::Affine3d & right_end_pose_tmp = start_state.getGlobalLinkTransform("right_gripper");
+    auto right_end_rot_matrix_tmp = right_end_pose_tmp.rotation();
+    auto right_euler_tmp = right_end_rot_matrix_tmp.eulerAngles(2,1,0);
+    std::cout<<"right_euler  "<<right_euler_tmp.transpose()<<std::endl;
+
 
     start_state.setJointGroupPositions(planning_group, test_start_value);
     start_state.setJointGroupPositions(slave_group, slave_test_start_value);
