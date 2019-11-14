@@ -696,14 +696,6 @@ bool DualCBiRRT::solve_IK_problem(Eigen::Matrix<double, 7, 1> slave_state_value_
     Eigen::AngleAxisd goal_yaw_angle(Eigen::AngleAxisd(slave_goal_euler[0], Eigen::Vector3d::UnitZ()));
     Eigen::Matrix3d slave_goal_rot_matrix;
     slave_goal_rot_matrix = goal_yaw_angle*goal_pitch_angle*goal_roll_angle;
-
-    //假设爪子可以在末端点位置保持不变的情况下，改变朝向角度
-//    Eigen::Vector3d slave_goal_pos = master_end_pos;
-//    slave_goal_pos[1] = master_end_pos[1] + 0.06; //位置约束直接考虑在世界坐标系
-    //朝向假设可以有左右个60度的幅度
-
-
-
     //*****************************************************************************************
 
     //*********************计算 slave 的目标末端位置，欧拉角向量误差，定义任务空间误差，关节角度增量**********************
@@ -854,6 +846,7 @@ bool DualCBiRRT::solve_IK_problem(Eigen::Matrix<double, 7, 1> slave_state_value_
 }
 
 bool DualCBiRRT::solve_IK_problem_no_plan(Eigen::Matrix<double, 7, 1> slave_state_value_matrix, Eigen::Matrix<double, 7, 1> & master_state_value_matrix, Eigen::Matrix<double, 7, 1> & result_state_value_matrix, const robot_state::JointModelGroup* planning_group, const robot_state::JointModelGroup* slave_group, planning_scene::PlanningScenePtr & planning_scene_ptr, std::pair<std::vector<double>, std::vector<double>>& slave_joint_pos_bounds){
+    //用于iktest 求解一个左臂点对应的右臂点
     //************************************获取函数参数，当前的master的各个关节值以及slave的各个关节值，存储在 RobotState 中*************************************
     robot_state::RobotState master_state = planning_scene_ptr->getCurrentStateNonConst();//用来保存这次计算所参考的master的状态，函数中不会更改
     robot_state::RobotState slave_state = planning_scene_ptr->getCurrentStateNonConst(); //用来保存计算到的当前的slave的状态，循环中多次更改
@@ -1042,6 +1035,7 @@ bool DualCBiRRT::solve_IK_problem_no_plan(Eigen::Matrix<double, 7, 1> slave_stat
 }
 
 bool DualCBiRRT::solve_IK_problem_new(Eigen::Matrix<double, 7, 1> slave_state_value_matrix, Eigen::Matrix<double, 7, 1> & master_state_value_matrix, Eigen::Matrix<double, 7, 1> & result_state_value_matrix, const robot_state::JointModelGroup* planning_group, const robot_state::JointModelGroup* slave_group, planning_scene::PlanningScenePtr & planning_scene_ptr, std::pair<std::vector<double>, std::vector<double>>& slave_joint_pos_bounds , PerformanceIndexOneExtend & perdex_one_extend, collision_detection::CollisionWorldFCL & world_FCL, const collision_detection::CollisionRobotConstPtr & robot){
+    //只是将求解的约束修改为一个范围，但是实际计算时是把范围的边界当成了想要的目标，其他和之前的一样。
     //************************************获取函数参数，当前的master的各个关节值以及slave的各个关节值，存储在 RobotState 中*************************************
     robot_state::RobotState master_state = planning_scene_ptr->getCurrentStateNonConst();//用来保存这次计算所参考的master的状态，函数中不会更改
     robot_state::RobotState slave_state = planning_scene_ptr->getCurrentStateNonConst(); //用来保存计算到的当前的slave的状态，循环中多次更改
@@ -1302,6 +1296,8 @@ bool DualCBiRRT::solve_IK_problem_new(Eigen::Matrix<double, 7, 1> slave_state_va
 }
 
 bool DualCBiRRT::solve_IK_problem_new_euler(Eigen::Matrix<double, 7, 1> slave_state_value_matrix, Eigen::Matrix<double, 7, 1> & master_state_value_matrix, Eigen::Matrix<double, 7, 1> & result_state_value_matrix, const robot_state::JointModelGroup* planning_group, const robot_state::JointModelGroup* slave_group, planning_scene::PlanningScenePtr & planning_scene_ptr, std::pair<std::vector<double>, std::vector<double>>& slave_joint_pos_bounds , PerformanceIndexOneExtend & perdex_one_extend, collision_detection::CollisionWorldFCL & world_FCL, const collision_detection::CollisionRobotConstPtr & robot){
+    //将求解的约束修改为一个范围，使用了将欧拉角速度转化成轴角角速度的矩阵变换。
+
     //************************************获取函数参数，当前的master的各个关节值以及slave的各个关节值，存储在 RobotState 中*************************************
     robot_state::RobotState master_state = planning_scene_ptr->getCurrentStateNonConst();//用来保存这次计算所参考的master的状态，函数中不会更改
     robot_state::RobotState slave_state = planning_scene_ptr->getCurrentStateNonConst(); //用来保存计算到的当前的slave的状态，循环中多次更改
@@ -1311,7 +1307,7 @@ bool DualCBiRRT::solve_IK_problem_new_euler(Eigen::Matrix<double, 7, 1> slave_st
         master_joint_value_vector.push_back(master_state_value_matrix[i]);
         slave_joint_value_vector.push_back(slave_state_value_matrix[i]);
     }
-
+    std::cout<<"slave_state_value_matrix\n  "<<slave_state_value_matrix.transpose()<<std::endl;
     master_state.setJointGroupPositions(planning_group, master_joint_value_vector);
     master_state.update();
     slave_state.setJointGroupPositions(slave_group,slave_joint_value_vector);
@@ -1376,6 +1372,7 @@ bool DualCBiRRT::solve_IK_problem_new_euler(Eigen::Matrix<double, 7, 1> slave_st
     const Eigen::Affine3d & slave_end_pose = slave_state.getGlobalLinkTransform("right_gripper");
     auto slave_end_rot_matrix = slave_end_pose.rotation();
     Eigen::Vector3d slave_euler = slave_end_rot_matrix.eulerAngles(2,1,0);
+    std::cout<<"slave_euler  "<<slave_euler.transpose()<<std::endl;
     Eigen::Vector3d slave_end_pos = slave_end_pose.translation();
     Eigen::MatrixXd slave_end_jacobian;
     Eigen::MatrixXd slave_end_jacobian_mp_inverse;
@@ -1409,7 +1406,9 @@ bool DualCBiRRT::solve_IK_problem_new_euler(Eigen::Matrix<double, 7, 1> slave_st
     double last_angle_error = std::numeric_limits<double>::max();
 
 
-    slave_goal_euler = slave_euler + rot_error;
+//    slave_goal_euler = slave_euler + rot_error;
+//    slave_goal_euler = master_euler;
+//    slave_goal_euler[2] = master_euler[2] + 3.14;
     std::cout<<"Current euler: "<<slave_euler.transpose()<<std::endl;
     std::cout<<"goal 1 "<<slave_goal_euler.transpose()<<std::endl;
     std::cout<<"error 1 "<<(slave_goal_euler - slave_euler).transpose()<<std::endl;
@@ -1460,7 +1459,7 @@ bool DualCBiRRT::solve_IK_problem_new_euler(Eigen::Matrix<double, 7, 1> slave_st
                     rot_error[i] = 0;
                 }
             }
-
+            slave_goal_euler = slave_euler + rot_error;
             sin0 = std::sin(slave_euler[0]);
             cos0 = std::cos(slave_euler[0]);
             sin1 = std::sin(slave_euler[1]);
@@ -1475,7 +1474,6 @@ bool DualCBiRRT::solve_IK_problem_new_euler(Eigen::Matrix<double, 7, 1> slave_st
             Erpy_right_bottom(2, 1) = sin0 * sin1 / cos1;
             Erpy.bottomRightCorner<3, 3>() = Erpy_right_bottom;
 
-            slave_goal_euler = slave_euler + rot_error;
             Eigen::AngleAxisd goal_roll_angle(Eigen::AngleAxisd(slave_goal_euler[2], Eigen::Vector3d::UnitX()));
             Eigen::AngleAxisd goal_pitch_angle(Eigen::AngleAxisd(slave_goal_euler[1], Eigen::Vector3d::UnitY()));
             Eigen::AngleAxisd goal_yaw_angle(Eigen::AngleAxisd(slave_goal_euler[0], Eigen::Vector3d::UnitZ()));
@@ -1527,7 +1525,8 @@ bool DualCBiRRT::solve_IK_problem_new_euler(Eigen::Matrix<double, 7, 1> slave_st
             }
             else{
 
-                stack_error.head(3) = pos_error;
+//                stack_error.head(3) = pos_error;
+                stack_error.head(3) = Eigen::Vector3d::Zero();
                 stack_error.tail(3) = rot_error;
 
                 stack_error = (0.1 * stack_error) / 0.01;
@@ -1549,8 +1548,12 @@ bool DualCBiRRT::solve_IK_problem_new_euler(Eigen::Matrix<double, 7, 1> slave_st
                 slave_end_jacobian = (slave_state.getJacobian(slave_group));
                 slave_end_jacobian_mp_inverse = (slave_end_jacobian.transpose() * ((slave_end_jacobian * slave_end_jacobian.transpose()).inverse())).eval();
 
+                std::cout << "stack_error" << std::endl;
+                std::cout << (stack_error).transpose() << std::endl;
                 std::cout << "Erpy" << std::endl;
-                std::cout << Erpy << std::endl;
+                std::cout << Erpy.inverse() << std::endl;
+                std::cout << "(Erpy.inverse() * stack_error)" << std::endl;
+                std::cout << (Erpy.inverse() * stack_error).transpose() << std::endl;
                 //计算关节增量
 //                joint_delta_vector =  (slave_end_jacobian_mp_inverse * stack_error  - (Eigen::Matrix<double, 7, 7>::Identity() - slave_end_jacobian_mp_inverse*slave_end_jacobian) * delta_H) * 0.01;
 //                joint_delta_vector = (slave_end_jacobian_mp_inverse * stack_error);
@@ -1570,9 +1573,11 @@ bool DualCBiRRT::solve_IK_problem_new_euler(Eigen::Matrix<double, 7, 1> slave_st
                 slave_end_pos = slave_end_pose_tmp.translation();
 
                 std::cout << "rot matrix" << std::endl;
-                std::cout << slave_end_rot_matrix << std::endl;
+                std::cout << slave_end_rot_matrix.transpose()<< std::endl;
                 std::cout << "rot euler" << std::endl;
-                std::cout << slave_euler << std::endl;
+                std::cout << slave_euler.transpose() << std::endl;
+                std::cout << "slave_end_pos" << std::endl;
+                std::cout << slave_end_pos.transpose() << std::endl;
             }
             count++;
 
@@ -1580,7 +1585,6 @@ bool DualCBiRRT::solve_IK_problem_new_euler(Eigen::Matrix<double, 7, 1> slave_st
     }
 
 }
-
 
 void DualCBiRRT::output_perdex() {
     int sample_counts = _performance_record.size();

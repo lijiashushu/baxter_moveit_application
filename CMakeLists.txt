@@ -198,6 +198,9 @@ target_link_libraries(dual_cbitrrt_multi_node ${catkin_LIBRARIES})
 add_executable(ik_test_node src/DualCBiRRT/ik_test.cpp src/DualCBiRRT/dual_cbirrt.cpp  include/baxter_moveit_application/DualCBiRRT/dual_cbirrt.h)
 target_link_libraries(ik_test_node ${catkin_LIBRARIES})
 
+add_executable(using_moveit_planner_node src/DualCBiRRT/using_moveit_planner.cpp)
+target_link_libraries(using_moveit_planner_node ${catkin_LIBRARIES})
+
 ## Rename C++ executable without prefix
 ## The above recommended prefix causes long target names, the following renames the
 ## target back to the shorter version for ease of user use

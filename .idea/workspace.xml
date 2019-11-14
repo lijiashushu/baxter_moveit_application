@@ -2,22 +2,27 @@
 <project version="4">
   <component name="CMakeRunConfigurationManager" shouldGenerate="true" shouldDeleteObsolete="true">
     <generated>
+      <config projectName="baxter_moveit_application" targetName="tf_generate_messages_py" />
       <config projectName="baxter_moveit_application" targetName="roscpp_generate_messages_eus" />
       <config projectName="baxter_moveit_application" targetName="geometry_msgs_generate_messages_py" />
+      <config projectName="baxter_moveit_application" targetName="roscpp_generate_messages_py" />
       <config projectName="baxter_moveit_application" targetName="graph_msgs_generate_messages_nodejs" />
+      <config projectName="baxter_moveit_application" targetName="tf_generate_messages_lisp" />
       <config projectName="baxter_moveit_application" targetName="geometry_msgs_generate_messages_eus" />
       <config projectName="baxter_moveit_application" targetName="20191028_test1_node" />
       <config projectName="baxter_moveit_application" targetName="tf2_msgs_generate_messages_eus" />
       <config projectName="baxter_moveit_application" targetName="moveit_msgs_generate_messages_cpp" />
+      <config projectName="baxter_moveit_application" targetName="visualization_msgs_generate_messages_cpp" />
       <config projectName="baxter_moveit_application" targetName="crrt_node" />
+      <config projectName="baxter_moveit_application" targetName="roscpp_generate_messages_cpp" />
       <config projectName="baxter_moveit_application" targetName="20191028_test2_node" />
       <config projectName="baxter_moveit_application" targetName="object_recognition_msgs_generate_messages_nodejs" />
       <config projectName="baxter_moveit_application" targetName="visualization_msgs_generate_messages_nodejs" />
       <config projectName="baxter_moveit_application" targetName="sensor_msgs_generate_messages_cpp" />
-      <config projectName="baxter_moveit_application" targetName="tf_generate_messages_lisp" />
-      <config projectName="baxter_moveit_application" targetName="tf2_msgs_generate_messages_nodejs" />
-      <config projectName="baxter_moveit_application" targetName="trajectory_msgs_generate_messages_py" />
-      <config projectName="baxter_moveit_application" targetName="doxygen" />
+      <config projectName="baxter_moveit_application" targetName="my_rrt_node" />
+      <config projectName="baxter_moveit_application" targetName="actionlib_generate_messages_py" />
+      <config projectName="baxter_moveit_application" targetName="shape_msgs_generate_messages_cpp" />
+      <config projectName="baxter_moveit_application" targetName="trajectory_msgs_generate_messages_cpp" />
       <config projectName="baxter_moveit_application" targetName="graph_msgs_generate_messages_py" />
       <config projectName="baxter_moveit_application" targetName="run_tests" />
       <config projectName="baxter_moveit_application" targetName="geometry_msgs_generate_messages_nodejs" />
@@ -27,35 +32,35 @@
       <config projectName="baxter_moveit_application" targetName="octomap_msgs_generate_messages_cpp" />
       <config projectName="baxter_moveit_application" targetName="std_msgs_generate_messages_eus" />
       <config projectName="baxter_moveit_application" targetName="object_recognition_msgs_generate_messages_cpp" />
-      <config projectName="baxter_moveit_application" targetName="object_recognition_msgs_generate_messages_py" />
-      <config projectName="baxter_moveit_application" targetName="moveit_msgs_generate_messages_nodejs" />
-      <config projectName="baxter_moveit_application" targetName="actionlib_msgs_generate_messages_cpp" />
-      <config projectName="baxter_moveit_application" targetName="cbitrrt_node" />
-      <config projectName="baxter_moveit_application" targetName="ik_test_node" />
-      <config projectName="baxter_moveit_application" targetName="20191027_test2_node" />
-      <config projectName="baxter_moveit_application" targetName="trajectory_msgs_generate_messages_nodejs" />
-      <config projectName="baxter_moveit_application" targetName="rosgraph_msgs_generate_messages_nodejs" />
       <config projectName="baxter_moveit_application" targetName="std_msgs_generate_messages_py" />
-      <config projectName="baxter_moveit_application" targetName="roscpp_generate_messages_py" />
+      <config projectName="baxter_moveit_application" targetName="moveit_msgs_generate_messages_nodejs" />
+      <config projectName="baxter_moveit_application" targetName="object_recognition_msgs_generate_messages_py" />
+      <config projectName="baxter_moveit_application" targetName="sensor_msgs_generate_messages_py" />
+      <config projectName="baxter_moveit_application" targetName="cbitrrt_node" />
+      <config projectName="baxter_moveit_application" targetName="20191026_test1_node" />
+      <config projectName="baxter_moveit_application" targetName="doxygen" />
+      <config projectName="baxter_moveit_application" targetName="20191027_test2_node" />
+      <config projectName="baxter_moveit_application" targetName="ik_test_node" />
+      <config projectName="baxter_moveit_application" targetName="rosgraph_msgs_generate_messages_nodejs" />
+      <config projectName="baxter_moveit_application" targetName="gmock" />
+      <config projectName="baxter_moveit_application" targetName="20191025_test2_node" />
       <config projectName="baxter_moveit_application" targetName="sensor_msgs_generate_messages_eus" />
-      <config projectName="baxter_moveit_application" targetName="actionlib_msgs_generate_messages_lisp" />
-      <config projectName="baxter_moveit_application" targetName="tf_generate_messages_py" />
+      <config projectName="baxter_moveit_application" targetName="trajectory_msgs_generate_messages_nodejs" />
       <config projectName="baxter_moveit_application" targetName="trajectory_msgs_generate_messages_eus" />
       <config projectName="baxter_moveit_application" targetName="actionlib_msgs_generate_messages_nodejs" />
       <config projectName="baxter_moveit_application" targetName="octomap_msgs_generate_messages_lisp" />
       <config projectName="baxter_moveit_application" targetName="tf_generate_messages_cpp" />
       <config projectName="baxter_moveit_application" targetName="std_msgs_generate_messages_lisp" />
-      <config projectName="baxter_moveit_application" targetName="gmock" />
+      <config projectName="baxter_moveit_application" targetName="actionlib_msgs_generate_messages_lisp" />
       <config projectName="baxter_moveit_application" targetName="rosgraph_msgs_generate_messages_eus" />
       <config projectName="baxter_moveit_application" targetName="octomap_msgs_generate_messages_eus" />
-      <config projectName="baxter_moveit_application" targetName="actionlib_msgs_generate_messages_py" />
       <config projectName="baxter_moveit_application" targetName="rosgraph_msgs_generate_messages_lisp" />
       <config projectName="baxter_moveit_application" targetName="tf2_msgs_generate_messages_lisp" />
       <config projectName="baxter_moveit_application" targetName="object_recognition_msgs_generate_messages_eus" />
-      <config projectName="baxter_moveit_application" targetName="sensor_msgs_generate_messages_py" />
+      <config projectName="baxter_moveit_application" targetName="actionlib_generate_messages_lisp" />
       <config projectName="baxter_moveit_application" targetName="download_extra_data" />
       <config projectName="baxter_moveit_application" targetName="moveit_msgs_generate_messages_lisp" />
-      <config projectName="baxter_moveit_application" targetName="trajectory_msgs_generate_messages_cpp" />
+      <config projectName="baxter_moveit_application" targetName="actionlib_msgs_generate_messages_py" />
       <config projectName="baxter_moveit_application" targetName="actionlib_msgs_generate_messages_eus" />
       <config projectName="baxter_moveit_application" targetName="visualization_msgs_generate_messages_lisp" />
       <config projectName="baxter_moveit_application" targetName="20191029_test1_node" />
@@ -63,49 +68,45 @@
       <config projectName="baxter_moveit_application" targetName="moveit_msgs_generate_messages_eus" />
       <config projectName="baxter_moveit_application" targetName="20191027_test1_node" />
       <config projectName="baxter_moveit_application" targetName="tests" />
-      <config projectName="baxter_moveit_application" targetName="visualization_msgs_generate_messages_cpp" />
+      <config projectName="baxter_moveit_application" targetName="20191029_test2_node" />
       <config projectName="baxter_moveit_application" targetName="graph_msgs_generate_messages_lisp" />
       <config projectName="baxter_moveit_application" targetName="octomap_msgs_generate_messages_nodejs" />
       <config projectName="baxter_moveit_application" targetName="roscpp_generate_messages_lisp" />
       <config projectName="baxter_moveit_application" targetName="20191029_test3_node" />
-      <config projectName="baxter_moveit_application" targetName="actionlib_generate_messages_nodejs" />
-      <config projectName="baxter_moveit_application" targetName="rosgraph_msgs_generate_messages_py" />
+      <config projectName="baxter_moveit_application" targetName="trajectory_msgs_generate_messages_py" />
       <config projectName="baxter_moveit_application" targetName="visualization_msgs_generate_messages_py" />
-      <config projectName="baxter_moveit_application" targetName="sensor_msgs_generate_messages_nodejs" />
+      <config projectName="baxter_moveit_application" targetName="actionlib_generate_messages_nodejs" />
       <config projectName="baxter_moveit_application" targetName="tf2_msgs_generate_messages_py" />
       <config projectName="baxter_moveit_application" targetName="shape_msgs_generate_messages_py" />
       <config projectName="baxter_moveit_application" targetName="geometry_msgs_generate_messages_lisp" />
       <config projectName="baxter_moveit_application" targetName="tf_generate_messages_eus" />
       <config projectName="baxter_moveit_application" targetName="roscpp_generate_messages_nodejs" />
-      <config projectName="baxter_moveit_application" targetName="tf2_msgs_generate_messages_cpp" />
+      <config projectName="baxter_moveit_application" targetName="actionlib_msgs_generate_messages_cpp" />
       <config projectName="baxter_moveit_application" targetName="dual_cbitrrt_node" />
-      <config projectName="baxter_moveit_application" targetName="actionlib_generate_messages_lisp" />
-      <config projectName="baxter_moveit_application" targetName="shape_msgs_generate_messages_cpp" />
-      <config projectName="baxter_moveit_application" targetName="my_rrt_node" />
+      <config projectName="baxter_moveit_application" targetName="rosgraph_msgs_generate_messages_py" />
+      <config projectName="baxter_moveit_application" targetName="sensor_msgs_generate_messages_nodejs" />
       <config projectName="baxter_moveit_application" targetName="actionlib_generate_messages_eus" />
       <config projectName="baxter_moveit_application" targetName="shape_msgs_generate_messages_eus" />
       <config projectName="baxter_moveit_application" targetName="octomap_msgs_generate_messages_py" />
       <config projectName="baxter_moveit_application" targetName="clean_test_results" />
       <config projectName="baxter_moveit_application" targetName="graph_msgs_generate_messages_cpp" />
-      <config projectName="baxter_moveit_application" targetName="roscpp_generate_messages_cpp" />
-      <config projectName="baxter_moveit_application" targetName="moveit_msgs_generate_messages_py" />
-      <config projectName="baxter_moveit_application" targetName="20191025_test2_node" />
+      <config projectName="baxter_moveit_application" targetName="sensor_msgs_generate_messages_lisp" />
+      <config projectName="baxter_moveit_application" targetName="tf2_msgs_generate_messages_nodejs" />
+      <config projectName="baxter_moveit_application" targetName="tf2_msgs_generate_messages_cpp" />
       <config projectName="baxter_moveit_application" targetName="dual_cbitrrt_multi_node" />
-      <config projectName="baxter_moveit_application" targetName="20191026_test1_node" />
-      <config projectName="baxter_moveit_application" targetName="20191029_test2_node" />
+      <config projectName="baxter_moveit_application" targetName="moveit_msgs_generate_messages_py" />
       <config projectName="baxter_moveit_application" targetName="geometry_msgs_generate_messages_cpp" />
       <config projectName="baxter_moveit_application" targetName="visualization_msgs_generate_messages_eus" />
       <config projectName="baxter_moveit_application" targetName="trajectory_msgs_generate_messages_lisp" />
       <config projectName="baxter_moveit_application" targetName="gtest" />
       <config projectName="baxter_moveit_application" targetName="gmock_main" />
+      <config projectName="baxter_moveit_application" targetName="using_moveit_planner_node" />
       <config projectName="baxter_moveit_application" targetName="shape_msgs_generate_messages_lisp" />
-      <config projectName="baxter_moveit_application" targetName="actionlib_generate_messages_py" />
+      <config projectName="baxter_moveit_application" targetName="shape_msgs_generate_messages_nodejs" />
       <config projectName="baxter_moveit_application" targetName="moveit_ros_manipulation_gencfg" />
       <config projectName="baxter_moveit_application" targetName="tf_generate_messages_nodejs" />
       <config projectName="baxter_moveit_application" targetName="20191025_test1_node" />
-      <config projectName="baxter_moveit_application" targetName="sensor_msgs_generate_messages_lisp" />
       <config projectName="baxter_moveit_application" targetName="actionlib_generate_messages_cpp" />
-      <config projectName="baxter_moveit_application" targetName="shape_msgs_generate_messages_nodejs" />
       <config projectName="baxter_moveit_application" targetName="20191030_test1_node" />
       <config projectName="baxter_moveit_application" targetName="std_msgs_generate_messages_nodejs" />
       <config projectName="baxter_moveit_application" targetName="std_msgs_generate_messages_cpp" />
@@ -120,10 +121,9 @@
   <component name="ChangeListManager">
     <list default="true" id="6fae3ce6-f295-4788-bee1-00ffa829f99c" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/include/baxter_moveit_application/DualCBiRRT/dual_cbirrt.h" beforeDir="false" afterPath="$PROJECT_DIR$/include/baxter_moveit_application/DualCBiRRT/dual_cbirrt.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/CMakeLists.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/DualCBiRRT/dual_cbirrt.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/DualCBiRRT/dual_cbirrt.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/DualCBiRRT/dual_cbirrt_test.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/DualCBiRRT/dual_cbirrt_test.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/DualCBiRRT/ik_test.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/DualCBiRRT/ik_test.cpp" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/cmake-build-debug/" />
     <ignored path="$PROJECT_DIR$/../../build/" />
@@ -139,25 +139,67 @@
   <component name="ExecutionTargetManager" SELECTED_TARGET="CMakeBuildProfile:Debug" />
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/DualCBiRRT/dual_cbirrt.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="136">
-              <caret line="1377" column="20" selection-start-line="1377" selection-start-column="20" selection-end-line="1377" selection-end-column="20" />
+            <state relative-caret-position="795">
+              <caret line="768" column="32" selection-start-line="768" selection-start-column="32" selection-end-line="768" selection-end-column="32" />
               <folding>
                 <element signature="e#1#62#0" expanded="true" />
-                <element signature="e#66406#72534#0" />
-                <element signature="e#72536#77748#0" />
+                <element signature="e#42949#52955#0" />
+                <element signature="e#52957#66410#0" />
+                <element signature="e#66412#81988#0" />
+                <element signature="e#81991#88119#0" />
+                <element signature="e#88121#93333#0" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/DualCBiRRT/using_moveit_planner.cpp">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="567">
+              <caret line="31" column="33" selection-start-line="31" selection-start-column="33" selection-end-line="31" selection-end-column="33" />
+              <folding>
+                <element signature="e#0#20#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file:///opt/ros/kinetic/include/moveit/robot_state/robot_state.h">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="12141">
+              <caret line="639" selection-start-line="639" selection-end-line="639" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file:///usr/include/c++/5/ext/new_allocator.h">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1957">
+              <caret line="103" selection-start-line="103" selection-end-line="103" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/CMakeLists.txt">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="3800">
+              <caret line="200" column="80" selection-start-line="200" selection-start-column="80" selection-end-line="200" selection-end-column="80" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/DualCBiRRT/dual_cbirrt_test.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="125">
-              <caret line="79" selection-start-line="79" selection-end-line="79" />
+            <state relative-caret-position="2508">
+              <caret line="132" column="84" selection-start-line="132" selection-start-column="84" selection-end-line="132" selection-end-column="84" />
               <folding>
                 <element signature="e#0#20#0" expanded="true" />
               </folding>
@@ -168,41 +210,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/DualCBiRRT/dual_cbirrt_test_multi_times.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="866">
+            <state relative-caret-position="3382">
               <caret line="178" column="4" selection-start-line="178" selection-start-column="4" selection-end-line="178" selection-end-column="37" />
-              <folding>
-                <element signature="e#0#20#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/include/baxter_moveit_application/DualCBiRRT/dual_cbirrt.h">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="169">
-              <caret line="107" column="11" selection-start-line="107" selection-start-column="11" selection-end-line="107" selection-end-column="11" />
-              <folding>
-                <element signature="e#97#117#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/DualCBiRRT/ik_test.cpp">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1919">
-              <caret line="101" column="48" selection-start-line="101" selection-start-column="48" selection-end-line="101" selection-end-column="48" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/20191029/20191029_test2.cpp">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="703">
-              <caret line="37" column="49" selection-start-line="37" selection-start-column="49" selection-end-line="37" selection-end-column="49" />
               <folding>
                 <element signature="e#0#20#0" expanded="true" />
               </folding>
@@ -235,11 +244,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>tree</find>
-      <find>ik_compute_times</find>
-      <find>&lt;&lt;&quot;,</find>
-      <find>&lt;&lt;&quot;,&quot;</find>
-      <find>&quot;,&quot;</find>
       <find>sec</find>
       <find>sample</find>
       <find>spend_time</find>
@@ -248,13 +252,11 @@
       <find>ALPHA</find>
       <find>_pitch_min</find>
       <find>solv</find>
-      <find>slave_goal_euler</find>
       <find>pos</find>
       <find>solve_IK_problem</find>
       <find>rot_error</find>
       <find>last</find>
       <find>rot_error_axis_angle</find>
-      <find>slave_goal_pos</find>
       <find>srand</find>
       <find>slave_end_rot_matrix</find>
       <find>_constrain_delta</find>
@@ -265,6 +267,13 @@
       <find>slave_end_pos</find>
       <find>Erpy</find>
       <find>right</find>
+      <find>stack_error</find>
+      <find>slave_goal_euler</find>
+      <find>plan(</find>
+      <find>slave_goal_pos</find>
+      <find>slave_start_value_matrix</find>
+      <find>roll_an</find>
+      <find>path_point_position_msg</find>
     </findStrings>
     <replaceStrings>
       <replace>CRRT</replace>
@@ -305,13 +314,14 @@
         <option value="$PROJECT_DIR$/src/CBiRRT/cbirrt.cpp" />
         <option value="$PROJECT_DIR$/src/CBiRRT/cbirrt_test.cpp" />
         <option value="$PROJECT_DIR$/src/20191029/20191029_test2.cpp" />
-        <option value="$PROJECT_DIR$/CMakeLists.txt" />
         <option value="$PROJECT_DIR$/src/20191028/20191028_test1.cpp" />
         <option value="$PROJECT_DIR$/src/DualCBiRRT/dual_cbirrt_test_multi_times.cpp" />
         <option value="$PROJECT_DIR$/src/DualCBiRRT/ik_test.cpp" />
         <option value="$PROJECT_DIR$/include/baxter_moveit_application/DualCBiRRT/dual_cbirrt.h" />
-        <option value="$PROJECT_DIR$/src/DualCBiRRT/dual_cbirrt.cpp" />
+        <option value="$PROJECT_DIR$/CMakeLists.txt" />
         <option value="$PROJECT_DIR$/src/DualCBiRRT/dual_cbirrt_test.cpp" />
+        <option value="$PROJECT_DIR$/src/DualCBiRRT/using_moveit_planner.cpp" />
+        <option value="$PROJECT_DIR$/src/DualCBiRRT/dual_cbirrt.cpp" />
       </list>
     </option>
   </component>
@@ -327,6 +337,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -356,7 +367,6 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -383,7 +393,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="CMake Application.dual_cbitrrt_node">
+  <component name="RunManager" selected="CMake Application.using_moveit_planner_node">
     <configuration name="20191025_test1_node" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="baxter_moveit_application" TARGET_NAME="20191025_test1_node" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="baxter_moveit_application" RUN_TARGET_NAME="20191025_test1_node">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
@@ -899,6 +909,11 @@
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
+    <configuration name="using_moveit_planner_node" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="baxter_moveit_application" TARGET_NAME="using_moveit_planner_node" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="baxter_moveit_application" RUN_TARGET_NAME="using_moveit_planner_node">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="visualization_msgs_generate_messages_cpp" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="baxter_moveit_application" TARGET_NAME="visualization_msgs_generate_messages_cpp" CONFIG_NAME="Debug">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
@@ -1028,6 +1043,7 @@
       <item itemvalue="CMake Application.trajectory_msgs_generate_messages_lisp" />
       <item itemvalue="CMake Application.trajectory_msgs_generate_messages_nodejs" />
       <item itemvalue="CMake Application.trajectory_msgs_generate_messages_py" />
+      <item itemvalue="CMake Application.using_moveit_planner_node" />
       <item itemvalue="CMake Application.visualization_msgs_generate_messages_cpp" />
       <item itemvalue="CMake Application.visualization_msgs_generate_messages_eus" />
       <item itemvalue="CMake Application.visualization_msgs_generate_messages_lisp" />
@@ -1069,24 +1085,26 @@
       <workItem from="1573467422286" duration="25000000" />
       <workItem from="1573551945362" duration="28036000" />
       <workItem from="1573636689258" duration="658000" />
-      <workItem from="1573644234063" duration="9324000" />
+      <workItem from="1573644234063" duration="9458000" />
+      <workItem from="1573661182772" duration="13331000" />
+      <workItem from="1573723583207" duration="351000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="168426000" />
+    <option name="totallyTimeSpent" value="182242000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="64" y="-11" width="1857" height="1092" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.02432283" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.14759536" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.3294979" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.4997236" visible="true" weight="0.41422594" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.52615064" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.4997236" weight="0.3043933" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.7186192" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
@@ -1095,7 +1113,7 @@
       <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.5002764" side_tool="true" weight="0.5366109" />
       <window_info anchor="bottom" id="Version Control" order="10" />
       <window_info anchor="bottom" id="CMake" order="11" weight="0.1495816" />
-      <window_info anchor="bottom" id="Messages" order="12" weight="0.51778245" />
+      <window_info anchor="bottom" id="Messages" order="12" weight="0.41108787" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -1121,7 +1139,7 @@
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
           <condition expression="count==1000" language="ObjectiveC" />
           <url>file://$PROJECT_DIR$/src/DualCBiRRT/dual_cbirrt.cpp</url>
-          <line>754</line>
+          <line>746</line>
           <option name="timeStamp" value="24" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
@@ -1131,33 +1149,33 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
           <url>file://$PROJECT_DIR$/src/DualCBiRRT/dual_cbirrt.cpp</url>
-          <line>1218</line>
+          <line>1212</line>
           <option name="timeStamp" value="53" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
           <url>file://$PROJECT_DIR$/src/DualCBiRRT/dual_cbirrt.cpp</url>
-          <line>1226</line>
+          <line>1220</line>
           <option name="timeStamp" value="54" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
           <url>file://$PROJECT_DIR$/src/DualCBiRRT/dual_cbirrt.cpp</url>
-          <line>1186</line>
+          <line>1180</line>
           <option name="timeStamp" value="64" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
           <url>file://$PROJECT_DIR$/src/DualCBiRRT/dual_cbirrt.cpp</url>
-          <line>1500</line>
+          <line>1498</line>
           <option name="timeStamp" value="65" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
           <url>file://$PROJECT_DIR$/src/DualCBiRRT/dual_cbirrt.cpp</url>
-          <line>1576</line>
+          <line>1581</line>
           <option name="timeStamp" value="66" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
-          <url>file://$PROJECT_DIR$/src/DualCBiRRT/dual_cbirrt_test.cpp</url>
-          <line>79</line>
-          <option name="timeStamp" value="68" />
+          <url>file://$PROJECT_DIR$/src/DualCBiRRT/dual_cbirrt.cpp</url>
+          <line>1375</line>
+          <option name="timeStamp" value="74" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
@@ -1301,13 +1319,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file:///opt/ros/kinetic/include/moveit/robot_state/robot_state.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="120">
-          <caret line="1369" selection-start-line="1369" selection-end-line="1369" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file:///opt/ros/kinetic/include/moveit/robot_model/link_model.h">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="74">
@@ -1407,13 +1418,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/CMakeLists.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3629">
-          <caret line="191" column="68" selection-start-line="191" selection-start-column="68" selection-end-line="191" selection-end-column="68" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/CBiRRT/cbirrt_test.cpp">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="855">
@@ -1452,6 +1456,16 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/include/baxter_moveit_application/DualCBiRRT/dual_cbirrt.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2033">
+          <caret line="107" column="11" selection-start-line="107" selection-start-column="11" selection-end-line="107" selection-end-column="11" />
+          <folding>
+            <element signature="e#97#117#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/DualCBiRRT/ik_test.cpp">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1919">
@@ -1463,6 +1477,47 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="703">
           <caret line="37" column="49" selection-start-line="37" selection-start-column="49" selection-end-line="37" selection-end-column="49" />
+          <folding>
+            <element signature="e#0#20#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///opt/ros/kinetic/include/moveit/robot_state/robot_state.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="12141">
+          <caret line="639" selection-start-line="639" selection-end-line="639" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///usr/include/c++/5/ext/new_allocator.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1957">
+          <caret line="103" selection-start-line="103" selection-end-line="103" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/CMakeLists.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3800">
+          <caret line="200" column="80" selection-start-line="200" selection-start-column="80" selection-end-line="200" selection-end-column="80" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/DualCBiRRT/dual_cbirrt_test.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2508">
+          <caret line="132" column="84" selection-start-line="132" selection-start-column="84" selection-end-line="132" selection-end-column="84" />
+          <folding>
+            <element signature="e#0#20#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/DualCBiRRT/dual_cbirrt_test_multi_times.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3382">
+          <caret line="178" column="4" selection-start-line="178" selection-start-column="4" selection-end-line="178" selection-end-column="37" />
           <folding>
             <element signature="e#0#20#0" expanded="true" />
           </folding>
@@ -1486,20 +1541,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/include/baxter_moveit_application/DualCBiRRT/dual_cbirrt.h">
+    <entry file="file://$PROJECT_DIR$/src/DualCBiRRT/using_moveit_planner.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="169">
-          <caret line="107" column="11" selection-start-line="107" selection-start-column="11" selection-end-line="107" selection-end-column="11" />
-          <folding>
-            <element signature="e#97#117#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/DualCBiRRT/dual_cbirrt_test_multi_times.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="866">
-          <caret line="178" column="4" selection-start-line="178" selection-start-column="4" selection-end-line="178" selection-end-column="37" />
+        <state relative-caret-position="567">
+          <caret line="31" column="33" selection-start-line="31" selection-start-column="33" selection-end-line="31" selection-end-column="33" />
           <folding>
             <element signature="e#0#20#0" expanded="true" />
           </folding>
@@ -1508,22 +1553,15 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/DualCBiRRT/dual_cbirrt.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="1377" column="20" selection-start-line="1377" selection-start-column="20" selection-end-line="1377" selection-end-column="20" />
+        <state relative-caret-position="795">
+          <caret line="768" column="32" selection-start-line="768" selection-start-column="32" selection-end-line="768" selection-end-column="32" />
           <folding>
             <element signature="e#1#62#0" expanded="true" />
-            <element signature="e#66406#72534#0" />
-            <element signature="e#72536#77748#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/DualCBiRRT/dual_cbirrt_test.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="125">
-          <caret line="79" selection-start-line="79" selection-end-line="79" />
-          <folding>
-            <element signature="e#0#20#0" expanded="true" />
+            <element signature="e#42949#52955#0" />
+            <element signature="e#52957#66410#0" />
+            <element signature="e#66412#81988#0" />
+            <element signature="e#81991#88119#0" />
+            <element signature="e#88121#93333#0" />
           </folding>
         </state>
       </provider>

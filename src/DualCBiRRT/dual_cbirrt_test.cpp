@@ -60,7 +60,7 @@ int main(int argc, char** argv){
 
     //获取当前的关节角度
     std::vector<double> tmp_display;
-    start_state.copyJointGroupPositions(planning_group, tmp_display);
+    start_state.copyJointGroupPositions(both_group, tmp_display);
     for(size_t i=0; i<tmp_display.size();i++){
         std::cout<<tmp_display[i]<<",";
     }
@@ -75,6 +75,7 @@ int main(int argc, char** argv){
     auto right_end_rot_matrix_tmp = right_end_pose_tmp.rotation();
     auto right_euler_tmp = right_end_rot_matrix_tmp.eulerAngles(2,1,0);
     std::cout<<"right_euler  "<<right_euler_tmp.transpose()<<std::endl;
+    std::cout<<"right_pos  "<<right_euler_tmp.transpose()<<std::endl;
 
 
     start_state.setJointGroupPositions(planning_group, test_start_value);
