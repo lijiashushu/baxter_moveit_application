@@ -48,10 +48,12 @@ int main(int argc, char** argv){
 //    std::vector<double> test_start_value = {0.178307,-1.36637,-0.718743,2.32057,-1.28874,1.62442,2.4651};//有障碍时手臂平方位置
 //    std::vector<double> test_start_value = {0.17109754, -0.87923624, -0.08423487,  1.712199,   -0.81049842,  2.09320188,  2.58848987}; //无障碍时手臂平方位置
 //    std::vector<double> slave_test_start_value = {0.0633710, 0.118378, 1.5027523, 2.2347026,-0.579105, 0.054547, -1.11615}; //无障碍时手臂平方位置
-    std::vector<double> test_start_value = {0.178307,-1.36637,-0.718743,2.32057,-1.28874,1.62442,2.4651}; //有障碍物测试
-    std::vector<double> slave_test_start_value = {-0.644661 , 0.255123 ,  1.83284 ,  2.19888,  -0.36092  , 0.90258  , -1.1066}; //有障碍物测试
-//    std::vector<double> test_start_value = {0.297489,-0.529426,-0.20978,1.46024,-0.653363,2.00439,2.61156}; //narrow障碍物的起始左臂位置
-//    std::vector<double> slave_test_start_value = {0.139818,0.472495,1.33869,2.05365,-0.771299,0.118704,-1.31815};//narrow障碍物的起始右臂位置
+//    std::vector<double> test_start_value = {0.178307,-1.36637,-0.718743,2.32057,-1.28874,1.62442,2.4651}; //有障碍物测试
+//    std::vector<double> slave_test_start_value = {-0.644661 , 0.255123 ,  1.83284 ,  2.19888,  -0.36092  , 0.90258  , -1.1066}; //有障碍物测试
+//    std::vector<double> test_start_value = {-0.202391,-1.01283,-0.709538,1.16068,-1.21936,1.51294,1.59967}; //narrow障碍物的起始左臂位置
+//    std::vector<double> slave_test_start_value = {-0.0273947,-0.113638,2.14442,0.981496,-0.31,1.45411,-1.02899};//narrow障碍物的起始右臂位置
+    std::vector<double> test_start_value = {-0.375463,-1.09228,-0.440484,1.20106,1.76769,-1.57028,0.0672226}; //没有奇异、narrow障碍物的起始左臂位置
+    std::vector<double> slave_test_start_value = {-0.115289,-0.393004,1.72106,1.01171,-2.93258,-1.39411,0.332235};//没有奇异、narrow障碍物的起始右臂位置
 
     std::vector<double> both_start_value;
     const robot_state::JointModelGroup* planning_group = start_state.getJointModelGroup("left_arm"); //
@@ -88,10 +90,12 @@ int main(int argc, char** argv){
 //    std::vector<double> test_goal_value = {-0.53121395, -1.14663671 , 0.21698349  ,2.33939883 ,-1.17448029  ,1.81105335,  2.82284528};//无障碍时手臂平方的目标左臂位置
 //    std::vector<double> slave_test_goal_value = {-0.64966, 0.0056597, 1.453030, 2.2167859, 0.0142739, 0.7887366, -1.69753346};//无障碍时手臂平方的目标右臂位置
 
-    std::vector<double> test_goal_value = {0.0511426,-0.422846,-0.602817,1.92707,-0.888771,1.20479,2.70597}; //平板类似桌子的障碍物的目标左臂位置
-    std::vector<double> slave_test_goal_value = {-0.614005,  0.611334 ,  1.40829,   1.80571, -0.631447,   1.11582,  -1.56488}; //平板类似桌子的障碍物的目标右臂位置
-//    std::vector<double> test_goal_value = {0.0168437,-0.597438,-0.58717,2.25003,-1.07713,1.14626,2.91677};//narrow障碍物的目标左臂位置
-//    std::vector<double> slave_test_goal_value = {-0.840541,0.522824,1.36928,2.01802,-0.580198,1.14264,-1.50451};//narrow障碍物的目标右臂位置
+//    std::vector<double> test_goal_value = {0.0511426,-0.422846,-0.602817,1.92707,-0.888771,1.20479,2.70597}; //平板类似桌子的障碍物的目标左臂位置
+//    std::vector<double> slave_test_goal_value = {-0.614005,  0.611334 ,  1.40829,   1.80571, -0.631447,   1.11582,  -1.56488}; //平板类似桌子的障碍物的目标右臂位置
+//    std::vector<double> test_goal_value = {-0.0813673,-0.68199,-0.637715,1.9482,-1.13503,1.24992,2.59584};//narrow障碍物的目标左臂位置
+//    std::vector<double> slave_test_goal_value = {-0.485412,0.487359,1.66579,1.6767,-0.522427,1.24843,-1.42944};//narrow障碍物的目标右臂位置
+    std::vector<double> test_goal_value = {-0.233357,-0.754374,-0.490762,1.95377,1.90675,-1.34839,1.06295};//没有奇异、narrow障碍物的目标左臂位置
+    std::vector<double> slave_test_goal_value = {-0.446697,-0.0863082,1.24614,1.77273,-2.93228,-1.08041,-0.381265};//没有奇异、narrow障碍物的目标右臂位置
 
     goal_state.setJointGroupPositions(planning_group, test_goal_value);
     goal_state.setJointGroupPositions(slave_group, slave_test_goal_value);
@@ -121,7 +125,7 @@ int main(int argc, char** argv){
     std::cout<<"slave_goal_euler2\n"<<slave_goal_euler2.transpose()<<std::endl;
 
     std::ofstream out_file1;
-    out_file1.open("/home/lijiashushu/ros_ws/src/baxter_moveit_application/draw_data/no_dis.csv", std::ios::out | std::ios::trunc);
+    out_file1.open("/home/lijiashushu/ros_ws/src/baxter_moveit_application/draw_data/sparse_collide.csv", std::ios::out | std::ios::trunc);
 
     out_file1
     <<"_seed"<<","
@@ -149,7 +153,7 @@ int main(int argc, char** argv){
     <<std::endl;
 
     std::ofstream out_file2;
-    out_file2.open("/home/lijiashushu/ros_ws/src/baxter_moveit_application/draw_data/yes_dis.csv", std::ios::out | std::ios::trunc);
+    out_file2.open("/home/lijiashushu/ros_ws/src/baxter_moveit_application/draw_data/dense_collide.csv", std::ios::out | std::ios::trunc);
 
     out_file2
     <<"_seed"<<","
@@ -176,12 +180,40 @@ int main(int argc, char** argv){
     <<"average_extend_one_ik_time"<<","
     <<std::endl;
 
+    std::ofstream out_file3;
+    out_file3.open("/home/lijiashushu/ros_ws/src/baxter_moveit_application/draw_data/meiyou_collide.csv", std::ios::out | std::ios::trunc);
+
+    out_file3
+            <<"_seed"<<","
+            <<"sample_counts"<<","
+            <<"extend_try"<<","
+            <<"constraint_project_success"<<","
+            <<"constraint_project_success_rate"<<","
+            <<"ik_success"<<","
+            <<"ik_success_rate"<<","
+            <<"extend_success"<<","
+            <<"extend_success_rate"<<","
+            <<"average_success_constraint_project_compute_times"<<","
+            <<"average_ik_compute_times"<<","
+            <<"average_success_ik_compute_times"<<","
+            <<"total_sample_time"<<","
+            <<"total_extend_time"<<","
+            <<"total_project_time"<<","
+            <<"total_ik_time"<<","
+            <<"average_sample_time"<<","
+            <<"average_extend_time"<<","
+            <<"average_extend_project_time"<<","
+            <<"average_extend_ik_time"<<","
+            <<"average_extend_one_project_time"<<","
+            <<"average_extend_one_ik_time"<<","
+            <<std::endl;
+
     std::srand((unsigned)time(NULL));
 
-    for(int ii = 0; ii<5; ii++){
+    for(int ii = 0; ii<3; ii++){
 
         int seed = std::rand();
-        DualCBiRRT my_planner1(1.0, seed, 0.00);
+        DualCBiRRT my_planner1(1.0, seed, 0.05);
         if(my_planner1.plan(goal_state, start_state, planning_scene_for_operate, "left_arm", planning_group, slave_group)){
             ROS_INFO("my_planner1 success at time %d", ii);
         }
@@ -191,7 +223,7 @@ int main(int argc, char** argv){
         my_planner1.output_perdex_multi(out_file1);
 
         DualCBiRRT my_planner2(1.0, seed, 0.05);
-        if(my_planner2.plan(goal_state, start_state, planning_scene_for_operate, "left_arm", planning_group, slave_group)){
+        if(my_planner2.plan_dense_collide(goal_state, start_state, planning_scene_for_operate, "left_arm", planning_group, slave_group)){
             ROS_INFO("my_planner2 success at time %d", ii);
         }
         else{
@@ -199,9 +231,18 @@ int main(int argc, char** argv){
         }
         my_planner2.output_perdex_multi(out_file2);
 
+        DualCBiRRT my_planner3(1.0, seed, 0.00);
+        if(my_planner3.plan(goal_state, start_state, planning_scene_for_operate, "left_arm", planning_group, slave_group)){
+            ROS_INFO("my_planner3 success at time %d", ii);
+        }
+        else{
+            ROS_INFO("my_planner3 fail at time %d", ii);
+        }
+        my_planner3.output_perdex_multi(out_file3);
     }
     out_file1.close();
     out_file2.close();
+    out_file3.close();
 
 
     return 0;

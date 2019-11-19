@@ -24,15 +24,17 @@
 #include <moveit_msgs/DisplayTrajectory.h>
 
 #include <geometry_msgs/Pose.h>
+#include <geometry_msgs/Point.h>
+#include <std_msgs/ColorRGBA.h>
 
 int main(int argc, char** argv){
     ros::init(argc, argv, "cbirrt_test");
     ros::NodeHandle n;
     ros::AsyncSpinner spinner(1);
     spinner.start();
-//    std::srand((unsigned)time(NULL));
+    std::srand((unsigned)time(NULL));
 
-    DualCBiRRT my_planner(1.0, 1, 0.00);
+    DualCBiRRT my_planner(1.0, rand(), 0.00);
 
     planning_scene_monitor::PlanningSceneMonitorPtr monitor_ptr = std::make_shared<planning_scene_monitor::PlanningSceneMonitor>("robot_description");
     monitor_ptr->requestPlanningSceneState("get_planning_scene");
@@ -44,14 +46,19 @@ int main(int argc, char** argv){
     //Z:180 Y:90 X:-90   2.94792  1.56999 -1.76536
 
 
-
+// 这些点都有奇异问题
 //    std::vector<double> test_start_value = {0.178307,-1.36637,-0.718743,2.32057,-1.28874,1.62442,2.4651};//有障碍时手臂平方位置
 //    std::vector<double> test_start_value = {0.17109754, -0.87923624, -0.08423487,  1.712199,   -0.81049842,  2.09320188,  2.58848987}; //无障碍时手臂平方位置
 //    std::vector<double> slave_test_start_value = {0.0633710, 0.118378, 1.5027523, 2.2347026,-0.579105, 0.054547, -1.11615}; //无障碍时手臂平方位置
-    std::vector<double> test_start_value = {0.178307,-1.36637,-0.718743,2.32057,-1.28874,1.62442,2.4651}; //有障碍物测试
-    std::vector<double> slave_test_start_value = {-0.644661 , 0.255123 ,  1.83284 ,  2.19888,  -0.36092  , 0.90258  , -1.1066}; //有障碍物测试
+//    std::vector<double> test_start_value = {0.178307,-1.36637,-0.718743,2.32057,-1.28874,1.62442,2.4651}; //有障碍物测试
+//    std::vector<double> slave_test_start_value = {-0.644661 , 0.255123 ,  1.83284 ,  2.19888,  -0.36092  , 0.90258  , -1.1066}; //有障碍物测试
 //    std::vector<double> test_start_value = {-0.202391,-1.01283,-0.709538,1.16068,-1.21936,1.51294,1.59967}; //narrow障碍物的起始左臂位置
 //    std::vector<double> slave_test_start_value = {-0.0273947,-0.113638,2.14442,0.981496,-0.31,1.45411,-1.02899};//narrow障碍物的起始右臂位置
+
+    std::vector<double> test_start_value = {-0.375463,-1.09228,-0.440484,1.20106,1.76769,-1.57028,0.0672226}; //没有奇异、narrow障碍物的起始左臂位置
+    std::vector<double> slave_test_start_value = {-0.115289,-0.393004,1.72106,1.01171,-2.93258,-1.39411,0.332235};//没有奇异、narrow障碍物的起始右臂位置
+
+
     std::vector<double> both_start_value;
     const robot_state::JointModelGroup* planning_group = start_state.getJointModelGroup("left_arm"); //
     const robot_state::JointModelGroup* slave_group = start_state.getJointModelGroup("right_arm"); //
@@ -66,16 +73,7 @@ int main(int argc, char** argv){
     }
     std::cout<<std::endl;
 
-    const Eigen::Affine3d & left_end_pose_tmp = start_state.getGlobalLinkTransform("left_gripper");
-    auto left_end_rot_matrix_tmp = left_end_pose_tmp.rotation();
-    auto left_euler_tmp = left_end_rot_matrix_tmp.eulerAngles(2,1,0);
-    std::cout<<"left_euler  "<<left_euler_tmp.transpose()<<std::endl;
 
-    const Eigen::Affine3d & right_end_pose_tmp = start_state.getGlobalLinkTransform("right_gripper");
-    auto right_end_rot_matrix_tmp = right_end_pose_tmp.rotation();
-    auto right_euler_tmp = right_end_rot_matrix_tmp.eulerAngles(2,1,0);
-    std::cout<<"right_euler  "<<right_euler_tmp.transpose()<<std::endl;
-    std::cout<<"right_pos  "<<right_euler_tmp.transpose()<<std::endl;
 
 
     start_state.setJointGroupPositions(planning_group, test_start_value);
@@ -86,6 +84,21 @@ int main(int argc, char** argv){
         both_start_value_matrix[i] = both_start_value[i];
     }
     std::cout<<"both_start_value_matrix\n"<<both_start_value_matrix.transpose()<<std::endl;
+
+    const Eigen::Affine3d & left_end_pose_tmp = start_state.getGlobalLinkTransform("left_gripper");
+    auto left_end_rot_matrix_tmp = left_end_pose_tmp.rotation();
+    auto left_euler_tmp = left_end_rot_matrix_tmp.eulerAngles(2,1,0);
+    auto left_end_pos = left_end_pose_tmp.translation();
+    std::cout<<"left_euler  "<<left_euler_tmp.transpose()<<std::endl;
+    std::cout<<"left_end_pos  "<<left_end_pos.transpose()<<std::endl;
+
+    const Eigen::Affine3d & right_end_pose_tmp = start_state.getGlobalLinkTransform("right_gripper");
+    auto right_end_rot_matrix_tmp = right_end_pose_tmp.rotation();
+    auto right_euler_tmp = right_end_rot_matrix_tmp.eulerAngles(2,1,0);
+    auto right_end_pos = right_end_pose_tmp.translation();
+    std::cout<<"right_euler  "<<right_euler_tmp.transpose()<<std::endl;
+    std::cout<<"right_end_pos  "<<right_end_pos.transpose()<<std::endl;
+
 
 
     planning_scene_for_operate->setCurrentState(start_state);
@@ -106,11 +119,16 @@ int main(int argc, char** argv){
 
 //    std::vector<double> test_goal_value = {-0.53121395, -1.14663671 , 0.21698349  ,2.33939883 ,-1.17448029  ,1.81105335,  2.82284528};//无障碍时手臂平方的目标左臂位置
 //    std::vector<double> slave_test_goal_value = {-0.64966, 0.0056597, 1.453030, 2.2167859, 0.0142739, 0.7887366, -1.69753346};//无障碍时手臂平方的目标右臂位置
+//    std::vector<double> test_goal_value = {0.0511426,-0.422846,-0.602817,1.92707,-0.888771,1.20479,2.70597}; //平板类似桌子的障碍物的目标左臂位置
+//    std::vector<double> slave_test_goal_value = {-0.614005,  0.611334 ,  1.40829,   1.80571, -0.631447,   1.11582,  -1.56488}; //平板类似桌子的障碍物的目标右臂位置
+//    std::vector<double> test_goal_value = {-0.0813673,-0.68199,-0.637715,1.9482,-1.13503,1.24992,2.59584};//narrow障碍物的目标左臂位置
+//    std::vector<double> slave_test_goal_value = {-0.485412,0.487359,1.66579,1.6767,-0.522427,1.24843,-1.42944};//narrow障碍物的目标右臂位置
 
-    std::vector<double> test_goal_value = {0.0511426,-0.422846,-0.602817,1.92707,-0.888771,1.20479,2.70597}; //平板类似桌子的障碍物的目标左臂位置
-    std::vector<double> slave_test_goal_value = {-0.614005,  0.611334 ,  1.40829,   1.80571, -0.631447,   1.11582,  -1.56488}; //平板类似桌子的障碍物的目标右臂位置
-//    std::vector<double> test_goal_value = {-0.272196,-0.455612,-0.542919,1.38227,-1.05738,1.39137,2.32208};//narrow障碍物的目标左臂位置
-//    std::vector<double> slave_test_goal_value = {-0.165811,0.500916,1.84184,1.18992,-0.567965,1.41339,-1.52962};//narrow障碍物的目标右臂位置
+    std::vector<double> test_goal_value = {-0.233357,-0.754374,-0.490762,1.95377,1.90675,-1.34839,1.06295};//没有奇异、narrow障碍物的目标左臂位置
+    std::vector<double> slave_test_goal_value = {-0.446697,-0.0863082,1.24614,1.77273,-2.93228,-1.08041,-0.381265};//没有奇异、narrow障碍物的目标右臂位置
+
+
+
     goal_state.setJointGroupPositions(planning_group, test_goal_value);
     goal_state.setJointGroupPositions(slave_group, slave_test_goal_value);
 
@@ -140,7 +158,7 @@ int main(int argc, char** argv){
 
 
 
-    if(my_planner.plan(goal_state, start_state, planning_scene_for_operate, "left_arm", planning_group, slave_group)){
+    if(my_planner.plan_dense_collide(goal_state, start_state, planning_scene_for_operate, "left_arm", planning_group, slave_group)){
         std::cout<<"???"<<std::endl;
     }
     my_planner.output_perdex();
@@ -179,6 +197,56 @@ int main(int argc, char** argv){
     }
     //********************************************************************
 
+    //*********************显示扩展成功的 master 的末端位置点*****************************
+
+
+
+
+    const std::vector<std::pair<robot_state::RobotState, size_t>> & a_state_tree = my_planner.get_tree_state_vector(true);
+    int a_tree_size = a_state_tree.size();
+    const std::vector<std::pair<robot_state::RobotState, size_t>> & b_state_tree = my_planner.get_tree_state_vector(false);
+    int b_tree_size = b_state_tree.size();
+
+    int display_num = a_tree_size + b_tree_size;
+    int step_size = 0;
+    step_size = 1;
+    std::vector<geometry_msgs::Point> extend_states_displaya;
+    std::vector<std_msgs::ColorRGBA> extend_states_display_colora;
+    std::vector<geometry_msgs::Point> extend_states_displayb;
+    std::vector<std_msgs::ColorRGBA> extend_states_display_colorb;
+    ROS_INFO("a_tree_size: %d", a_tree_size);
+    ROS_INFO("b_tree_size: %d", b_tree_size);
+    int count = 0;
+    Eigen::Vector3d tmp;
+    while(count <  a_tree_size){
+        tmp = a_state_tree[count].first.getGlobalLinkTransform("left_gripper").translation();
+        geometry_msgs::Point tmp_point_msg;
+        tmp_point_msg.x = tmp[0];
+        tmp_point_msg.y = tmp[1];
+        tmp_point_msg.z = tmp[2];
+        extend_states_displaya.push_back(tmp_point_msg);
+        std_msgs::ColorRGBA tmp_color;
+        tmp_color.b = 1.0;
+        tmp_color.a = 1.0;
+        extend_states_display_colora.push_back(tmp_color);
+        count += step_size;
+    }
+    count = 0;
+    while(count <  b_tree_size){
+        tmp = b_state_tree[count].first.getGlobalLinkTransform("left_gripper").translation();
+        geometry_msgs::Point tmp_point_msg;
+        tmp_point_msg.x = tmp[0];
+        tmp_point_msg.y = tmp[1];
+        tmp_point_msg.z = tmp[2];
+        extend_states_displayb.push_back(tmp_point_msg);
+        std_msgs::ColorRGBA tmp_color;
+        tmp_color.r = 1.0;
+        tmp_color.a = 1.0;
+        extend_states_display_colorb.push_back(tmp_color);
+        count += step_size;
+    }
+
+
     //*********************显示规划的轨迹*****************************
     const std::vector<std::string>& master_joint_names = planning_group->getVariableNames();
     for(size_t i=0; i<master_joint_names.size(); i++){
@@ -202,6 +270,13 @@ int main(int argc, char** argv){
     visual_tools.publishText(text_pose, "Simple RRT", rvt::WHITE, rvt::XLARGE);
     for (std::size_t i = 0; i < result_pose.size(); ++i)
         visual_tools.publishAxisLabeled(result_pose[i], "pt" + std::to_string(i), rvt::SMALL);
+
+    geometry_msgs::Vector3 scale;
+    scale.x = 0.01;
+    scale.y = 0.01;
+    scale.z = 0.01;
+    visual_tools.publishSpheres(extend_states_displaya, extend_states_display_colora, scale);
+    visual_tools.publishSpheres(extend_states_displayb, extend_states_display_colorb, scale);
     visual_tools.trigger();
 
 

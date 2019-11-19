@@ -33,13 +33,23 @@ int main(int argc, char** argv){
     spinner.start();
 //    std::srand((unsigned)time(NULL));
 
+//    moveit::planning_interface::MoveGroupInterface move_group("left_arm");
+////    0.523779 -0.0419838   0.183778
+////    Eigen::Vector3d goal_pos (0.717521, -0.0286976,   0.669831);
+//    Eigen::Vector3d goal_pos (0.580377, -0.0316619,   0.284903);
+////    Eigen::Vector3d rpy(2.53466, 1.57962, 0.962707);
+////    Eigen::Vector3d rpy(2.94767, 1.56975, 0.962707);
+////    Eigen::Vector3d rpy(2.97894, 1.54465, 1.40875);
+//    Eigen::Vector3d rpy(0, 0, 1.57);
+
     moveit::planning_interface::MoveGroupInterface move_group("right_arm");
 //    0.523779 -0.0419838   0.183778
-    Eigen::Vector3d goal_pos (0.525132, -0.0411864, 0.180255);
-//    Eigen::Vector3d rpy(2.53466, 1.57962, 0.962707);
-//    Eigen::Vector3d rpy(2.94767, 1.56975, 0.962707);
-//    Eigen::Vector3d rpy(2.97894, 1.54465, 1.40875);
-    Eigen::Vector3d rpy(1.55762, 1.61104, -0.0139141);
+//    Eigen::Vector3d goal_pos (0.717521, -0.0286976 - 0.06,   0.669831);
+    Eigen::Vector3d goal_pos (0.580377, -0.0916619,   0.284903);
+////    Eigen::Vector3d rpy(2.53466, 1.57962, 0.962707);
+////    Eigen::Vector3d rpy(2.94767, 1.56975, 0.962707);
+////    Eigen::Vector3d rpy(2.97894, 1.54465, 1.40875);
+    Eigen::Vector3d rpy(0, 0, -1.57);
 
 
 
@@ -88,8 +98,17 @@ int main(int argc, char** argv){
     const robot_state::JointModelGroup* slave_group = start_state.getJointModelGroup("right_arm"); //
     const robot_state::JointModelGroup* both_group = start_state.getJointModelGroup("both_arms"); //
 
-
     start_state.setJointGroupPositions(slave_group, my_plan.trajectory_.joint_trajectory.points[my_plan.trajectory_.joint_trajectory.points.size()-1].positions);
+
+//    start_state.setJointGroupPositions(planning_group, my_plan.trajectory_.joint_trajectory.points[my_plan.trajectory_.joint_trajectory.points.size()-1].positions);
+
+
+    for(size_t i=0; i<my_plan.trajectory_.joint_trajectory.points[my_plan.trajectory_.joint_trajectory.points.size()-1].positions.size();i++){
+        std::cout<<my_plan.trajectory_.joint_trajectory.points[my_plan.trajectory_.joint_trajectory.points.size()-1].positions[i]<<",";
+    }
+    std::cout<<std::endl;
+
+
 
     planning_scene_for_operate->setCurrentState(start_state);
     moveit_msgs::PlanningScene planning_scene_msg;
