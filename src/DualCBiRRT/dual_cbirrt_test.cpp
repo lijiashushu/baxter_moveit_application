@@ -34,7 +34,7 @@ int main(int argc, char** argv){
     spinner.start();
     std::srand((unsigned)time(NULL));
 
-    DualCBiRRT my_planner(1.0, rand(), 0.00);
+    DualCBiRRT my_planner(1.0, 2, 0.00);
 
     planning_scene_monitor::PlanningSceneMonitorPtr monitor_ptr = std::make_shared<planning_scene_monitor::PlanningSceneMonitor>("robot_description");
     monitor_ptr->requestPlanningSceneState("get_planning_scene");
@@ -72,9 +72,6 @@ int main(int argc, char** argv){
         std::cout<<tmp_display[i]<<",";
     }
     std::cout<<std::endl;
-
-
-
 
     start_state.setJointGroupPositions(planning_group, test_start_value);
     start_state.setJointGroupPositions(slave_group, slave_test_start_value);
@@ -158,7 +155,7 @@ int main(int argc, char** argv){
 
 
 
-    if(my_planner.plan_dense_collide(goal_state, start_state, planning_scene_for_operate, "left_arm", planning_group, slave_group)){
+    if(my_planner.plan_dense_collide_new(goal_state, start_state, planning_scene_for_operate, "left_arm", planning_group, slave_group)){
         std::cout<<"???"<<std::endl;
     }
     my_planner.output_perdex();

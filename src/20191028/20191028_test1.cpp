@@ -62,13 +62,13 @@ int main(int argc, char** argv){
     collision_detection::CollisionWorldFCL worldFcl(world);
 
 
-    const robot_state::JointModelGroup* left_arm = robot_state_write.getJointModelGroup("left_arm");
+    const robot_state::JointModelGroup* left_arm = robot_state_write.getJointModelGroup("right_arm");
     const std::set<const robot_model::LinkModel*> left_link_model = left_arm->getUpdatedLinkModelsSet();
 
 
     collision_detection::DistanceRequest dis_req;
     collision_detection::DistanceResult dis_res;
-    dis_req.group_name = "left_arm";
+    dis_req.group_name = "right_arm";
     dis_req.active_components_only = &left_link_model;
     dis_req.enable_nearest_points = true;
     dis_req.type = collision_detection::DistanceRequestType::SINGLE;
@@ -88,6 +88,8 @@ int main(int argc, char** argv){
     std::cout<<first_point<<std::endl;
     ROS_INFO("second point");
     std::cout<<second_point<<std::endl;
+    ROS_INFO("second - firsrt point");
+    std::cout<<second_point - first_point<<std::endl;
     ROS_INFO("normal");
     std::cout<<normal<<std::endl;
 

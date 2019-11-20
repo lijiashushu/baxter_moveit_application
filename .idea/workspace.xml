@@ -10,6 +10,7 @@
       <config projectName="baxter_moveit_application" targetName="tf2_msgs_generate_messages_eus" />
       <config projectName="baxter_moveit_application" targetName="crrt_node" />
       <config projectName="baxter_moveit_application" targetName="sensor_msgs_generate_messages_py" />
+      <config projectName="baxter_moveit_application" targetName="rosgraph_msgs_generate_messages_py" />
       <config projectName="baxter_moveit_application" targetName="20191028_test2_node" />
       <config projectName="baxter_moveit_application" targetName="object_recognition_msgs_generate_messages_nodejs" />
       <config projectName="baxter_moveit_application" targetName="visualization_msgs_generate_messages_nodejs" />
@@ -57,7 +58,6 @@
       <config projectName="baxter_moveit_application" targetName="moveit_msgs_generate_messages_lisp" />
       <config projectName="baxter_moveit_application" targetName="trajectory_msgs_generate_messages_cpp" />
       <config projectName="baxter_moveit_application" targetName="actionlib_msgs_generate_messages_eus" />
-      <config projectName="baxter_moveit_application" targetName="20191025_test1_node" />
       <config projectName="baxter_moveit_application" targetName="20191029_test1_node" />
       <config projectName="baxter_moveit_application" targetName="gmock" />
       <config projectName="baxter_moveit_application" targetName="moveit_msgs_generate_messages_eus" />
@@ -76,7 +76,7 @@
       <config projectName="baxter_moveit_application" targetName="tf_generate_messages_eus" />
       <config projectName="baxter_moveit_application" targetName="roscpp_generate_messages_nodejs" />
       <config projectName="baxter_moveit_application" targetName="dual_cbitrrt_node" />
-      <config projectName="baxter_moveit_application" targetName="rosgraph_msgs_generate_messages_py" />
+      <config projectName="baxter_moveit_application" targetName="shape_msgs_generate_messages_cpp" />
       <config projectName="baxter_moveit_application" targetName="my_rrt_node" />
       <config projectName="baxter_moveit_application" targetName="actionlib_generate_messages_eus" />
       <config projectName="baxter_moveit_application" targetName="shape_msgs_generate_messages_eus" />
@@ -103,7 +103,7 @@
       <config projectName="baxter_moveit_application" targetName="actionlib_generate_messages_py" />
       <config projectName="baxter_moveit_application" targetName="moveit_ros_manipulation_gencfg" />
       <config projectName="baxter_moveit_application" targetName="20191027_test1_node" />
-      <config projectName="baxter_moveit_application" targetName="shape_msgs_generate_messages_cpp" />
+      <config projectName="baxter_moveit_application" targetName="20191025_test1_node" />
       <config projectName="baxter_moveit_application" targetName="sensor_msgs_generate_messages_lisp" />
       <config projectName="baxter_moveit_application" targetName="actionlib_generate_messages_cpp" />
       <config projectName="baxter_moveit_application" targetName="shape_msgs_generate_messages_nodejs" />
@@ -121,12 +121,14 @@
   <component name="ChangeListManager">
     <list default="true" id="6fae3ce6-f295-4788-bee1-00ffa829f99c" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/draw_data/dense_collide.csv" beforeDir="false" afterPath="$PROJECT_DIR$/draw_data/dense_collide.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/draw_data/meiyou_collide.csv" beforeDir="false" afterPath="$PROJECT_DIR$/draw_data/meiyou_collide.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/draw_data/sparse_collide.csv" beforeDir="false" afterPath="$PROJECT_DIR$/draw_data/sparse_collide.csv" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/include/baxter_moveit_application/DualCBiRRT/dual_cbirrt.h" beforeDir="false" afterPath="$PROJECT_DIR$/include/baxter_moveit_application/DualCBiRRT/dual_cbirrt.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/20191028/20191028_test1.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/20191028/20191028_test1.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/DualCBiRRT/dual_cbirrt.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/DualCBiRRT/dual_cbirrt.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/DualCBiRRT/dual_cbirrt_test.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/DualCBiRRT/dual_cbirrt_test.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/DualCBiRRT/dual_cbirrt_test_multi_times.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/DualCBiRRT/dual_cbirrt_test_multi_times.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/DualCBiRRT/ik_test.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/DualCBiRRT/ik_test.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/DualCBiRRT/using_moveit_planner.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/DualCBiRRT/using_moveit_planner.cpp" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/cmake-build-debug/" />
     <ignored path="$PROJECT_DIR$/../../build/" />
@@ -145,32 +147,31 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/DualCBiRRT/dual_cbirrt.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1693">
-              <caret line="917" column="17" selection-start-line="917" selection-start-column="17" selection-end-line="917" selection-end-column="17" />
+            <state relative-caret-position="377">
+              <caret line="1562" column="13" selection-start-line="1562" selection-start-column="13" selection-end-line="1562" selection-end-column="13" />
               <folding>
                 <element signature="e#1#62#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/include/baxter_moveit_application/DualCBiRRT/dual_cbirrt.h">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1757">
-              <caret line="128" column="27" selection-start-line="128" selection-start-column="8" selection-end-line="128" selection-end-column="27" />
-              <folding>
-                <element signature="e#97#117#0" expanded="true" />
+                <element signature="e#458#1433#0" />
+                <element signature="e#1464#2151#0" />
+                <element signature="e#2153#3310#0" />
+                <element signature="e#3313#19840#0" />
+                <element signature="e#52821#62731#0" />
+                <element signature="e#72715#82715#0" />
+                <element signature="e#82814#91333#0" />
+                <element signature="e#110255#120353#0" />
+                <element signature="e#133669#139797#0" />
+                <element signature="e#139799#145011#0" />
+                <element signature="e#145013#145239#0" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/DualCBiRRT/dual_cbirrt_test.cpp">
+        <entry file="file://$PROJECT_DIR$/src/DualCBiRRT/dual_cbirrt_test_multi_times.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="259">
-              <caret line="36" column="37" selection-start-line="36" selection-start-column="37" selection-end-line="36" selection-end-column="37" />
+            <state relative-caret-position="1306">
+              <caret line="208" column="24" lean-forward="true" selection-start-line="208" selection-start-column="24" selection-end-line="208" selection-end-column="24" />
               <folding>
                 <element signature="e#0#20#0" expanded="true" />
               </folding>
@@ -179,37 +180,22 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file:///opt/ros/kinetic/include/moveit/robot_state/robot_state.h">
+        <entry file="file://$PROJECT_DIR$/include/baxter_moveit_application/DualCBiRRT/dual_cbirrt.h">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="123">
-              <caret line="1408" selection-start-line="1408" selection-end-line="1408" />
+            <state relative-caret-position="961">
+              <caret line="132" column="11" selection-start-line="132" selection-start-column="11" selection-end-line="132" selection-end-column="11" />
+              <folding>
+                <element signature="e#97#117#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file:///opt/ros/kinetic/include/geometry_msgs/Vector3.h">
+        <entry file="file://$PROJECT_DIR$/src/DualCBiRRT/dual_cbirrt_test.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="300">
-              <caret line="57" column="57" selection-start-line="57" selection-start-column="57" selection-end-line="57" selection-end-column="57" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file:///opt/ros/kinetic/include/rviz_visual_tools/rviz_visual_tools.h">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="453">
-              <caret line="510" column="39" selection-start-line="510" selection-start-column="39" selection-end-line="510" selection-end-column="39" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/DualCBiRRT/using_moveit_planner.cpp">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="57">
-              <caret line="29" selection-start-line="29" selection-end-line="30" />
+            <state relative-caret-position="2757">
+              <caret line="186" column="41" selection-start-line="186" selection-start-column="41" selection-end-line="186" selection-end-column="41" />
               <folding>
                 <element signature="e#0#20#0" expanded="true" />
               </folding>
@@ -229,8 +215,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/20191028/20191028_test1.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1596">
-              <caret line="84" column="28" selection-start-line="84" selection-end-line="85" />
+            <state relative-caret-position="242">
+              <caret line="79" selection-start-line="79" selection-end-line="79" />
               <folding>
                 <element signature="e#0#20#0" expanded="true" />
               </folding>
@@ -242,36 +228,36 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>stack_error</find>
-      <find>slave_goal_euler</find>
-      <find>slave_goal_pos</find>
-      <find>slave_start_value_matrix</find>
-      <find>roll_an</find>
-      <find>path_point_position_msg</find>
-      <find>avoid_obstacle_vel</find>
-      <find>Compu</find>
-      <find>Computed minum_collision_dis_jac jacobian succesully</find>
-      <find>solv</find>
-      <find>r</find>
-      <find>roll_error</find>
-      <find>_pitch_min</find>
-      <find>pitch</find>
-      <find>project_success</find>
-      <find>break</find>
-      <find>euler_error</find>
-      <find>singularValues2</find>
+      <find>nea</find>
+      <find>avoid velocity</find>
       <find>minimum_collision_dis_jac_pinv</find>
+      <find>planning_link_model</find>
+      <find>upper</find>
+      <find>Eigen::Matrix&lt;double, 7, 1&gt; joint_delta_vector;</find>
+      <find>slave_end_jacobian_null_space</find>
+      <find>slave_state</find>
+      <find>env1_wall_right</find>
+      <find>minimum_collision_dis_jac</find>
+      <find>gripper motion cause obstacle point motion</find>
+      <find>dis =</find>
+      <find>dis_res</find>
+      <find>nearest</find>
+      <find>joint_delta_vector.norm</find>
+      <find>dis</find>
+      <find>IK3</find>
       <find>_error_coefficient</find>
-      <find>my_planner</find>
-      <find>open</find>
-      <find>projecting</find>
-      <find>plan(</find>
-      <find>pose</find>
-      <find>publish</find>
-      <find>plan()</find>
-      <find>extend_states_display</find>
+      <find>rot_error_axis_angle</find>
       <find>fail</find>
-      <find>delete_all_markers</find>
+      <find>al</find>
+      <find>_random_engine</find>
+      <find>recor</find>
+      <find>wall</find>
+      <find>cout</find>
+      <find>curr</find>
+      <find>avoid_obstacle_vel</find>
+      <find>null_space_joint_delta_vector</find>
+      <find>DistanceResult</find>
+      <find>exp</find>
     </findStrings>
     <replaceStrings>
       <replace>CRRT</replace>
@@ -314,29 +300,30 @@
         <option value="$PROJECT_DIR$/src/CBiRRT/cbirrt.cpp" />
         <option value="$PROJECT_DIR$/src/CBiRRT/cbirrt_test.cpp" />
         <option value="$PROJECT_DIR$/src/20191029/20191029_test2.cpp" />
-        <option value="$PROJECT_DIR$/src/20191028/20191028_test1.cpp" />
         <option value="$PROJECT_DIR$/CMakeLists.txt" />
         <option value="$PROJECT_DIR$/src/DualCBiRRT/ik_test.cpp" />
         <option value="$PROJECT_DIR$/src/DualCBiRRT/using_moveit_planner.cpp" />
-        <option value="$PROJECT_DIR$/src/DualCBiRRT/dual_cbirrt_test_multi_times.cpp" />
         <option value="$PROJECT_DIR$/include/baxter_moveit_application/DualCBiRRT/dual_cbirrt.h" />
-        <option value="$PROJECT_DIR$/src/DualCBiRRT/dual_cbirrt.cpp" />
+        <option value="$PROJECT_DIR$/src/20191028/20191028_test1.cpp" />
         <option value="$PROJECT_DIR$/src/DualCBiRRT/dual_cbirrt_test.cpp" />
+        <option value="$PROJECT_DIR$/src/DualCBiRRT/dual_cbirrt_test_multi_times.cpp" />
+        <option value="$PROJECT_DIR$/src/DualCBiRRT/dual_cbirrt.cpp" />
       </list>
     </option>
   </component>
   <component name="OCFindUsagesOptions" text="true" ivars="false" properties="true" derivedClasses="false" />
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="75" />
-    <option name="y" value="24" />
-    <option name="width" value="831" />
-    <option name="height" value="1048" />
+    <option name="x" value="65" />
+    <option name="y" value="-4" />
+    <option name="width" value="839" />
+    <option name="height" value="1084" />
   </component>
   <component name="ProjectView">
     <navigator proportions="" version="1">
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -381,13 +368,19 @@
               <item name="baxter_moveit_application" type="47feb1d3:ProjectViewModuleNode" />
               <item name="baxter_moveit_application" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="20191028" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="baxter_moveit_application" type="b2602c69:ProjectViewProjectNode" />
+              <item name="baxter_moveit_application" type="47feb1d3:ProjectViewModuleNode" />
+              <item name="baxter_moveit_application" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="DualCBiRRT" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -414,7 +407,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="CMake Application.dual_cbitrrt_node">
+  <component name="RunManager" selected="CMake Application.dual_cbitrrt_multi_node">
     <configuration name="20191025_test1_node" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="baxter_moveit_application" TARGET_NAME="20191025_test1_node" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="baxter_moveit_application" RUN_TARGET_NAME="20191025_test1_node">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
@@ -1113,23 +1106,25 @@
       <workItem from="1573897471019" duration="1218000" />
       <workItem from="1573910841579" duration="1396000" />
       <workItem from="1573974317936" duration="5172000" />
+      <workItem from="1574191169417" duration="10598000" />
+      <workItem from="1574213069862" duration="21190000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="209847000" />
+    <option name="totallyTimeSpent" value="241635000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="75" y="52" width="831" height="1020" extended-state="0" />
+    <frame x="65" y="-4" width="1855" height="1084" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.2942675" />
-      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49790794" visible="true" weight="0.07075732" />
+      <window_info id="Structure" order="1" sideWeight="0.50209206" side_tool="true" weight="0.1509121" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.3294979" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.4997236" visible="true" weight="0.55990785" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.50429183" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.4997236" visible="true" weight="0.2374477" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.76778245" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
@@ -1138,7 +1133,7 @@
       <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.5002764" side_tool="true" weight="0.5366109" />
       <window_info anchor="bottom" id="Version Control" order="10" />
       <window_info anchor="bottom" id="CMake" order="11" weight="0.1495816" />
-      <window_info anchor="bottom" id="Messages" order="12" weight="0.45046082" />
+      <window_info anchor="bottom" id="Messages" order="12" weight="0.8190377" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -1162,55 +1157,24 @@
           <option name="timeStamp" value="13" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
-          <condition expression="count==1000" language="ObjectiveC" />
-          <url>file://$PROJECT_DIR$/src/DualCBiRRT/dual_cbirrt.cpp</url>
-          <line>1249</line>
-          <option name="timeStamp" value="24" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
           <url>file://$PROJECT_DIR$/src/DualCBiRRT/ik_test.cpp</url>
           <line>108</line>
           <option name="timeStamp" value="45" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
-          <url>file://$PROJECT_DIR$/src/DualCBiRRT/dual_cbirrt.cpp</url>
-          <line>1981</line>
-          <option name="timeStamp" value="53" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
-          <url>file://$PROJECT_DIR$/src/DualCBiRRT/dual_cbirrt.cpp</url>
-          <line>1989</line>
-          <option name="timeStamp" value="54" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
-          <url>file://$PROJECT_DIR$/src/DualCBiRRT/dual_cbirrt.cpp</url>
-          <line>1949</line>
-          <option name="timeStamp" value="64" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
-          <url>file://$PROJECT_DIR$/src/DualCBiRRT/dual_cbirrt.cpp</url>
-          <line>2265</line>
-          <option name="timeStamp" value="65" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
-          <url>file://$PROJECT_DIR$/src/DualCBiRRT/dual_cbirrt.cpp</url>
-          <line>2348</line>
-          <option name="timeStamp" value="66" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
-          <url>file://$PROJECT_DIR$/src/DualCBiRRT/dual_cbirrt.cpp</url>
-          <line>2142</line>
-          <option name="timeStamp" value="74" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
           <url>file://$PROJECT_DIR$/src/DualCBiRRT/dual_cbirrt_test.cpp</url>
-          <line>284</line>
+          <line>281</line>
           <option name="timeStamp" value="75" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
           <url>file://$PROJECT_DIR$/src/DualCBiRRT/dual_cbirrt_test.cpp</url>
-          <line>277</line>
+          <line>274</line>
           <option name="timeStamp" value="76" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/src/DualCBiRRT/dual_cbirrt_test.cpp</url>
+          <line>145</line>
+          <option name="timeStamp" value="90" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
@@ -1265,15 +1229,6 @@
     </expressions>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/CMakeLists.txt" />
-    <entry file="file://$PROJECT_DIR$/src/20191025_test1.cpp" />
-    <entry file="file:///usr/include/eigen3/Eigen/src/Geometry/Transform.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="594">
-          <caret line="1040" column="56" lean-forward="true" selection-start-line="1040" selection-start-column="56" selection-end-line="1040" selection-end-column="56" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/20191030/20191029_test1.cpp" />
     <entry file="file:///usr/include/eigen3/Eigen/src/LU/InverseImpl.h">
       <provider selected="true" editor-type-id="text-editor">
@@ -1450,24 +1405,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file:///opt/ros/kinetic/include/moveit/collision_detection/collision_common.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="452">
-          <caret line="370" column="38" selection-start-line="370" selection-start-column="22" selection-end-line="370" selection-end-column="38" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file:///opt/ros/kinetic/include/moveit/collision_detection/collision_world.h">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="713">
           <caret line="87" column="15" selection-start-line="87" selection-start-column="15" selection-end-line="87" selection-end-column="15" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file:///usr/include/eigen3/Eigen/src/Core/Product.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="132">
-          <caret line="130" selection-start-line="130" selection-end-line="130" />
         </state>
       </provider>
     </entry>
@@ -1554,10 +1495,31 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/DualCBiRRT/dual_cbirrt_test_multi_times.cpp">
+    <entry file="file:///opt/ros/kinetic/include/moveit/robot_state/robot_state.h">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="4275">
-          <caret line="225" column="69" selection-start-line="225" selection-start-column="69" selection-end-line="225" selection-end-column="69" />
+        <state relative-caret-position="26752">
+          <caret line="1408" selection-start-line="1408" selection-end-line="1408" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///opt/ros/kinetic/include/geometry_msgs/Vector3.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1083">
+          <caret line="57" column="57" selection-start-line="57" selection-start-column="57" selection-end-line="57" selection-end-column="57" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///opt/ros/kinetic/include/rviz_visual_tools/rviz_visual_tools.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="9690">
+          <caret line="510" column="39" selection-start-line="510" selection-start-column="39" selection-end-line="510" selection-end-column="39" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/DualCBiRRT/using_moveit_planner.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="551">
+          <caret line="29" selection-start-line="29" selection-end-line="30" />
           <folding>
             <element signature="e#0#20#0" expanded="true" />
           </folding>
@@ -1571,71 +1533,103 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/20191028/20191028_test1.cpp">
+    <entry file="file:///usr/include/eigen3/Eigen/src/Core/util/StaticAssert.h">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1596">
-          <caret line="84" column="28" selection-start-line="84" selection-end-line="85" />
-          <folding>
-            <element signature="e#0#20#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="171">
+          <caret line="31" selection-start-line="31" selection-end-line="31" />
         </state>
       </provider>
     </entry>
-    <entry file="file:///opt/ros/kinetic/include/rviz_visual_tools/rviz_visual_tools.h">
+    <entry file="file:///opt/ros/kinetic/include/moveit/collision_detection/collision_common.h">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="453">
-          <caret line="510" column="39" selection-start-line="510" selection-start-column="39" selection-end-line="510" selection-end-column="39" />
+        <state relative-caret-position="179">
+          <caret line="362" column="2" selection-start-line="362" selection-start-column="2" selection-end-line="362" selection-end-column="2" />
         </state>
       </provider>
     </entry>
-    <entry file="file:///opt/ros/kinetic/include/geometry_msgs/Vector3.h">
+    <entry file="file:///usr/include/eigen3/Eigen/src/Core/CwiseBinaryOp.h">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="300">
-          <caret line="57" column="57" selection-start-line="57" selection-start-column="57" selection-end-line="57" selection-end-column="57" />
+        <state relative-caret-position="129">
+          <caret line="109" selection-start-line="109" selection-end-line="109" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/DualCBiRRT/using_moveit_planner.cpp">
+    <entry file="file:///usr/include/eigen3/Eigen/src/Core/GeneralProduct.h">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="57">
-          <caret line="29" selection-start-line="29" selection-end-line="30" />
-          <folding>
-            <element signature="e#0#20#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="129">
+          <caret line="414" selection-start-line="414" selection-end-line="414" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///usr/include/eigen3/Eigen/src/Core/Product.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="111">
+          <caret line="130" selection-start-line="130" selection-end-line="130" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/include/baxter_moveit_application/DualCBiRRT/dual_cbirrt.h">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1757">
-          <caret line="128" column="27" selection-start-line="128" selection-start-column="8" selection-end-line="128" selection-end-column="27" />
+        <state relative-caret-position="961">
+          <caret line="132" column="11" selection-start-line="132" selection-start-column="11" selection-end-line="132" selection-end-column="11" />
           <folding>
             <element signature="e#97#117#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file:///opt/ros/kinetic/include/moveit/robot_state/robot_state.h">
+    <entry file="file:///usr/include/eigen3/Eigen/src/Core/CommaInitializer.h">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="123">
-          <caret line="1408" selection-start-line="1408" selection-end-line="1408" />
+        <state relative-caret-position="111">
+          <caret line="67" selection-start-line="67" selection-end-line="67" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/DualCBiRRT/dual_cbirrt.cpp">
+    <entry file="file://$PROJECT_DIR$/src/20191028/20191028_test1.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1693">
-          <caret line="917" column="17" selection-start-line="917" selection-start-column="17" selection-end-line="917" selection-end-column="17" />
+        <state relative-caret-position="242">
+          <caret line="79" selection-start-line="79" selection-end-line="79" />
           <folding>
-            <element signature="e#1#62#0" expanded="true" />
+            <element signature="e#0#20#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/DualCBiRRT/dual_cbirrt_test.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="259">
-          <caret line="36" column="37" selection-start-line="36" selection-start-column="37" selection-end-line="36" selection-end-column="37" />
+        <state relative-caret-position="2757">
+          <caret line="186" column="41" selection-start-line="186" selection-start-column="41" selection-end-line="186" selection-end-column="41" />
+          <folding>
+            <element signature="e#0#20#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/DualCBiRRT/dual_cbirrt.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="377">
+          <caret line="1562" column="13" selection-start-line="1562" selection-start-column="13" selection-end-line="1562" selection-end-column="13" />
+          <folding>
+            <element signature="e#1#62#0" expanded="true" />
+            <element signature="e#458#1433#0" />
+            <element signature="e#1464#2151#0" />
+            <element signature="e#2153#3310#0" />
+            <element signature="e#3313#19840#0" />
+            <element signature="e#52821#62731#0" />
+            <element signature="e#72715#82715#0" />
+            <element signature="e#82814#91333#0" />
+            <element signature="e#110255#120353#0" />
+            <element signature="e#133669#139797#0" />
+            <element signature="e#139799#145011#0" />
+            <element signature="e#145013#145239#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/DualCBiRRT/dual_cbirrt_test_multi_times.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1306">
+          <caret line="208" column="24" lean-forward="true" selection-start-line="208" selection-start-column="24" selection-end-line="208" selection-end-column="24" />
           <folding>
             <element signature="e#0#20#0" expanded="true" />
           </folding>

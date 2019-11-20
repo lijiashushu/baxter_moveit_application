@@ -223,7 +223,7 @@ int main(int argc, char** argv){
         my_planner1.output_perdex_multi(out_file1);
 
         DualCBiRRT my_planner2(1.0, seed, 0.05);
-        if(my_planner2.plan_dense_collide(goal_state, start_state, planning_scene_for_operate, "left_arm", planning_group, slave_group)){
+        if(my_planner2.plan_dense_collide_new(goal_state, start_state, planning_scene_for_operate, "left_arm", planning_group, slave_group)){
             ROS_INFO("my_planner2 success at time %d", ii);
         }
         else{
@@ -231,14 +231,14 @@ int main(int argc, char** argv){
         }
         my_planner2.output_perdex_multi(out_file2);
 
-        DualCBiRRT my_planner3(1.0, seed, 0.00);
-        if(my_planner3.plan(goal_state, start_state, planning_scene_for_operate, "left_arm", planning_group, slave_group)){
-            ROS_INFO("my_planner3 success at time %d", ii);
-        }
-        else{
-            ROS_INFO("my_planner3 fail at time %d", ii);
-        }
-        my_planner3.output_perdex_multi(out_file3);
+//        DualCBiRRT my_planner3(1.0, seed, 0.00);
+//        if(my_planner3.plan(goal_state, start_state, planning_scene_for_operate, "left_arm", planning_group, slave_group)){
+//            ROS_INFO("my_planner3 success at time %d", ii);
+//        }
+//        else{
+//            ROS_INFO("my_planner3 fail at time %d", ii);
+//        }
+//        my_planner3.output_perdex_multi(out_file3);
     }
     out_file1.close();
     out_file2.close();
