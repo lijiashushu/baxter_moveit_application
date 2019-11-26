@@ -125,9 +125,10 @@ int main(int argc, char** argv){
     std::cout<<"slave_goal_euler2\n"<<slave_goal_euler2.transpose()<<std::endl;
 
     std::ofstream out_file1;
-    out_file1.open("/home/lijiashushu/ros_ws/src/baxter_moveit_application/draw_data/sparse_collide.csv", std::ios::out | std::ios::trunc);
+    out_file1.open("/home/lijiashushu/ros_ws/src/baxter_moveit_application/draw_data/task_no_try_fix.csv", std::ios::out | std::ios::trunc);
 
     out_file1
+    <<"planning_time"<<","
     <<"_seed"<<","
     <<"sample_counts"<<","
     <<"extend_try"<<","
@@ -153,9 +154,10 @@ int main(int argc, char** argv){
     <<std::endl;
 
     std::ofstream out_file2;
-    out_file2.open("/home/lijiashushu/ros_ws/src/baxter_moveit_application/draw_data/dense_collide.csv", std::ios::out | std::ios::trunc);
+    out_file2.open("/home/lijiashushu/ros_ws/src/baxter_moveit_application/draw_data/task_yes_try_fix.csv", std::ios::out | std::ios::trunc);
 
     out_file2
+    <<"planning_time"<<","
     <<"_seed"<<","
     <<"sample_counts"<<","
     <<"extend_try"<<","
@@ -184,6 +186,7 @@ int main(int argc, char** argv){
     out_file3.open("/home/lijiashushu/ros_ws/src/baxter_moveit_application/draw_data/meiyou_collide.csv", std::ios::out | std::ios::trunc);
 
     out_file3
+            <<"planning_time"<<","
             <<"_seed"<<","
             <<"sample_counts"<<","
             <<"extend_try"<<","
@@ -210,25 +213,48 @@ int main(int argc, char** argv){
 
     std::srand((unsigned)time(NULL));
 
-    for(int ii = 0; ii<3; ii++){
+
+    Eigen::Matrix<double ,10,1> rand_seeds;
+    rand_seeds<<11437442140,
+    500988018,
+    465441008,
+    1827005505,
+    596817637,
+    1530352337,
+    820433818,
+    315509430,
+    622230346,
+    1710628714;
+
+    ros::Time time_1;
+    ros::Time time_2;
+    for(int ii = 0; ii<30; ii++){
 
         int seed = std::rand();
+
         DualCBiRRT my_planner1(1.0, seed, 0.05);
-        if(my_planner1.plan(goal_state, start_state, planning_scene_for_operate, "left_arm", planning_group, slave_group)){
+        time_1 = ros::Time::now();
+        if(my_planner1.plan_task_space_dir(goal_state, start_state, planning_scene_for_operate, "left_arm", planning_group, slave_group)){
             ROS_INFO("my_planner1 success at time %d", ii);
         }
         else{
             ROS_INFO("my_planner1 fail at time %d", ii);
         }
+        time_2 = ros::Time::now();
+        out_file1<<(time_2 - time_1).toSec()<<",";
         my_planner1.output_perdex_multi(out_file1);
 
+
         DualCBiRRT my_planner2(1.0, seed, 0.05);
-        if(my_planner2.plan_dense_collide_new(goal_state, start_state, planning_scene_for_operate, "left_arm", planning_group, slave_group)){
+        time_1 = ros::Time::now();
+        if(my_planner2.plan_task_space_dir_try_adjust(goal_state, start_state, planning_scene_for_operate, "left_arm", planning_group, slave_group)){
             ROS_INFO("my_planner2 success at time %d", ii);
         }
         else{
             ROS_INFO("my_planner2 fail at time %d", ii);
         }
+        time_2 = ros::Time::now();
+        out_file2<<(time_2 - time_1).toSec()<<",";
         my_planner2.output_perdex_multi(out_file2);
 
 //        DualCBiRRT my_planner3(1.0, seed, 0.00);

@@ -189,6 +189,7 @@ target_link_libraries(crrt_node ${catkin_LIBRARIES})
 add_executable(cbitrrt_node src/CBiRRT/cbirrt_test.cpp src/CBiRRT/cbirrt.cpp include/baxter_moveit_application/CBiRRT/cbirrt.h)
 target_link_libraries(cbitrrt_node ${catkin_LIBRARIES})
 
+## DualCBiRRT
 add_executable(dual_cbitrrt_node src/DualCBiRRT/dual_cbirrt_test.cpp src/DualCBiRRT/dual_cbirrt.cpp  include/baxter_moveit_application/DualCBiRRT/dual_cbirrt.h)
 target_link_libraries(dual_cbitrrt_node ${catkin_LIBRARIES})
 
@@ -200,6 +201,37 @@ target_link_libraries(ik_test_node ${catkin_LIBRARIES})
 
 add_executable(using_moveit_planner_node src/DualCBiRRT/using_moveit_planner.cpp)
 target_link_libraries(using_moveit_planner_node ${catkin_LIBRARIES})
+
+
+## DualCBiRRT+++++++Astar
+add_executable(astar_dual_cbitrrt_node src/DualCBiRRT_Astar/dual_cbirrt_test.cpp src/DualCBiRRT_Astar/dual_cbirrt.cpp  include/baxter_moveit_application/DualCBiRRT_Astar/dual_cbirrt.h src/DualCBiRRT_Astar/Astar_searcher.cpp include/baxter_moveit_application/DualCBiRRT_Astar/Astar_searcher.h include/baxter_moveit_application/DualCBiRRT_Astar/node.h)
+target_link_libraries(astar_dual_cbitrrt_node ${catkin_LIBRARIES})
+
+add_executable(astar_dual_cbitrrt_multi_node src/DualCBiRRT_Astar/dual_cbirrt_test_multi_times.cpp src/DualCBiRRT_Astar/dual_cbirrt.cpp  include/baxter_moveit_application/DualCBiRRT_Astar/dual_cbirrt.h)
+target_link_libraries(astar_dual_cbitrrt_multi_node ${catkin_LIBRARIES})
+
+add_executable(astar_ik_test_node src/DualCBiRRT_Astar/ik_test.cpp src/DualCBiRRT_Astar/dual_cbirrt.cpp  include/baxter_moveit_application/DualCBiRRT_Astar/dual_cbirrt.h)
+target_link_libraries(astar_ik_test_node ${catkin_LIBRARIES})
+
+add_executable(astar_using_moveit_planner_node src/DualCBiRRT_Astar/using_moveit_planner.cpp)
+target_link_libraries(astar_using_moveit_planner_node ${catkin_LIBRARIES})
+
+add_executable(astar_demo src/DualCBiRRT_Astar/astar_demo_node.cpp src/DualCBiRRT_Astar/Astar_searcher.cpp include/baxter_moveit_application/DualCBiRRT_Astar/Astar_searcher.h include/baxter_moveit_application/DualCBiRRT_Astar/node.h)
+target_link_libraries(astar_demo ${catkin_LIBRARIES})
+
+
+## MultiCBiRRT+++++++
+add_executable(multi_cbitrrt_node src/MultiCBiRRT/dual_cbirrt_test.cpp src/MultiCBiRRT/dual_cbirrt.cpp  include/baxter_moveit_application/MultiCBiRRT/dual_cbirrt.h)
+target_link_libraries(multi_cbitrrt_node ${catkin_LIBRARIES})
+
+add_executable(multi_cbitrrt_multi_node src/MultiCBiRRT/dual_cbirrt_test_multi_times.cpp src/MultiCBiRRT/dual_cbirrt.cpp  include/baxter_moveit_application/MultiCBiRRT/dual_cbirrt.h)
+target_link_libraries(multi_cbitrrt_multi_node ${catkin_LIBRARIES})
+
+add_executable(multi_ik_test_node src/MultiCBiRRT/ik_test.cpp src/MultiCBiRRT/dual_cbirrt.cpp  include/baxter_moveit_application/MultiCBiRRT/dual_cbirrt.h)
+target_link_libraries(multi_ik_test_node ${catkin_LIBRARIES})
+
+add_executable(multi_using_moveit_planner_node src/MultiCBiRRT/using_moveit_planner.cpp)
+target_link_libraries(multi_using_moveit_planner_node ${catkin_LIBRARIES})
 
 ## Rename C++ executable without prefix
 ## The above recommended prefix causes long target names, the following renames the

@@ -1,0 +1,1 @@
+set(ORDERED_PATHS "/home/lijiashushu/ros_ws/devel/lib;/opt/ros/kinetic/lib;/home/lijiashushu/ws_moveit/devel/lib")

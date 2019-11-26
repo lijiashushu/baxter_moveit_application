@@ -34,7 +34,7 @@ int main(int argc, char** argv){
     spinner.start();
     std::srand((unsigned)time(NULL));
 
-    DualCBiRRT my_planner(1.0, 2, 0.00);
+    DualCBiRRT my_planner(1.0, 815068162, 0.00);
 
     planning_scene_monitor::PlanningSceneMonitorPtr monitor_ptr = std::make_shared<planning_scene_monitor::PlanningSceneMonitor>("robot_description");
     monitor_ptr->requestPlanningSceneState("get_planning_scene");
@@ -155,11 +155,13 @@ int main(int argc, char** argv){
 
 
 
-    if(my_planner.plan_dense_collide_new(goal_state, start_state, planning_scene_for_operate, "left_arm", planning_group, slave_group)){
+    if(my_planner.plan_task_space_dir_try_adjust(goal_state, start_state, planning_scene_for_operate, "left_arm", planning_group, slave_group)){
         std::cout<<"???"<<std::endl;
     }
     my_planner.output_perdex();
     std::vector<robot_state::RobotState> result = my_planner.planning_result;
+    std::vector<size_t> result_index = my_planner.planning_result_index;
+    std::vector<Eigen::Vector3d> result_state_vector = my_planner.planning_result_task_state_vector;
     ROS_INFO("waypoints num is %d", int(result.size()));
 
 
@@ -176,6 +178,13 @@ int main(int argc, char** argv){
         tmp1.insert(tmp1.end(), tmp2.begin(), tmp2.end());
         path_point_position_msg.positions = tmp1;
         path_point_msg.points.push_back(path_point_position_msg);
+
+//        if(i<result.size()-1){
+//            std::cout<<"norm: "<<(result_state_vector[i+1] - result_state_vector[i]).norm()<<std::endl;
+//            std::cout<<"index1: "<<result_index[i] <<" index2 "<< result_index[i+1] <<std::endl;
+//            std::cout<<"vec1: "<<result_state_vector[i].transpose() <<" vec2 "<< result_state_vector[i+1].transpose() <<std::endl;
+//        }
+
 
         //就这一部分是添加姿态
         if(i%5==0) {
