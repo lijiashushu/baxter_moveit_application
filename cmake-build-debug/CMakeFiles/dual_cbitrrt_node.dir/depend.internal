@@ -466,6 +466,10 @@ CMakeFiles/dual_cbitrrt_node.dir/src/DualCBiRRT/dual_cbirrt_test.cpp.o
  /opt/ros/kinetic/include/geometry_msgs/Wrench.h
  /opt/ros/kinetic/include/graph_msgs/Edges.h
  /opt/ros/kinetic/include/graph_msgs/GeometryGraph.h
+ /opt/ros/kinetic/include/kdl/frames.hpp
+ /opt/ros/kinetic/include/kdl/frames.inl
+ /opt/ros/kinetic/include/kdl/utilities/kdl-config.h
+ /opt/ros/kinetic/include/kdl/utilities/utility.h
  /opt/ros/kinetic/include/message_filters/connection.h
  /opt/ros/kinetic/include/message_filters/macros.h
  /opt/ros/kinetic/include/message_filters/signal1.h

@@ -38,6 +38,7 @@ DualCBiRRT::DualCBiRRT(double probability, int seed, double alpha):_random_distr
 
 
     _max_planning_times = 5000;
+    _left_right_distance = 0.2;
 
     _master_link_names.push_back("left_upper_shoulder");
     _master_link_names.push_back("left_lower_shoulder");
@@ -1704,9 +1705,14 @@ void DualCBiRRT::constraint_extend_task_space_dir(Eigen::Matrix<double, 7, 1> & 
                     qs_task_state_vector = end_pose.translation();
 
                     end_rot_matrix = end_pose.rotation();
+                    error_axis_angle = end_rot_matrix;
                     end_rot_eulerAngle = end_rot_matrix.eulerAngles(2, 1, 0);
 
                     if (!qs_state.satisfiesBounds(planning_group, 0.05)){
+                        std::cout<<"end_rot_eulerAngle  "<<end_rot_eulerAngle.transpose()<<std::endl;
+                        std::cout<<"required_eulerAngle  "<<required_eulerAngle.transpose()<<std::endl;
+                        std::cout<<"error_axis_angle  "<<error_axis_angle.angle()<<std::endl;
+                        std::cout<<"pos_error "<<pos_error.transpose()<<std::endl;
                         project_success = false;
                         break;
                     }
@@ -2271,6 +2277,412 @@ void DualCBiRRT::constraint_extend_task_space_dir_dense_collide(Eigen::Matrix<do
     std::cout<<"outout!!"<<std::endl;
 }
 
+void DualCBiRRT::constraint_extend_task_space_dir_new(Eigen::Matrix<double, 7, 1> & random_state_value_matrix, Eigen::Matrix<double, 7, 1> & nearest_node_matrix, size_t nearst_node_index, Eigen::Matrix<double, 7, 1> & reached_state_matrix, const robot_state::JointModelGroup* planning_group, const std::string & planning_group_name, planning_scene::PlanningScenePtr & planning_scene_ptr, const robot_state::JointModelGroup* slave_group, std::pair<std::vector<double>, std::vector<double>>& slave_joint_pos_bounds, PerformanceIndexOneSample & perdex_one_sample, collision_detection::CollisionWorldFCL & world_FCL, const collision_detection::CollisionRobotConstPtr & robot, bool if_tree_a, bool if_sample, Eigen::Vector3d& reached_task_pos, size_t & reached_index){
+    std::set<const moveit::core::LinkModel *> master_link_model_set;
+    std::set<const moveit::core::LinkModel *> slave_link_model_set;
+    for(size_t i=0; i<_slave_link_names.size(); i++){
+        master_link_model_set.insert(planning_group->getLinkModel(_master_link_names[i]));
+        slave_link_model_set.insert(slave_group->getLinkModel(_slave_link_names[i]));
+    }
+
+
+    size_t qs_old_index = nearst_node_index;
+
+    Eigen::Matrix<double, 7, 1> qs_matrix = nearest_node_matrix;
+    Eigen::Matrix<double, 7, 1> qs_old_matrix = nearest_node_matrix;
+
+
+    std::vector<double> qs_vector(7);
+    std::vector<double> qs_old_vector(7);
+    std::vector<double> random_vector(7);
+
+    for(size_t i=0; i < qs_vector.size(); i++){
+        qs_vector[i] =  qs_matrix[i];
+        qs_old_vector[i] =  qs_old_matrix[i];
+        random_vector[i] = random_state_value_matrix[i];
+    }
+
+    robot_state::RobotState random_state = planning_scene_ptr->getCurrentStateNonConst();
+    robot_state::RobotState qs_state = planning_scene_ptr->getCurrentStateNonConst();
+    robot_state::RobotState qs_old_state = planning_scene_ptr->getCurrentStateNonConst();
+    random_state.setJointGroupPositions(planning_group, random_vector);
+    random_state.update();
+    qs_state.setJointGroupPositions(planning_group, qs_vector);
+    qs_state.update();
+    qs_old_state.setJointGroupPositions(planning_group, qs_old_vector);
+    qs_old_state.update();
+
+    Eigen::Vector3d random_task_state_vector;
+    Eigen::Vector3d qs_task_state_vector;
+    Eigen::Vector3d qs_old_task_state_vector;
+    Eigen::Vector3d task_direction_vector;
+    Eigen::Vector3d extend_goal_task_state_vector;
+
+    random_task_state_vector = random_state.getGlobalLinkTransform("left_gripper").translation();
+    qs_task_state_vector = qs_state.getGlobalLinkTransform("left_gripper").translation();
+    qs_old_task_state_vector = qs_old_state.getGlobalLinkTransform("left_gripper").translation();
+    double test = qs_old_task_state_vector[0];
+    std::cout<<"qs_task_state_vector: "<<qs_task_state_vector.transpose()<<std::endl;
+    std::cout<<"random_task_state_vector: "<<random_task_state_vector.transpose()<<std::endl;
+    Eigen::MatrixXd end_jacobian;
+    Eigen::MatrixXd end_jacobian_pinv;
+
+    Eigen::Matrix<double, 6, 1> task_delta_vector;
+    Eigen::Matrix<double, 7, 1> joint_delta_vector;
+
+    //计算 slave 相关变量
+    Eigen::Matrix<double, 7, 1> current_slave_angles_matrix;
+    if(if_tree_a){
+        current_slave_angles_matrix = _a_rrt_tree_matrix[nearst_node_index].tail(7);
+    }
+    else{
+        current_slave_angles_matrix = _b_rrt_tree_matrix[nearst_node_index].tail(7);
+    }
+
+    Eigen::Matrix<double, 7, 1> computed_slave_angles_matrix;
+    std::vector<double> slave_angles_vector(7);
+
+    Eigen::Matrix<double, 14, 1> matrix_tree_element;
+
+
+    //*******************************************向约束空间投影用到的变量*****************************************
+    double yaw_error = 0;
+    double pitch_error = 0;
+    double roll_error=0;
+    double total_error = 0;
+    bool project_success = true;
+    Eigen::Vector3d end_rot_eulerAngle;
+    Eigen::Vector3d required_eulerAngle;
+    Eigen::Matrix3d end_rot_matrix;
+    Eigen::Matrix3d required_rot_matrix;
+    Eigen::Matrix3d error_rot_matrix;
+    Eigen::AngleAxisd error_axis_angle;
+    Eigen::AngleAxis<double >::Vector3 error_axis;
+    double error_angle;
+    Eigen::Vector3d pos_error;
+
+
+    int performance_index_extend_num = 0;
+    int extend_num = 0;
+    while (true){
+        std::cout<<"extending"<<std::endl;
+        if(if_sample){
+            extend_num++;
+            if(extend_num > 10){
+                reached_state_matrix = qs_matrix;
+                reached_task_pos = qs_task_state_vector;
+                reached_index = qs_old_index;
+                break;
+            }
+        }
+        if ((random_task_state_vector - qs_task_state_vector).norm() < 0.005){
+            reached_state_matrix = qs_matrix;
+            reached_task_pos = qs_task_state_vector;
+            reached_index = qs_old_index;
+            break;
+        }
+        else if((random_task_state_vector - qs_task_state_vector).norm() > (random_task_state_vector-qs_old_task_state_vector).norm()){
+            reached_state_matrix = qs_old_matrix;
+            reached_task_pos = qs_old_task_state_vector;
+            reached_index = _a_rrt_tree_state[qs_old_index].second;
+            _a_rrt_tree_matrix.pop_back();
+            _a_rrt_tree_state.pop_back();
+            _a_rrt_tree_task_space_state.pop_back();
+
+            break;
+        }
+        else{
+            qs_old_matrix = qs_matrix;
+            qs_old_task_state_vector = qs_task_state_vector;
+            qs_old_state = qs_state;
+
+            //计算出了一个任务空间中的目标
+            task_direction_vector = random_task_state_vector - qs_task_state_vector;
+            double norm = task_direction_vector.norm();
+            task_direction_vector = task_direction_vector / norm;
+            if(_task_step_size <= norm){
+                extend_goal_task_state_vector = qs_task_state_vector + task_direction_vector * _task_step_size;
+            }
+            else{
+                extend_goal_task_state_vector = qs_task_state_vector + task_direction_vector * norm;
+            }
+
+            //*********************************performance_index 所用到的变量的定义********************************
+            performance_index_extend_num++;
+            PerformanceIndexOneExtend perdex_one_extend;
+            perdex_one_extend.extend_num = performance_index_extend_num;
+            ros::Time extend_start_time = ros::Time::now();
+            ros::Time extend_end_time;
+            ros::Time project_start_time;
+            ros::Time project_end_time;
+            ros::Time ik_start_time;
+            ros::Time ik_end_time;
+            //**************************************************************************************************
+
+
+
+            int project_count = 0;
+            project_start_time = ros::Time::now();
+            while (true){
+                project_count++;
+                std::cout<<"projecting "<< project_count <<std::endl;
+                //先计算当前与约束的误差
+
+                roll_error = 1.57 - end_rot_eulerAngle[2];
+                pitch_error = 0 - end_rot_eulerAngle[1];
+                if(end_rot_eulerAngle[1] < _yaw_min){
+                    yaw_error = _yaw_min - end_rot_eulerAngle[1];
+                }
+                else if(end_rot_eulerAngle[1] > _yaw_max){
+                    yaw_error = _yaw_max - end_rot_eulerAngle[1];
+                }
+                else{
+                    yaw_error = 0;
+                }
+
+                pos_error = extend_goal_task_state_vector - qs_task_state_vector;
+
+                total_error = sqrt(roll_error*roll_error + pitch_error*pitch_error + yaw_error*yaw_error);
+                if(total_error < _constrain_delta && pos_error.norm() < 0.005){
+                    project_success = true;
+                    break;
+                }
+                else{
+                    required_eulerAngle[2] = end_rot_eulerAngle[2] + roll_error;
+                    required_eulerAngle[1] = end_rot_eulerAngle[1] + pitch_error;
+                    required_eulerAngle[0] = end_rot_eulerAngle[0] + yaw_error;
+
+
+                    Eigen::AngleAxisd roll_angle(Eigen::AngleAxisd(required_eulerAngle[2], Eigen::Vector3d::UnitX()));
+                    Eigen::AngleAxisd pitch_angle(Eigen::AngleAxisd(required_eulerAngle[1], Eigen::Vector3d::UnitY()));
+                    Eigen::AngleAxisd yaw_angle(Eigen::AngleAxisd(required_eulerAngle[0], Eigen::Vector3d::UnitZ()));
+                    required_rot_matrix = yaw_angle*pitch_angle*roll_angle;
+                    error_rot_matrix = required_rot_matrix * (end_rot_matrix.inverse());
+                    error_axis_angle.fromRotationMatrix(error_rot_matrix);
+                    error_axis = error_axis_angle.axis();
+                    error_angle = error_axis_angle.angle();
+                    task_delta_vector.tail(3) = error_axis * error_angle;
+                    task_delta_vector.head(3) = pos_error;
+                    task_delta_vector = _error_coefficient * task_delta_vector / 0.01;
+
+
+                    end_jacobian = qs_state.getJacobian(planning_group);
+                    end_jacobian_pinv = end_jacobian.transpose() * ((end_jacobian * end_jacobian.transpose()).inverse());
+                    joint_delta_vector =  end_jacobian_pinv  * task_delta_vector;
+                    qs_matrix = qs_matrix + joint_delta_vector * 0.01;
+
+                    for(size_t i=0; i<7; i++){
+                        qs_vector[i] = qs_matrix[i];
+                    }
+                    qs_state.setJointGroupPositions(planning_group, qs_vector);
+                    qs_state.update();
+                    const Eigen::Affine3d end_pose = qs_state.getGlobalLinkTransform("left_gripper");
+                    qs_task_state_vector = end_pose.translation();
+
+                    end_rot_matrix = end_pose.rotation();
+                    error_axis_angle = end_rot_matrix;
+                    end_rot_eulerAngle = end_rot_matrix.eulerAngles(2, 1, 0);
+
+                    if (!qs_state.satisfiesBounds(planning_group, 0.05)){
+                        std::cout<<"end_rot_eulerAngle  "<<end_rot_eulerAngle.transpose()<<std::endl;
+                        std::cout<<"required_eulerAngle  "<<required_eulerAngle.transpose()<<std::endl;
+                        std::cout<<"error_axis_angle  "<<error_axis_angle.angle()<<std::endl;
+                        std::cout<<"pos_error "<<pos_error.transpose()<<std::endl;
+                        project_success = false;
+                        break;
+                    }
+                }
+            }
+
+            project_end_time = ros::Time::now();
+            perdex_one_extend.project_total_spend_time = double((project_end_time - project_start_time).nsec) / 1000000000;
+            perdex_one_extend.constraint_project_times = project_count;
+            //如果投影成功，qs_state肯定更新过
+            if(project_success){
+                perdex_one_extend.project_success = 1;
+
+
+                collision_detection::DistanceRequest collision_req_master;
+                collision_req_master.enable_nearest_points = true;
+                collision_req_master.enable_signed_distance = true;
+                collision_req_master.active_components_only = &master_link_model_set;
+                collision_req_master.group_name = "left_arm";
+                collision_req_master.type = collision_detection::DistanceRequestType::LIMITED;
+                collision_detection::DistanceResult collision_res_master;
+                collision_detection::DistanceResult new_collision_res_master;
+                world_FCL.distanceRobot(collision_req_master, collision_res_master, *robot, qs_state);
+
+
+                if(!collision_res_master.collision){
+//                    if(!planning_scene_ptr->isStateValid(qs_state, "left_arm")){
+//                        std::cout<<"isStateColliding  "<<planning_scene_ptr->isStateColliding(qs_state, "left_arm")<<std::endl;
+//                        std::cout<<"minimum distance  "<<collision_res_master.minimum_distance.distance<<std::endl;
+//                        std::cout<<"computed_master_angles_matrix\n  "<<qs_matrix.transpose()<<std::endl;
+//                        Eigen::Matrix<double ,7,1>up_bounds;
+//                        Eigen::Matrix<double ,7,1>low_bounds;
+//                        for(size_t i=0;i<7;i++){
+//                            up_bounds[i] = slave_joint_pos_bounds.first[i];
+//                            low_bounds[i] = slave_joint_pos_bounds.second[i];
+//                        }
+//                        std::cout<<"slave_up_bounds\n"<<up_bounds.transpose()<<std::endl;
+//                        std::cout<<"slave_low_bounds\n"<<low_bounds.transpose()<<std::endl;
+//                        std::cout<<std::endl;
+//                    }
+
+
+                    ik_start_time =  ros::Time::now();
+                    bool ik_result = solve_IK_problem(current_slave_angles_matrix, qs_matrix, computed_slave_angles_matrix, planning_group, slave_group, planning_scene_ptr, slave_joint_pos_bounds, perdex_one_extend, world_FCL, robot);
+                    ik_end_time = ros::Time::now();
+                    perdex_one_extend.ik_total_spend_time = double((ik_end_time - ik_start_time).nsec) / 1000000000;
+                    if(ik_result){
+                        perdex_one_extend.ik_success = 1;
+                        for(size_t i=0; i<7; i++){
+                            slave_angles_vector[i] = computed_slave_angles_matrix[i];
+                        }
+                        qs_state.setJointGroupPositions(slave_group, slave_angles_vector);
+                        qs_state.update();
+
+
+                        collision_detection::DistanceRequest collision_req_slave;
+                        collision_req_slave.enable_nearest_points = true;
+                        collision_req_slave.enable_signed_distance = true;
+                        collision_req_slave.active_components_only = &slave_link_model_set;
+                        collision_req_slave.group_name = "right_arm";
+                        collision_req_slave.type = collision_detection::DistanceRequestType::LIMITED;
+                        collision_detection::DistanceResult collision_res_slave;
+                        collision_detection::DistanceResult new_collision_res_slave;
+                        world_FCL.distanceRobot(collision_req_slave, collision_res_slave, *robot, qs_state);
+
+                        if(!collision_res_slave.collision){
+//                            if(!planning_scene_ptr->isStateValid(qs_state, "right_arm")){
+//                                std::cout<<"minimum distance  "<<collision_res_slave.minimum_distance.distance<<std::endl;
+//                                std::cout<<"computed_slave_angles_matrix\n  "<<computed_slave_angles_matrix.transpose()<<std::endl;
+//                                Eigen::Matrix<double ,7,1>up_bounds;
+//                                Eigen::Matrix<double ,7,1>low_bounds;
+//                                for(size_t i=0;i<7;i++){
+//                                    up_bounds[i] = slave_joint_pos_bounds.first[i];
+//                                    low_bounds[i] = slave_joint_pos_bounds.second[i];
+//                                }
+//                                std::cout<<"slave_up_bounds\n"<<up_bounds.transpose()<<std::endl;
+//                                std::cout<<"slave_low_bounds\n"<<low_bounds.transpose()<<std::endl;
+//                                std::cout<<std::endl;
+//                            }
+                            perdex_one_extend.no_collide=1;
+
+                            //将节点加入树中
+                            std::cout<<"adding a state"<<std::endl;
+                            perdex_one_extend.extend_success=1;
+                            matrix_tree_element.head(7) = qs_matrix;
+                            matrix_tree_element.tail(7) = computed_slave_angles_matrix;
+                            if(if_tree_a){
+                                _a_rrt_tree_matrix.push_back(matrix_tree_element);
+                                current_slave_angles_matrix = computed_slave_angles_matrix; //如果还在这个循环里执行，下一次计算IK的话slave从这个值为初始值开始计算
+
+                                std::pair<robot_state::RobotState, size_t> tmp(qs_state, qs_old_index);
+                                _a_rrt_tree_state.push_back(tmp);
+                                qs_old_index = _a_rrt_tree_state.size() - 1;
+
+                                _a_rrt_tree_task_space_state.push_back(qs_task_state_vector);
+                                std::cout<<"qs_task_state_vector: "<<qs_task_state_vector.transpose()<<std::endl;
+
+                            }
+                            else{
+                                _b_rrt_tree_matrix.push_back(matrix_tree_element);
+                                current_slave_angles_matrix = computed_slave_angles_matrix; //如果还在这个循环里执行，下一次计算IK的话slave从这个值为初始值开始计算
+
+                                std::pair<robot_state::RobotState, size_t> tmp(qs_state, qs_old_index);
+                                _b_rrt_tree_state.push_back(tmp);
+                                qs_old_index = _b_rrt_tree_state.size() - 1;
+                                std::cout<<"qs_task_state_vector: "<<qs_task_state_vector.transpose()<<std::endl;
+                                std::cout<<"extend_goal_vector : "<<extend_goal_task_state_vector.transpose()<<std::endl;
+                                std::cout<<"random_vector : "<<random_task_state_vector.transpose()<<std::endl;
+                                _b_rrt_tree_task_space_state.push_back(qs_task_state_vector);
+                            }
+
+                        }
+                        else{//slave collide fail
+                            reached_state_matrix = qs_old_matrix;
+                            reached_task_pos = qs_old_task_state_vector;
+                            reached_index = qs_old_index;
+                            perdex_one_extend.no_collide=0;
+                            extend_end_time = ros::Time::now();
+                            perdex_one_extend.extend_total_spend_time = double((extend_end_time - extend_start_time).nsec)/1000000000;
+                            if(if_tree_a){
+                                perdex_one_sample.tree_a.push_back(perdex_one_extend);
+                            }
+                            else{
+                                perdex_one_sample.tree_b.push_back(perdex_one_extend);
+                            }
+                            break;
+                        }
+                    }
+                    else{//IK fail
+                        std::cout<<"ik fail"<<std::endl;
+                        reached_state_matrix = qs_old_matrix;
+                        reached_task_pos = qs_old_task_state_vector;
+                        reached_index = qs_old_index;
+                        perdex_one_extend.ik_success = 0;
+                        extend_end_time = ros::Time::now();
+                        perdex_one_extend.extend_total_spend_time = double((extend_end_time - extend_start_time).nsec)/1000000000;
+                        if(if_tree_a){
+                            perdex_one_sample.tree_a.push_back(perdex_one_extend);
+                        }
+                        else{
+                            perdex_one_sample.tree_b.push_back(perdex_one_extend);
+                        }
+                        break;
+                    }
+
+
+                }
+                else{//master collide fail
+                    std::cout<<"master collide fail"<<std::endl;
+
+                    reached_state_matrix = qs_old_matrix;
+                    reached_task_pos = qs_old_task_state_vector;
+                    reached_index = qs_old_index;
+                    perdex_one_extend.ik_success = 0;
+                    extend_end_time = ros::Time::now();
+                    perdex_one_extend.extend_total_spend_time = double((extend_end_time - extend_start_time).nsec)/1000000000;
+                    if(if_tree_a){
+                        perdex_one_sample.tree_a.push_back(perdex_one_extend);
+                    }
+                    else{
+                        perdex_one_sample.tree_b.push_back(perdex_one_extend);
+                    }
+                    break;
+                }
+
+            }
+            else{//project fail
+                std::cout<<"project fail"<<std::endl;
+                reached_state_matrix = qs_old_matrix;
+                reached_task_pos = qs_old_task_state_vector;
+                reached_index = qs_old_index;
+                perdex_one_extend.project_success = 0;
+                extend_end_time = ros::Time::now();
+                perdex_one_extend.extend_total_spend_time = double((extend_end_time - extend_start_time).nsec)/1000000000;
+                if(if_tree_a){
+                    perdex_one_sample.tree_a.push_back(perdex_one_extend);
+                }
+                else{
+                    perdex_one_sample.tree_b.push_back(perdex_one_extend);
+                }
+                break;
+            }
+            extend_end_time = ros::Time::now();
+            perdex_one_extend.extend_total_spend_time = double((extend_end_time - extend_start_time).nsec)/1000000000;
+            if(if_tree_a){
+                perdex_one_sample.tree_a.push_back(perdex_one_extend);
+            }
+            else{
+                perdex_one_sample.tree_b.push_back(perdex_one_extend);
+            }
+        }
+    }
+    std::cout<<"outout!!"<<std::endl;
+}
+
 void DualCBiRRT::constraint_extend_task_space_dir_try_adjust(Eigen::Matrix<double, 7, 1> & random_state_value_matrix, Eigen::Matrix<double, 7, 1> & nearest_node_matrix, size_t nearst_node_index, Eigen::Matrix<double, 7, 1> & reached_state_matrix, const robot_state::JointModelGroup* planning_group, const std::string & planning_group_name, planning_scene::PlanningScenePtr & planning_scene_ptr, const robot_state::JointModelGroup* slave_group, std::pair<std::vector<double>, std::vector<double>>& slave_joint_pos_bounds, PerformanceIndexOneSample & perdex_one_sample, collision_detection::CollisionWorldFCL & world_FCL, const collision_detection::CollisionRobotConstPtr & robot, bool if_tree_a, bool if_sample, Eigen::Vector3d& reached_task_pos, size_t & reached_index){
     std::set<const moveit::core::LinkModel *> master_link_model_set;
     std::set<const moveit::core::LinkModel *> slave_link_model_set;
@@ -2551,6 +2963,7 @@ void DualCBiRRT::constraint_extend_task_space_dir_try_adjust(Eigen::Matrix<doubl
                         std::cout<<"new_master_min_dis  "<<new_collision_res_master.minimum_distance.distance<<std::endl;
                         if(!new_collision_res_master.collision){
                             std::cout<<"master fix success!"<<std::endl;
+                            ROS_WARN("master fix success!");
                             if_master_must_collide = false;
                         }
                         else{
@@ -2638,6 +3051,7 @@ void DualCBiRRT::constraint_extend_task_space_dir_try_adjust(Eigen::Matrix<doubl
                                 std::cout<<"new_slave_min_dis  "<<new_collision_res_slave.minimum_distance.distance<<std::endl;
                                 if(!new_collision_res_slave.collision){
                                     std::cout<<"slave fix success!"<<std::endl;
+                                    ROS_WARN("slave fix success!");
                                     if_slave_must_collide = false;
                                 }
                                 else{
@@ -3580,7 +3994,7 @@ bool DualCBiRRT::plan_task_space_dir(robot_state::RobotState & goal_state, robot
 
     _a_rrt_tree_task_space_state.push_back(start_state.getGlobalLinkTransform("left_gripper").translation());
     _b_rrt_tree_task_space_state.push_back(goal_state.getGlobalLinkTransform("left_gripper").translation());
-
+    std::cout<<"b_tree:: "<<goal_state.getGlobalLinkTransform("left_gripper").translation()<<std::endl;
 
     std::cout<<"_a_rrt_tree_task_space_state[0]\n"<<_a_rrt_tree_task_space_state[0].transpose()<<std::endl;
     std::cout<<"_b_rrt_tree_task_space_state[0]\n"<<_b_rrt_tree_task_space_state[0].transpose()<<std::endl;
@@ -3714,6 +4128,209 @@ bool DualCBiRRT::plan_task_space_dir(robot_state::RobotState & goal_state, robot
             constraint_extend_task_space_dir(random_state_value_matrix, nearest_node_matrix, nearest_node_index, b_tree_reached_matrix, planning_group, planning_group_name, planning_scene_ptr, slave_group, slave_joint_pos_bounds, perdex_one_sample, worldFcl, robot, extend_order, true, b_tree_reached_vector, b_tree_reached_index);
             nearest_node_index = near_tree_task_space(b_tree_reached_vector, nearest_node_task_state, nearest_node_matrix, !extend_order);
             constraint_extend_task_space_dir(b_tree_reached_matrix, nearest_node_matrix, nearest_node_index, a_tree_reached_matrix, planning_group, planning_group_name, planning_scene_ptr, slave_group, slave_joint_pos_bounds, perdex_one_sample, worldFcl, robot, !extend_order, false, a_tree_reached_vector, a_tree_reached_index);
+
+            std::cout<<"a_tree_reached_vector: "<<a_tree_reached_vector.transpose()<<std::endl;
+            std::cout<<"b_tree_reached_vector: "<<b_tree_reached_vector.transpose()<<std::endl;
+            if((a_tree_reached_vector - b_tree_reached_vector).norm() < 0.005)
+            {
+                ROS_INFO("Success!!!");
+                //先添加前半部分路径点
+                size_t back_track = a_tree_reached_index;
+                while(back_track != -1){
+                    planning_result.push_back(_a_rrt_tree_state[back_track].first);
+                    planning_result_index.push_back(_a_rrt_tree_state[back_track].second);
+                    planning_result_task_state_vector.push_back(_a_rrt_tree_task_space_state[back_track]);
+
+                    back_track = _a_rrt_tree_state[back_track].second;
+                }
+                std::reverse(planning_result.begin(), planning_result.end());
+                std::reverse(planning_result_index.begin(), planning_result_index.end());
+                std::reverse(planning_result_task_state_vector.begin(), planning_result_task_state_vector.end());
+
+                //添加后半部分路径点
+                back_track = b_tree_reached_index;
+                while(back_track != -1){
+                    planning_result.push_back(_b_rrt_tree_state[back_track].first);
+                    planning_result_index.push_back(_b_rrt_tree_state[back_track].second);
+                    planning_result_task_state_vector.push_back(_b_rrt_tree_task_space_state[back_track]);
+
+                    back_track = _b_rrt_tree_state[back_track].second;
+                }
+                return true;
+            }
+            else{
+                extend_order = true;
+            }
+
+        }
+        sample_end_time = ros::Time::now();
+        perdex_one_sample.spend_time = double((sample_end_time - sample_start_time).nsec)/1000000000;
+        _performance_record.push_back(perdex_one_sample);
+    }
+    return false;
+}
+
+bool DualCBiRRT::plan_task_space_dir_new(robot_state::RobotState & goal_state, robot_state::RobotState & start_state, planning_scene::PlanningScenePtr& planning_scene_ptr, const std::string & planning_group_name, const robot_state::JointModelGroup* planning_group, const robot_state::JointModelGroup* slave_group){
+
+    for(size_t i=0; i<_slave_link_names.size(); i++){
+        _master_link_model_set.insert(planning_group->getLinkModel(_master_link_names[i]));
+        _slave_link_model_set.insert(slave_group->getLinkModel(_slave_link_names[i]));
+    }
+
+    //创建一个确定的随机数生成器
+    random_numbers::RandomNumberGenerator rng(_seed);
+    //创建一个碰撞检测器
+    const collision_detection::CollisionRobotConstPtr robot = planning_scene_ptr->getCollisionRobot();
+    const collision_detection::WorldPtr world = planning_scene_ptr->getWorldNonConst();
+    collision_detection::CollisionWorldFCL worldFcl(world);
+
+
+    std::pair<robot_state::RobotState, size_t> a_tree_init_pair(start_state, -1);
+    std::pair<robot_state::RobotState, size_t> b_tree_init_pair(goal_state, -1);
+    _a_rrt_tree_state.push_back(a_tree_init_pair);
+    _b_rrt_tree_state.push_back(b_tree_init_pair);
+
+    std::pair<std::vector<double>, std::vector<Eigen::Matrix<double ,7,1>>> init_pair;
+    _a_rrt_tree_adjust_weight_and_joints_master.push_back(init_pair);
+    _b_rrt_tree_adjust_weight_and_joints_master.push_back(init_pair);
+
+
+    _a_rrt_tree_task_space_state.push_back(start_state.getGlobalLinkTransform("left_gripper").translation());
+    _b_rrt_tree_task_space_state.push_back(goal_state.getGlobalLinkTransform("left_gripper").translation());
+
+
+    std::cout<<"_a_rrt_tree_task_space_state[0]\n"<<_a_rrt_tree_task_space_state[0].transpose()<<std::endl;
+    std::cout<<"_b_rrt_tree_task_space_state[0]\n"<<_b_rrt_tree_task_space_state[0].transpose()<<std::endl;
+    //获取slave group的关节界限，用于求解IK
+    const robot_model::RobotModelConstPtr & baxter_robot_model_ptr = planning_scene_ptr->getRobotModel();
+    const std::vector<std::string>& slave_joint_names = slave_group->getVariableNames();
+    std::pair<std::vector<double>, std::vector<double>> slave_joint_pos_bounds;
+    std::vector<double> slave_joint_max_bounds;
+    std::vector<double> slave_joint_min_bounds;
+    for(size_t i=0; i<slave_joint_names.size(); i++){
+        const robot_state::VariableBounds tmp_bounds = baxter_robot_model_ptr->getVariableBounds(slave_joint_names[i]);
+        slave_joint_max_bounds.push_back(tmp_bounds.max_position_);
+        slave_joint_min_bounds.push_back(tmp_bounds.min_position_);
+    }
+    slave_joint_pos_bounds.first = slave_joint_max_bounds;
+    slave_joint_pos_bounds.second = slave_joint_min_bounds;
+
+
+    robot_state::RobotState random_state = planning_scene_ptr->getCurrentStateNonConst();
+    robot_state::RobotState a_tree_reached_state = planning_scene_ptr->getCurrentStateNonConst();
+    robot_state::RobotState b_tree_reached_state = planning_scene_ptr->getCurrentStateNonConst();
+
+
+    Eigen::Matrix<double, 7, 1> random_state_value_matrix;
+    Eigen::Vector3d random_task_state_vector;
+    Eigen::Matrix<double, 7, 1> nearest_node_matrix;
+    Eigen::Vector3d nearest_node_task_state;
+    Eigen::Matrix<double, 7, 1> a_tree_reached_matrix;
+    Eigen::Matrix<double, 7, 1> b_tree_reached_matrix;
+    Eigen::Vector3d a_tree_reached_vector;
+    Eigen::Vector3d b_tree_reached_vector;
+    size_t a_tree_reached_index;
+    size_t b_tree_reached_index;
+    Eigen::Matrix<double, 7, 1> goal_value_matrix;
+    Eigen::Matrix<double, 7, 1> start_value_matrix;
+    Eigen::Matrix<double, 7, 1> slave_goal_value_matrix;
+    Eigen::Matrix<double, 7, 1> slave_start_value_matrix;
+
+    size_t nearest_node_index;
+
+    std::vector<double> goal_state_value; //用来判断是不是采样到了goal_state
+    goal_state.copyJointGroupPositions(planning_group, goal_state_value);
+    std::vector<double> start_state_value;
+    start_state.copyJointGroupPositions(planning_group, start_state_value);
+    ROS_INFO("goal_state_value.size()=%d", int(goal_state_value.size()));
+    for(size_t i=0; i<goal_state_value.size(); i++){
+        goal_value_matrix[i] = goal_state_value[i];
+        start_value_matrix[i] = start_state_value[i];
+    }
+
+    std::vector<double> slave_goal_state_value;
+    goal_state.copyJointGroupPositions(slave_group, slave_goal_state_value);
+    std::vector<double> slave_start_state_value;
+    start_state.copyJointGroupPositions(slave_group, slave_start_state_value);
+    for(size_t i=0; i<slave_goal_state_value.size(); i++){
+        slave_goal_value_matrix[i] = slave_goal_state_value[i];
+        slave_start_value_matrix[i] = slave_start_state_value[i];
+    }
+
+    Eigen::Matrix<double, 14, 1> tmp_matrix_element;
+    tmp_matrix_element.head(7) = start_value_matrix;
+    tmp_matrix_element.tail(7) = slave_start_value_matrix;
+    _a_rrt_tree_matrix.push_back(tmp_matrix_element);
+    tmp_matrix_element.head(7) = goal_value_matrix;
+    tmp_matrix_element.tail(7) = slave_goal_value_matrix;
+    _b_rrt_tree_matrix.push_back(tmp_matrix_element);
+
+    std::cout<<"init_a_matrix_tree\n  "<<_a_rrt_tree_matrix[0].transpose() <<std::endl;
+    std::cout<<"init_b_matrix_tree\n  "<<_b_rrt_tree_matrix[0].transpose() <<std::endl;
+
+
+    bool extend_order = true; //两棵树轮流向采样的方向扩展
+    ros::Time sample_start_time;
+    ros::Time sample_end_time;
+
+    for(int count=0; count < _max_planning_times; count++){
+        sample_start_time = ros::Time::now();
+
+        PerformanceIndexOneSample perdex_one_sample;
+        perdex_one_sample.sample_num = count;
+        std::cout<<"count: "<<count<<std::endl;
+        //先扩展a树
+
+
+        if(extend_order){
+            sample_task_state(goal_state, random_state, random_state_value_matrix, planning_group, rng, random_task_state_vector);
+
+            nearest_node_index = near_tree_task_space(random_task_state_vector, nearest_node_task_state, nearest_node_matrix, extend_order);
+            constraint_extend_task_space_dir_new(random_state_value_matrix, nearest_node_matrix, nearest_node_index, a_tree_reached_matrix, planning_group, planning_group_name, planning_scene_ptr, slave_group, slave_joint_pos_bounds, perdex_one_sample, worldFcl, robot, extend_order, true, a_tree_reached_vector, a_tree_reached_index);
+            nearest_node_index = near_tree_task_space(a_tree_reached_vector, nearest_node_task_state, nearest_node_matrix, !extend_order);
+            constraint_extend_task_space_dir_new(a_tree_reached_matrix, nearest_node_matrix, nearest_node_index, b_tree_reached_matrix, planning_group, planning_group_name, planning_scene_ptr, slave_group, slave_joint_pos_bounds, perdex_one_sample, worldFcl, robot, !extend_order, false, b_tree_reached_vector, b_tree_reached_index);
+
+            std::cout<<"a_tree_reached_vector: "<<a_tree_reached_vector.transpose()<<std::endl;
+            std::cout<<"b_tree_reached_vector: "<<b_tree_reached_vector.transpose()<<std::endl;
+
+            if((a_tree_reached_vector - b_tree_reached_vector).norm() < 0.005)
+            {
+                ROS_INFO("Success!!!");
+                //先添加前半部分路径点
+                size_t back_track = a_tree_reached_index;
+                std::cout<<"heh "<<_a_rrt_tree_task_space_state[back_track].transpose()<<std::endl;
+                while(back_track != -1){
+                    planning_result.push_back(_a_rrt_tree_state[back_track].first);
+                    planning_result_index.push_back(_a_rrt_tree_state[back_track].second);
+                    planning_result_task_state_vector.push_back(_a_rrt_tree_task_space_state[back_track]);
+                    back_track = _a_rrt_tree_state[back_track].second;
+                }
+                std::reverse(planning_result.begin(), planning_result.end());
+                std::reverse(planning_result_index.begin(), planning_result_index.end());
+                std::reverse(planning_result_task_state_vector.begin(), planning_result_task_state_vector.end());
+
+                //添加后半部分路径点
+                back_track = b_tree_reached_index;
+                while(back_track != -1){
+                    planning_result.push_back(_b_rrt_tree_state[back_track].first);
+                    planning_result_index.push_back(_b_rrt_tree_state[back_track].second);
+                    planning_result_task_state_vector.push_back(_b_rrt_tree_task_space_state[back_track]);
+                    back_track = _b_rrt_tree_state[back_track].second;
+                }
+                return true;
+            }
+            else{
+                extend_order = false;
+            }
+        }
+        else{
+
+            sample_task_state(goal_state, random_state, random_state_value_matrix, planning_group, rng, random_task_state_vector);
+
+            nearest_node_index = near_tree_task_space(random_task_state_vector, nearest_node_task_state, nearest_node_matrix, extend_order);
+            constraint_extend_task_space_dir_new(random_state_value_matrix, nearest_node_matrix, nearest_node_index, b_tree_reached_matrix, planning_group, planning_group_name, planning_scene_ptr, slave_group, slave_joint_pos_bounds, perdex_one_sample, worldFcl, robot, extend_order, true, b_tree_reached_vector, b_tree_reached_index);
+            nearest_node_index = near_tree_task_space(b_tree_reached_vector, nearest_node_task_state, nearest_node_matrix, !extend_order);
+            constraint_extend_task_space_dir_new(b_tree_reached_matrix, nearest_node_matrix, nearest_node_index, a_tree_reached_matrix, planning_group, planning_group_name, planning_scene_ptr, slave_group, slave_joint_pos_bounds, perdex_one_sample, worldFcl, robot, !extend_order, false, a_tree_reached_vector, a_tree_reached_index);
 
             std::cout<<"a_tree_reached_vector: "<<a_tree_reached_vector.transpose()<<std::endl;
             std::cout<<"b_tree_reached_vector: "<<b_tree_reached_vector.transpose()<<std::endl;
@@ -4211,7 +4828,7 @@ bool DualCBiRRT::solve_IK_problem(Eigen::Matrix<double, 7, 1> slave_state_value_
     //最开始的闭环约束方式
     Eigen::Vector3d slave_goal_euler(master_euler[0], master_euler[1], master_euler[2] - 3.1415926);
     Eigen::Vector3d slave_goal_pos;
-    Eigen::Vector3d distance(0, 0, 0.06);
+    Eigen::Vector3d distance(0, 0, _left_right_distance);
     slave_goal_pos = master_end_rot_matrix * distance + master_end_pos;
     Eigen::AngleAxisd goal_roll_angle(Eigen::AngleAxisd(slave_goal_euler[2], Eigen::Vector3d::UnitX()));
     Eigen::AngleAxisd goal_pitch_angle(Eigen::AngleAxisd(slave_goal_euler[1], Eigen::Vector3d::UnitY()));
@@ -4350,7 +4967,7 @@ bool DualCBiRRT::solve_IK_problem_no_plan(Eigen::Matrix<double, 7, 1> slave_stat
     //************************************计算 slave 的目标末端位置，欧拉角向量以及旋转矩阵************************************
     Eigen::Vector3d slave_goal_euler(master_euler[0], master_euler[1], master_euler[2] - 3.1415926);
     Eigen::Vector3d slave_goal_pos;
-    Eigen::Vector3d distance(0, 0, 0.06);
+    Eigen::Vector3d distance(0, 0, _left_right_distance);
     slave_goal_pos = master_end_rot_matrix * distance + master_end_pos;
     Eigen::AngleAxisd goal_roll_angle(Eigen::AngleAxisd(slave_goal_euler[2], Eigen::Vector3d::UnitX()));
     Eigen::AngleAxisd goal_pitch_angle(Eigen::AngleAxisd(slave_goal_euler[1], Eigen::Vector3d::UnitY()));
@@ -4563,7 +5180,7 @@ bool DualCBiRRT::solve_IK_problem_dense_collide_new(Eigen::Matrix<double, 7, 1> 
     //最开始的闭环约束方式
     Eigen::Vector3d slave_goal_euler(master_euler[0], master_euler[1], master_euler[2] - 3.1415926);
     Eigen::Vector3d slave_goal_pos;
-    Eigen::Vector3d distance(0, 0, 0.06);
+    Eigen::Vector3d distance(0, 0, _left_right_distance);
     slave_goal_pos = master_end_rot_matrix * distance + master_end_pos;
     Eigen::AngleAxisd goal_roll_angle(Eigen::AngleAxisd(slave_goal_euler[2], Eigen::Vector3d::UnitX()));
     Eigen::AngleAxisd goal_pitch_angle(Eigen::AngleAxisd(slave_goal_euler[1], Eigen::Vector3d::UnitY()));
@@ -4794,7 +5411,7 @@ bool DualCBiRRT::solve_IK_problem_task_space(Eigen::Matrix<double, 7, 1> slave_s
     //最开始的闭环约束方式
     Eigen::Vector3d slave_goal_euler(master_euler[0], master_euler[1], master_euler[2] - 3.1415926);
     Eigen::Vector3d slave_goal_pos;
-    Eigen::Vector3d distance(0, 0, 0.06);
+    Eigen::Vector3d distance(0, 0, _left_right_distance);
     slave_goal_pos = master_end_rot_matrix * distance + master_end_pos;
     Eigen::AngleAxisd goal_roll_angle(Eigen::AngleAxisd(slave_goal_euler[2], Eigen::Vector3d::UnitX()));
     Eigen::AngleAxisd goal_pitch_angle(Eigen::AngleAxisd(slave_goal_euler[1], Eigen::Vector3d::UnitY()));

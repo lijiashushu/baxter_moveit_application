@@ -34,24 +34,34 @@ int main(int argc, char** argv){
 //    std::srand((unsigned)time(NULL));
 
 //    moveit::planning_interface::MoveGroupInterface move_group("left_arm");
-////    0.523779 -0.0419838   0.183778
-////    Eigen::Vector3d goal_pos (0.717521, -0.0286976,   0.669831);
-//    Eigen::Vector3d goal_pos (0.580377, -0.0316619,   0.284903);
-////    Eigen::Vector3d rpy(2.53466, 1.57962, 0.962707);
-////    Eigen::Vector3d rpy(2.94767, 1.56975, 0.962707);
-////    Eigen::Vector3d rpy(2.97894, 1.54465, 1.40875);
-//    Eigen::Vector3d rpy(0, 0, 1.57);
+//////    0.523779 -0.0419838   0.183778
+//    Eigen::Vector3d goal_pos (0.717521, -0.0286976,   0.669831);
+////    Eigen::Vector3d goal_pos (0.580377, -0.0316619,   0.284903);
+//////    Eigen::Vector3d rpy(2.53466, 1.57962, 0.962707);
+//////    Eigen::Vector3d rpy(2.94767, 1.56975, 0.962707);
+//////    Eigen::Vector3d rpy(2.97894, 1.54465, 1.40875);
+//    Eigen::Vector3d rpy(0.5, 0, 1.57);
 
     moveit::planning_interface::MoveGroupInterface move_group("right_arm");
 //    0.523779 -0.0419838   0.183778
 //    Eigen::Vector3d goal_pos (0.717521, -0.0286976 - 0.06,   0.669831);
-    Eigen::Vector3d goal_pos (0.580377, -0.0916619,   0.284903);
-////    Eigen::Vector3d rpy(2.53466, 1.57962, 0.962707);
-////    Eigen::Vector3d rpy(2.94767, 1.56975, 0.962707);
-////    Eigen::Vector3d rpy(2.97894, 1.54465, 1.40875);
-    Eigen::Vector3d rpy(0, 0, -1.57);
+//    Eigen::Vector3d goal_pos (0.580377, -0.0916619,   0.284903);
+    Eigen::Vector3d goal_pos (0.749218, -0.10886, 0.647803);
+//    Eigen::Vector3d rpy(2.53466, 1.57962, 0.962707);
+//    Eigen::Vector3d rpy(2.94767, 1.56975, 0.962707);
+//    Eigen::Vector3d rpy(2.97894, 1.54465, 1.40875);
+    Eigen::Vector3d rpy(3.1402, 3.14011 ,1.57151);
 
-
+//    left_target_pos  0.75 -0.05  0.65
+//    left_target_euler    0    0 1.57
+//    left computing IK success
+//    right_target_pos  0.745833 -0.107529  0.652246
+//    right_target_euler 0.00027487 0.00016706   -1.56988
+//    right_target_euler 0.00027487 0.00016706   -1.56988
+//    right_current_euler  3.1402 3.14011 1.57151
+//    right_error_pos -0.0033309  0.0013442 0.00436561
+//    right_error_euler -3.13992 -3.13995 -3.14139
+//    right_rot_error_axis_angle.angle() 0.00213562
 
 
 //    Eigen::Vector3d rpy(0, 0, 0);

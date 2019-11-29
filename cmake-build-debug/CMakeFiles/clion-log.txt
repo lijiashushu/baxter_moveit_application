@@ -18,6 +18,7 @@ CMAKE_ROOT: /home/lijiashushu/tool/clion-2019.1.4/bin/cmake/linux/share/cmake-3.
 -- BUILD_SHARED_LIBS is on
 -- Using these message generators: gencpp;geneus;genlisp;gennodejs;genpy
 /home/lijiashushu/ros_ws/src/kdl_parser/kdl_parser/include/opt/ros/kinetic/include/opt/ros/kinetic/share/xmlrpcpp/cmake/../../../include/xmlrpcpp/home/lijiashushu/ws_moveit/src/moveit_visual_tools/include/usr/include/usr/include/eigen3
+/home/lijiashushu/ros_ws/src/kdl_parser/kdl_parser/include/opt/ros/kinetic/include/opt/ros/kinetic/share/xmlrpcpp/cmake/../../../include/xmlrpcpp/home/lijiashushu/ws_moveit/src/moveit_visual_tools/include/usr/include/usr/include/eigen3
 moveit_ros_planning_INCLUDE_DIRS: /opt/ros/kinetic/include/usr/include/eigen3/usr/include/home/lijiashushu/ros_ws/src/kdl_parser/kdl_parser/include/opt/ros/kinetic/share/xmlrpcpp/cmake/../../../include/xmlrpcpp
 -- Configuring done
 -- Generating done

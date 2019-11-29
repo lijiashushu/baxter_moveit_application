@@ -95,6 +95,8 @@ geometry_msgs/Point.h
 -
 std_msgs/ColorRGBA.h
 -
+kdl/frames.hpp
+-
 
 /home/lijiashushu/ws_moveit/src/moveit_visual_tools/include/moveit_visual_tools/moveit_visual_tools.h
 rviz_visual_tools/rviz_visual_tools.h
@@ -672,6 +674,28 @@ std_msgs/Header.h
 geometry_msgs/Point.h
 -
 graph_msgs/Edges.h
+-
+
+/opt/ros/kinetic/include/kdl/frames.hpp
+utilities/kdl-config.h
+/opt/ros/kinetic/include/kdl/utilities/kdl-config.h
+utilities/utility.h
+/opt/ros/kinetic/include/kdl/utilities/utility.h
+frames.inl
+/opt/ros/kinetic/include/kdl/frames.inl
+
+/opt/ros/kinetic/include/kdl/frames.inl
+
+/opt/ros/kinetic/include/kdl/utilities/kdl-config.h
+
+/opt/ros/kinetic/include/kdl/utilities/utility.h
+kdl-config.h
+/opt/ros/kinetic/include/kdl/utilities/kdl-config.h
+cstdlib
+-
+cassert
+-
+cmath
 -
 
 /opt/ros/kinetic/include/message_filters/connection.h

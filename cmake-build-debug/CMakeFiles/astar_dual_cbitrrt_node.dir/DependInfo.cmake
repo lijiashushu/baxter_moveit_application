@@ -25,6 +25,7 @@ set(CMAKE_CXX_TARGET_INCLUDE_PATH
   "/opt/ros/kinetic/share/xmlrpcpp/cmake/../../../include/xmlrpcpp"
   "/home/lijiashushu/ws_moveit/src/moveit_visual_tools/include"
   "/usr/include/eigen3"
+  "/usr/local/include/qpOASES"
   )
 
 # Targets to which this target links.

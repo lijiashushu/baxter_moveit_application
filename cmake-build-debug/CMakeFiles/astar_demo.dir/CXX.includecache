@@ -94,13 +94,7 @@ Eigen/Eigen
 backward.hpp
 ../include/baxter_moveit_application/DualCBiRRT_Astar/backward.hpp
 
-/home/lijiashushu/ros_ws/src/baxter_moveit_application/src/DualCBiRRT_Astar/Astar_searcher.cpp
-baxter_moveit_application/DualCBiRRT_Astar/Astar_searcher.h
-/home/lijiashushu/ros_ws/src/baxter_moveit_application/src/DualCBiRRT_Astar/baxter_moveit_application/DualCBiRRT_Astar/Astar_searcher.h
-
 /home/lijiashushu/ros_ws/src/baxter_moveit_application/src/DualCBiRRT_Astar/astar_demo_node.cpp
-iostream
--
 fstream
 -
 math.h
@@ -110,6 +104,8 @@ ros/ros.h
 ros/console.h
 -
 sensor_msgs/PointCloud2.h
+-
+iostream
 -
 nav_msgs/Odometry.h
 -
@@ -134,6 +130,8 @@ moveit_msgs/CollisionObject.h
 shape_msgs/SolidPrimitive.h
 -
 geometry_msgs/Pose.h
+-
+kdl/frames.hpp
 -
 
 /opt/ros/kinetic/include/boost_161_condition_variable.h
@@ -650,6 +648,28 @@ ros/message_operations.h
 geometry_msgs/Vector3.h
 -
 geometry_msgs/Vector3.h
+-
+
+/opt/ros/kinetic/include/kdl/frames.hpp
+utilities/kdl-config.h
+/opt/ros/kinetic/include/kdl/utilities/kdl-config.h
+utilities/utility.h
+/opt/ros/kinetic/include/kdl/utilities/utility.h
+frames.inl
+/opt/ros/kinetic/include/kdl/frames.inl
+
+/opt/ros/kinetic/include/kdl/frames.inl
+
+/opt/ros/kinetic/include/kdl/utilities/kdl-config.h
+
+/opt/ros/kinetic/include/kdl/utilities/utility.h
+kdl-config.h
+/opt/ros/kinetic/include/kdl/utilities/kdl-config.h
+cstdlib
+-
+cassert
+-
+cmath
 -
 
 /opt/ros/kinetic/include/message_filters/connection.h

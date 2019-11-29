@@ -26,6 +26,8 @@
 #include <geometry_msgs/Pose.h>
 #include <geometry_msgs/Point.h>
 #include <std_msgs/ColorRGBA.h>
+#include <kdl/frames.hpp>
+
 
 int main(int argc, char** argv){
     ros::init(argc, argv, "cbirrt_test");
@@ -34,7 +36,30 @@ int main(int argc, char** argv){
     spinner.start();
     std::srand((unsigned)time(NULL));
 
-    DualCBiRRT my_planner(1.0, 815068162, 0.00);
+    Eigen::Matrix3d rotmatrix;
+    rotmatrix<<0.999998 ,-0.00148166 , 0.00139371, -0.00139265, 0.000715737 ,   0.999999, -0.00148265 ,  -0.999999, 0.000713672;
+    Eigen::Vector3d euler;
+    euler = rotmatrix.eulerAngles(2,1,0);
+    std::cout<<"euler  "<<euler.transpose()<<std::endl;
+
+    KDL::Rotation test(0.999998 ,-0.00148166 , 0.00139371, -0.00139265, 0.000715737 ,   0.999999, -0.00148265 ,  -0.999999, 0.000713672);
+    Eigen::Vector3d euler2;
+    test.GetEulerZYX(euler2(0), euler2(1), euler2(2));
+    std::cout<<"euler2  "<<euler2.transpose()<<std::endl;
+
+    Eigen::Vector3d slave_www_euler;
+    slave_www_euler <<3.1402, 3.14011,1.57151;
+//    slave_www_euler <<0.00027487, 0.00016706, -1.56988;
+    Eigen::AngleAxisd www_roll_angle(Eigen::AngleAxisd(slave_www_euler[2], Eigen::Vector3d::UnitX()));
+    Eigen::AngleAxisd www_pitch_angle(Eigen::AngleAxisd(slave_www_euler[1], Eigen::Vector3d::UnitY()));
+    Eigen::AngleAxisd www_yaw_angle(Eigen::AngleAxisd(slave_www_euler[0], Eigen::Vector3d::UnitZ()));
+    Eigen::Matrix3d slave_www_rot_matrix;
+    slave_www_rot_matrix=www_yaw_angle*www_pitch_angle*www_roll_angle;
+    std::cout<<slave_www_rot_matrix<<std::endl;
+
+
+
+    DualCBiRRT my_planner(1.0, rand(), 0.00);
 
     planning_scene_monitor::PlanningSceneMonitorPtr monitor_ptr = std::make_shared<planning_scene_monitor::PlanningSceneMonitor>("robot_description");
     monitor_ptr->requestPlanningSceneState("get_planning_scene");
@@ -55,15 +80,16 @@ int main(int argc, char** argv){
 //    std::vector<double> test_start_value = {-0.202391,-1.01283,-0.709538,1.16068,-1.21936,1.51294,1.59967}; //narrow障碍物的起始左臂位置
 //    std::vector<double> slave_test_start_value = {-0.0273947,-0.113638,2.14442,0.981496,-0.31,1.45411,-1.02899};//narrow障碍物的起始右臂位置
 
-    std::vector<double> test_start_value = {-0.375463,-1.09228,-0.440484,1.20106,1.76769,-1.57028,0.0672226}; //没有奇异、narrow障碍物的起始左臂位置
-    std::vector<double> slave_test_start_value = {-0.115289,-0.393004,1.72106,1.01171,-2.93258,-1.39411,0.332235};//没有奇异、narrow障碍物的起始右臂位置
+//    std::vector<double> test_start_value = {-0.375463,-1.09228,-0.440484,1.20106,1.76769,-1.57028,0.0672226}; //没有奇异、narrow障碍物的起始左臂位置，大桌子
+//    std::vector<double> slave_test_start_value = {-0.115289,-0.393004,1.72106,1.01171,-2.93258,-1.39411,0.332235};//没有奇异、narrow障碍物的起始右臂位置，大桌子
 
+    std::vector<double> test_start_value = {-0.0137274,-0.648781,-1.1192,0.880775,2.37693,-1.56809,-0.11713}; //没有奇异、narrow障碍物的起始左臂位置，大桌子，增加抓取物体
+    std::vector<double> slave_test_start_value = {-0.0361471,-0.345621,1.6738,0.869939,-2.96241,-1.47801,0.298402};//没有奇异、narrow障碍物的起始右臂位置，大桌子，增加抓取物体
 
     std::vector<double> both_start_value;
     const robot_state::JointModelGroup* planning_group = start_state.getJointModelGroup("left_arm"); //
     const robot_state::JointModelGroup* slave_group = start_state.getJointModelGroup("right_arm"); //
     const robot_state::JointModelGroup* both_group = start_state.getJointModelGroup("both_arms"); //
-
 
     //获取当前的关节角度
     std::vector<double> tmp_display;
@@ -121,10 +147,12 @@ int main(int argc, char** argv){
 //    std::vector<double> test_goal_value = {-0.0813673,-0.68199,-0.637715,1.9482,-1.13503,1.24992,2.59584};//narrow障碍物的目标左臂位置
 //    std::vector<double> slave_test_goal_value = {-0.485412,0.487359,1.66579,1.6767,-0.522427,1.24843,-1.42944};//narrow障碍物的目标右臂位置
 
-    std::vector<double> test_goal_value = {-0.233357,-0.754374,-0.490762,1.95377,1.90675,-1.34839,1.06295};//没有奇异、narrow障碍物的目标左臂位置
-    std::vector<double> slave_test_goal_value = {-0.446697,-0.0863082,1.24614,1.77273,-2.93228,-1.08041,-0.381265};//没有奇异、narrow障碍物的目标右臂位置
+//    std::vector<double> test_goal_value = {-0.233357,-0.754374,-0.490762,1.95377,1.90675,-1.34839,1.06295};//没有奇异、narrow障碍物的目标左臂位置
+//    std::vector<double> slave_test_goal_value = {-0.446697,-0.0863082,1.24614,1.77273,-2.93228,-1.08041,-0.381265};//没有奇异、narrow障碍物的目标右臂位置
 
 
+    std::vector<double> test_goal_value = {0.104215,-0.367542,-0.866707,1.42165,2.45671,-1.38136,0.587156};//没有奇异、narrow障碍物的目标左臂位置，大桌子，增加抓取物体
+    std::vector<double> slave_test_goal_value = {-0.260604,0.0155082,1.32256,1.4155,-3.02382,-1.21494,-0.264714};//没有奇异、narrow障碍物的目标右臂位置,大桌子，增加抓取物体
 
     goal_state.setJointGroupPositions(planning_group, test_goal_value);
     goal_state.setJointGroupPositions(slave_group, slave_test_goal_value);
@@ -155,7 +183,7 @@ int main(int argc, char** argv){
 
 
 
-    if(my_planner.plan_task_space_dir_try_adjust(goal_state, start_state, planning_scene_for_operate, "left_arm", planning_group, slave_group)){
+    if(my_planner.plan_task_space_dir(goal_state, start_state, planning_scene_for_operate, "left_arm", planning_group, slave_group)){
         std::cout<<"???"<<std::endl;
     }
     my_planner.output_perdex();

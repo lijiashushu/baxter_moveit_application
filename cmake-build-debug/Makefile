@@ -337,6 +337,19 @@ my_rrt_node/fast:
 .PHONY : 20191029_test1_node/fast
 
 #=============================================================================
+# Target rules for targets named qpOASES_test
+
+# Build rule for target.
+qpOASES_test: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 qpOASES_test
+.PHONY : qpOASES_test
+
+# fast build rule for target.
+qpOASES_test/fast:
+	$(MAKE) -f CMakeFiles/qpOASES_test.dir/build.make CMakeFiles/qpOASES_test.dir/build
+.PHONY : qpOASES_test/fast
+
+#=============================================================================
 # Target rules for targets named 20191028_test2_node
 
 # Build rule for target.
@@ -2640,6 +2653,33 @@ src/MyRRT/my_rrt_test.cpp.s:
 	$(MAKE) -f CMakeFiles/my_rrt_node.dir/build.make CMakeFiles/my_rrt_node.dir/src/MyRRT/my_rrt_test.cpp.s
 .PHONY : src/MyRRT/my_rrt_test.cpp.s
 
+src/qpOASE/qpoase_test.o: src/qpOASE/qpoase_test.cpp.o
+
+.PHONY : src/qpOASE/qpoase_test.o
+
+# target to build an object file
+src/qpOASE/qpoase_test.cpp.o:
+	$(MAKE) -f CMakeFiles/qpOASES_test.dir/build.make CMakeFiles/qpOASES_test.dir/src/qpOASE/qpoase_test.cpp.o
+.PHONY : src/qpOASE/qpoase_test.cpp.o
+
+src/qpOASE/qpoase_test.i: src/qpOASE/qpoase_test.cpp.i
+
+.PHONY : src/qpOASE/qpoase_test.i
+
+# target to preprocess a source file
+src/qpOASE/qpoase_test.cpp.i:
+	$(MAKE) -f CMakeFiles/qpOASES_test.dir/build.make CMakeFiles/qpOASES_test.dir/src/qpOASE/qpoase_test.cpp.i
+.PHONY : src/qpOASE/qpoase_test.cpp.i
+
+src/qpOASE/qpoase_test.s: src/qpOASE/qpoase_test.cpp.s
+
+.PHONY : src/qpOASE/qpoase_test.s
+
+# target to generate assembly for a file
+src/qpOASE/qpoase_test.cpp.s:
+	$(MAKE) -f CMakeFiles/qpOASES_test.dir/build.make CMakeFiles/qpOASES_test.dir/src/qpOASE/qpoase_test.cpp.s
+.PHONY : src/qpOASE/qpoase_test.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -2664,6 +2704,7 @@ help:
 	@echo "... my_rrt_node"
 	@echo "... 20191029_test3_node"
 	@echo "... 20191029_test1_node"
+	@echo "... qpOASES_test"
 	@echo "... 20191028_test2_node"
 	@echo "... 20191028_test1_node"
 	@echo "... 20191027_test1_node"
@@ -2873,6 +2914,9 @@ help:
 	@echo "... src/MyRRT/my_rrt_test.o"
 	@echo "... src/MyRRT/my_rrt_test.i"
 	@echo "... src/MyRRT/my_rrt_test.s"
+	@echo "... src/qpOASE/qpoase_test.o"
+	@echo "... src/qpOASE/qpoase_test.i"
+	@echo "... src/qpOASE/qpoase_test.s"
 .PHONY : help
 
 

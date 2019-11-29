@@ -13,18 +13,20 @@ message("CMAKE_MODULE_PATH: " ${CMAKE_MODULE_PATH})
 message("CMAKE_ROOT: " ${CMAKE_ROOT})
 
 find_package(catkin REQUIRED COMPONENTS
-  roscpp
-  rospy
-  std_msgs
-  sensor_msgs
-
-        moveit_core
-        moveit_ros_planning
-        moveit_ros_planning_interface
-        moveit_visual_tools
+    roscpp
+    rospy
+    std_msgs
+    sensor_msgs
+    kdl_parser
+    moveit_core
+    moveit_ros_planning
+    moveit_ros_planning_interface
+    moveit_visual_tools
+    orocos_kdl
 )
 
 find_package(moveit_ros_planning REQUIRED)
+
 
 ## System dependencies are found with CMake's conventions
 # find_package(Boost REQUIRED COMPONENTS system)
@@ -130,7 +132,10 @@ catkin_package(
 include_directories(
   include
   ${catkin_INCLUDE_DIRS}
+  /usr/local/include/qpOASES
+
 )
+message(${catkin_INCLUDE_DIRS})
 message(${catkin_INCLUDE_DIRS})
 message("moveit_ros_planning_INCLUDE_DIRS: " ${moveit_ros_planning_INCLUDE_DIRS})
 ## Declare a C++ library
@@ -224,6 +229,7 @@ target_link_libraries(astar_demo ${catkin_LIBRARIES})
 add_executable(multi_cbitrrt_node src/MultiCBiRRT/dual_cbirrt_test.cpp src/MultiCBiRRT/dual_cbirrt.cpp  include/baxter_moveit_application/MultiCBiRRT/dual_cbirrt.h)
 target_link_libraries(multi_cbitrrt_node ${catkin_LIBRARIES})
 
+
 add_executable(multi_cbitrrt_multi_node src/MultiCBiRRT/dual_cbirrt_test_multi_times.cpp src/MultiCBiRRT/dual_cbirrt.cpp  include/baxter_moveit_application/MultiCBiRRT/dual_cbirrt.h)
 target_link_libraries(multi_cbitrrt_multi_node ${catkin_LIBRARIES})
 
@@ -232,6 +238,11 @@ target_link_libraries(multi_ik_test_node ${catkin_LIBRARIES})
 
 add_executable(multi_using_moveit_planner_node src/MultiCBiRRT/using_moveit_planner.cpp)
 target_link_libraries(multi_using_moveit_planner_node ${catkin_LIBRARIES})
+
+## qpOASES_test+++++++
+
+add_executable(qpOASES_test src/qpOASE/qpoase_test.cpp)
+target_link_libraries(qpOASES_test /usr/local/lib/libqpOASES.a)
 
 ## Rename C++ executable without prefix
 ## The above recommended prefix causes long target names, the following renames the

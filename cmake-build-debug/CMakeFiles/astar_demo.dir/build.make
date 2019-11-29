@@ -194,6 +194,7 @@ devel/lib/baxter_moveit_application/astar_demo: /usr/lib/x86_64-linux-gnu/libboo
 devel/lib/baxter_moveit_application/astar_demo: /usr/lib/x86_64-linux-gnu/libboost_atomic.so
 devel/lib/baxter_moveit_application/astar_demo: /usr/lib/x86_64-linux-gnu/libpthread.so
 devel/lib/baxter_moveit_application/astar_demo: /usr/lib/x86_64-linux-gnu/libconsole_bridge.so
+devel/lib/baxter_moveit_application/astar_demo: /opt/ros/kinetic/lib/liborocos-kdl.so.1.3.0
 devel/lib/baxter_moveit_application/astar_demo: CMakeFiles/astar_demo.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/lijiashushu/ros_ws/src/baxter_moveit_application/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Linking CXX executable devel/lib/baxter_moveit_application/astar_demo"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/astar_demo.dir/link.txt --verbose=$(VERBOSE)

@@ -16,6 +16,7 @@
 /home/lijiashushu/ros_ws/src/baxter_moveit_application/cmake-build-debug/CMakeFiles/my_rrt_node.dir
 /home/lijiashushu/ros_ws/src/baxter_moveit_application/cmake-build-debug/CMakeFiles/20191029_test3_node.dir
 /home/lijiashushu/ros_ws/src/baxter_moveit_application/cmake-build-debug/CMakeFiles/20191029_test1_node.dir
+/home/lijiashushu/ros_ws/src/baxter_moveit_application/cmake-build-debug/CMakeFiles/qpOASES_test.dir
 /home/lijiashushu/ros_ws/src/baxter_moveit_application/cmake-build-debug/CMakeFiles/20191028_test2_node.dir
 /home/lijiashushu/ros_ws/src/baxter_moveit_application/cmake-build-debug/CMakeFiles/20191028_test1_node.dir
 /home/lijiashushu/ros_ws/src/baxter_moveit_application/cmake-build-debug/CMakeFiles/20191027_test1_node.dir

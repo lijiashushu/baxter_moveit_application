@@ -112,7 +112,7 @@ vector<Vector3d> AstarPathFinder::getVisitedNodes() //得到所有遍历过的�
                     visited_nodes.push_back(GridNodeMap[i][j][k]->coord);
             }
 
-    ROS_WARN("visited_nodes size : %d", visited_nodes.size());
+    ROS_WARN("visited_nodes size : %d", (int)visited_nodes.size());
     return visited_nodes;
 }
 

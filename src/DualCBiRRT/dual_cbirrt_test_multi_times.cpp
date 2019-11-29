@@ -228,13 +228,13 @@ int main(int argc, char** argv){
 
     ros::Time time_1;
     ros::Time time_2;
-    for(int ii = 0; ii<30; ii++){
+    for(int ii = 0; ii<100; ii++){
 
         int seed = std::rand();
 
         DualCBiRRT my_planner1(1.0, seed, 0.05);
         time_1 = ros::Time::now();
-        if(my_planner1.plan_task_space_dir(goal_state, start_state, planning_scene_for_operate, "left_arm", planning_group, slave_group)){
+        if(my_planner1.plan_task_space_dir_new(goal_state, start_state, planning_scene_for_operate, "left_arm", planning_group, slave_group)){
             ROS_INFO("my_planner1 success at time %d", ii);
         }
         else{

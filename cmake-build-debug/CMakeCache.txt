@@ -453,8 +453,14 @@ object_recognition_msgs_DIR:PATH=/opt/ros/kinetic/share/object_recognition_msgs/
 //The directory containing a CMake configuration file for octomap_msgs.
 octomap_msgs_DIR:PATH=/opt/ros/kinetic/share/octomap_msgs/cmake
 
+//The directory containing a CMake configuration file for orocos_kdl.
+orocos_kdl_DIR:PATH=/opt/ros/kinetic/share/orocos_kdl
+
 //The directory containing a CMake configuration file for pluginlib.
 pluginlib_DIR:PATH=/opt/ros/kinetic/share/pluginlib/cmake
+
+//The directory containing a CMake configuration file for qpOASES.
+qpOASES_DIR:PATH=qpOASES_DIR-NOTFOUND
 
 //The directory containing a CMake configuration file for random_numbers.
 random_numbers_DIR:PATH=/opt/ros/kinetic/share/random_numbers/cmake
