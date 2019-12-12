@@ -52,8 +52,12 @@ int main(int argc, char** argv){
 //    std::vector<double> slave_test_start_value = {-0.644661 , 0.255123 ,  1.83284 ,  2.19888,  -0.36092  , 0.90258  , -1.1066}; //有障碍物测试
 //    std::vector<double> test_start_value = {-0.202391,-1.01283,-0.709538,1.16068,-1.21936,1.51294,1.59967}; //narrow障碍物的起始左臂位置
 //    std::vector<double> slave_test_start_value = {-0.0273947,-0.113638,2.14442,0.981496,-0.31,1.45411,-1.02899};//narrow障碍物的起始右臂位置
-    std::vector<double> test_start_value = {-0.375463,-1.09228,-0.440484,1.20106,1.76769,-1.57028,0.0672226}; //没有奇异、narrow障碍物的起始左臂位置
-    std::vector<double> slave_test_start_value = {-0.115289,-0.393004,1.72106,1.01171,-2.93258,-1.39411,0.332235};//没有奇异、narrow障碍物的起始右臂位置
+//    std::vector<double> test_start_value = {-0.375463,-1.09228,-0.440484,1.20106,1.76769,-1.57028,0.0672226}; //没有奇异、narrow障碍物的起始左臂位置
+//    std::vector<double> slave_test_start_value = {-0.115289,-0.393004,1.72106,1.01171,-2.93258,-1.39411,0.332235};//没有奇异、narrow障碍物的起始右臂位置
+
+    std::vector<double> test_start_value = {-0.0137274,-0.648781,-1.1192,0.880775,2.37693,-1.56809,-0.11713}; //没有奇异、narrow障碍物的起始左臂位置，大桌子，增加抓取物体
+    std::vector<double> slave_test_start_value = {-0.0361471,-0.345621,1.6738,0.869939,-2.96241,-1.47801,0.298402};//没有奇异、narrow障碍物的起始右臂位置，大桌子，增加抓取物体
+
 
     std::vector<double> both_start_value;
     const robot_state::JointModelGroup* planning_group = start_state.getJointModelGroup("left_arm"); //
@@ -94,8 +98,11 @@ int main(int argc, char** argv){
 //    std::vector<double> slave_test_goal_value = {-0.614005,  0.611334 ,  1.40829,   1.80571, -0.631447,   1.11582,  -1.56488}; //平板类似桌子的障碍物的目标右臂位置
 //    std::vector<double> test_goal_value = {-0.0813673,-0.68199,-0.637715,1.9482,-1.13503,1.24992,2.59584};//narrow障碍物的目标左臂位置
 //    std::vector<double> slave_test_goal_value = {-0.485412,0.487359,1.66579,1.6767,-0.522427,1.24843,-1.42944};//narrow障碍物的目标右臂位置
-    std::vector<double> test_goal_value = {-0.233357,-0.754374,-0.490762,1.95377,1.90675,-1.34839,1.06295};//没有奇异、narrow障碍物的目标左臂位置
-    std::vector<double> slave_test_goal_value = {-0.446697,-0.0863082,1.24614,1.77273,-2.93228,-1.08041,-0.381265};//没有奇异、narrow障碍物的目标右臂位置
+//    std::vector<double> test_goal_value = {-0.233357,-0.754374,-0.490762,1.95377,1.90675,-1.34839,1.06295};//没有奇异、narrow障碍物的目标左臂位置
+//    std::vector<double> slave_test_goal_value = {-0.446697,-0.0863082,1.24614,1.77273,-2.93228,-1.08041,-0.381265};//没有奇异、narrow障碍物的目标右臂位置
+
+    std::vector<double> test_goal_value = {0.104215,-0.367542,-0.866707,1.42165,2.45671,-1.38136,0.587156};//没有奇异、narrow障碍物的目标左臂位置，大桌子，增加抓取物体
+    std::vector<double> slave_test_goal_value = {-0.260604,0.0155082,1.32256,1.4155,-3.02382,-1.21494,-0.264714};//没有奇异、narrow障碍物的目标右臂位置,大桌子，增加抓取物体
 
     goal_state.setJointGroupPositions(planning_group, test_goal_value);
     goal_state.setJointGroupPositions(slave_group, slave_test_goal_value);

@@ -47,16 +47,30 @@ int main(int argc, char** argv){
     test.GetEulerZYX(euler2(0), euler2(1), euler2(2));
     std::cout<<"euler2  "<<euler2.transpose()<<std::endl;
 
+    KDL::Rotation test2;
+
+    Eigen::Matrix3d rotmatrix2;
+    rotmatrix2<<           1, -0.000167312 ,-0.000274717,
+    0.00027487 , 0.000916281   ,         1,
+    -0.00016706 ,          -1,  0.000916327;
+    for(size_t i=0; i<3; i++){
+        for(size_t j=0; j<3; j++){
+            test2(i, j) = rotmatrix2(i,j);
+        }
+    }
+    test2.GetEulerZYX(euler2(0), euler2(1), euler2(2));
+    std::cout<<"euler3  "<<euler2.transpose()<<std::endl;
+
     Eigen::Vector3d slave_www_euler;
-    slave_www_euler <<3.1402, 3.14011,1.57151;
-//    slave_www_euler <<0.00027487, 0.00016706, -1.56988;
+//    slave_www_euler <<3.1402, 3.14011,1.57151;
+    slave_www_euler <<0.00027487, 0.00016706, -1.56988;
     Eigen::AngleAxisd www_roll_angle(Eigen::AngleAxisd(slave_www_euler[2], Eigen::Vector3d::UnitX()));
     Eigen::AngleAxisd www_pitch_angle(Eigen::AngleAxisd(slave_www_euler[1], Eigen::Vector3d::UnitY()));
     Eigen::AngleAxisd www_yaw_angle(Eigen::AngleAxisd(slave_www_euler[0], Eigen::Vector3d::UnitZ()));
     Eigen::Matrix3d slave_www_rot_matrix;
     slave_www_rot_matrix=www_yaw_angle*www_pitch_angle*www_roll_angle;
     std::cout<<slave_www_rot_matrix<<std::endl;
-
+    std::cout<<slave_www_rot_matrix.eulerAngles(2,1,0)<<std::endl;
 
 
     DualCBiRRT my_planner(1.0, rand(), 0.00);

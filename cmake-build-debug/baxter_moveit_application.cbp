@@ -27,16 +27,6 @@
 					<DistClean command="/usr/bin/make -j12 -f &quot;/home/lijiashushu/ros_ws/src/baxter_moveit_application/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
-			<Target title="install/local">
-				<Option working_dir="/home/lijiashushu/ros_ws/src/baxter_moveit_application/cmake-build-debug"/>
-				<Option type="4"/>
-				<MakeCommands>
-					<Build command="/usr/bin/make -j12 -f &quot;/home/lijiashushu/ros_ws/src/baxter_moveit_application/cmake-build-debug/Makefile&quot;  VERBOSE=1 install/local"/>
-					<CompileFile command="/usr/bin/make -j12 -f &quot;/home/lijiashushu/ros_ws/src/baxter_moveit_application/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/make -j12 -f &quot;/home/lijiashushu/ros_ws/src/baxter_moveit_application/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/make -j12 -f &quot;/home/lijiashushu/ros_ws/src/baxter_moveit_application/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-				</MakeCommands>
-			</Target>
 			<Target title="install">
 				<Option working_dir="/home/lijiashushu/ros_ws/src/baxter_moveit_application/cmake-build-debug"/>
 				<Option type="4"/>
@@ -62,6 +52,148 @@
 				<Option type="4"/>
 				<MakeCommands>
 					<Build command="/usr/bin/make -j12 -f &quot;/home/lijiashushu/ros_ws/src/baxter_moveit_application/cmake-build-debug/Makefile&quot;  VERBOSE=1 test"/>
+					<CompileFile command="/usr/bin/make -j12 -f &quot;/home/lijiashushu/ros_ws/src/baxter_moveit_application/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j12 -f &quot;/home/lijiashushu/ros_ws/src/baxter_moveit_application/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j12 -f &quot;/home/lijiashushu/ros_ws/src/baxter_moveit_application/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="test_manipulability">
+				<Option output="/home/lijiashushu/ros_ws/src/baxter_moveit_application/cmake-build-debug/devel/lib/baxter_moveit_application/test_manipulability" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/lijiashushu/ros_ws/src/baxter_moveit_application/cmake-build-debug/devel/lib/baxter_moveit_application"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add option="-DROS_BUILD_SHARED_LIBS=1"/>
+					<Add option="-DROS_PACKAGE_NAME=&quot;baxter_moveit_application&quot;"/>
+					<Add option="-DROSCONSOLE_BACKEND_LOG4CXX"/>
+					<Add directory="/home/lijiashushu/ros_ws/src/baxter_moveit_application/include"/>
+					<Add directory="/home/lijiashushu/ros_ws/src/kdl_parser/kdl_parser/include"/>
+					<Add directory="/opt/ros/kinetic/include"/>
+					<Add directory="/opt/ros/kinetic/share/xmlrpcpp/cmake/../../../include/xmlrpcpp"/>
+					<Add directory="/home/lijiashushu/ws_moveit/src/moveit_visual_tools/include"/>
+					<Add directory="/usr/include/eigen3"/>
+					<Add directory="/usr/local/include/qpOASES"/>
+					<Add directory="/usr/include/c++/5"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/5"/>
+					<Add directory="/usr/include/c++/5/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/5/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j12 -f &quot;/home/lijiashushu/ros_ws/src/baxter_moveit_application/cmake-build-debug/Makefile&quot;  VERBOSE=1 test_manipulability"/>
+					<CompileFile command="/usr/bin/make -j12 -f &quot;/home/lijiashushu/ros_ws/src/baxter_moveit_application/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j12 -f &quot;/home/lijiashushu/ros_ws/src/baxter_moveit_application/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j12 -f &quot;/home/lijiashushu/ros_ws/src/baxter_moveit_application/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="test_manipulability/fast">
+				<Option output="/home/lijiashushu/ros_ws/src/baxter_moveit_application/cmake-build-debug/devel/lib/baxter_moveit_application/test_manipulability" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/lijiashushu/ros_ws/src/baxter_moveit_application/cmake-build-debug/devel/lib/baxter_moveit_application"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add option="-DROS_BUILD_SHARED_LIBS=1"/>
+					<Add option="-DROS_PACKAGE_NAME=&quot;baxter_moveit_application&quot;"/>
+					<Add option="-DROSCONSOLE_BACKEND_LOG4CXX"/>
+					<Add directory="/home/lijiashushu/ros_ws/src/baxter_moveit_application/include"/>
+					<Add directory="/home/lijiashushu/ros_ws/src/kdl_parser/kdl_parser/include"/>
+					<Add directory="/opt/ros/kinetic/include"/>
+					<Add directory="/opt/ros/kinetic/share/xmlrpcpp/cmake/../../../include/xmlrpcpp"/>
+					<Add directory="/home/lijiashushu/ws_moveit/src/moveit_visual_tools/include"/>
+					<Add directory="/usr/include/eigen3"/>
+					<Add directory="/usr/local/include/qpOASES"/>
+					<Add directory="/usr/include/c++/5"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/5"/>
+					<Add directory="/usr/include/c++/5/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/5/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j12 -f &quot;/home/lijiashushu/ros_ws/src/baxter_moveit_application/cmake-build-debug/Makefile&quot;  VERBOSE=1 test_manipulability/fast"/>
+					<CompileFile command="/usr/bin/make -j12 -f &quot;/home/lijiashushu/ros_ws/src/baxter_moveit_application/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j12 -f &quot;/home/lijiashushu/ros_ws/src/baxter_moveit_application/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j12 -f &quot;/home/lijiashushu/ros_ws/src/baxter_moveit_application/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="install/local">
+				<Option working_dir="/home/lijiashushu/ros_ws/src/baxter_moveit_application/cmake-build-debug"/>
+				<Option type="4"/>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j12 -f &quot;/home/lijiashushu/ros_ws/src/baxter_moveit_application/cmake-build-debug/Makefile&quot;  VERBOSE=1 install/local"/>
+					<CompileFile command="/usr/bin/make -j12 -f &quot;/home/lijiashushu/ros_ws/src/baxter_moveit_application/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j12 -f &quot;/home/lijiashushu/ros_ws/src/baxter_moveit_application/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j12 -f &quot;/home/lijiashushu/ros_ws/src/baxter_moveit_application/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="euler_dual_cbitrrt_multi_node">
+				<Option output="/home/lijiashushu/ros_ws/src/baxter_moveit_application/cmake-build-debug/devel/lib/baxter_moveit_application/euler_dual_cbitrrt_multi_node" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/lijiashushu/ros_ws/src/baxter_moveit_application/cmake-build-debug/devel/lib/baxter_moveit_application"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add option="-DROS_BUILD_SHARED_LIBS=1"/>
+					<Add option="-DROS_PACKAGE_NAME=&quot;baxter_moveit_application&quot;"/>
+					<Add option="-DROSCONSOLE_BACKEND_LOG4CXX"/>
+					<Add directory="/home/lijiashushu/ros_ws/src/baxter_moveit_application/include"/>
+					<Add directory="/home/lijiashushu/ros_ws/src/kdl_parser/kdl_parser/include"/>
+					<Add directory="/opt/ros/kinetic/include"/>
+					<Add directory="/opt/ros/kinetic/share/xmlrpcpp/cmake/../../../include/xmlrpcpp"/>
+					<Add directory="/home/lijiashushu/ws_moveit/src/moveit_visual_tools/include"/>
+					<Add directory="/usr/include/eigen3"/>
+					<Add directory="/usr/local/include/qpOASES"/>
+					<Add directory="/usr/include/c++/5"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/5"/>
+					<Add directory="/usr/include/c++/5/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/5/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j12 -f &quot;/home/lijiashushu/ros_ws/src/baxter_moveit_application/cmake-build-debug/Makefile&quot;  VERBOSE=1 euler_dual_cbitrrt_multi_node"/>
+					<CompileFile command="/usr/bin/make -j12 -f &quot;/home/lijiashushu/ros_ws/src/baxter_moveit_application/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j12 -f &quot;/home/lijiashushu/ros_ws/src/baxter_moveit_application/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j12 -f &quot;/home/lijiashushu/ros_ws/src/baxter_moveit_application/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="euler_dual_cbitrrt_multi_node/fast">
+				<Option output="/home/lijiashushu/ros_ws/src/baxter_moveit_application/cmake-build-debug/devel/lib/baxter_moveit_application/euler_dual_cbitrrt_multi_node" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/lijiashushu/ros_ws/src/baxter_moveit_application/cmake-build-debug/devel/lib/baxter_moveit_application"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add option="-DROS_BUILD_SHARED_LIBS=1"/>
+					<Add option="-DROS_PACKAGE_NAME=&quot;baxter_moveit_application&quot;"/>
+					<Add option="-DROSCONSOLE_BACKEND_LOG4CXX"/>
+					<Add directory="/home/lijiashushu/ros_ws/src/baxter_moveit_application/include"/>
+					<Add directory="/home/lijiashushu/ros_ws/src/kdl_parser/kdl_parser/include"/>
+					<Add directory="/opt/ros/kinetic/include"/>
+					<Add directory="/opt/ros/kinetic/share/xmlrpcpp/cmake/../../../include/xmlrpcpp"/>
+					<Add directory="/home/lijiashushu/ws_moveit/src/moveit_visual_tools/include"/>
+					<Add directory="/usr/include/eigen3"/>
+					<Add directory="/usr/local/include/qpOASES"/>
+					<Add directory="/usr/include/c++/5"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/5"/>
+					<Add directory="/usr/include/c++/5/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/5/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j12 -f &quot;/home/lijiashushu/ros_ws/src/baxter_moveit_application/cmake-build-debug/Makefile&quot;  VERBOSE=1 euler_dual_cbitrrt_multi_node/fast"/>
 					<CompileFile command="/usr/bin/make -j12 -f &quot;/home/lijiashushu/ros_ws/src/baxter_moveit_application/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
 					<Clean command="/usr/bin/make -j12 -f &quot;/home/lijiashushu/ros_ws/src/baxter_moveit_application/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 					<DistClean command="/usr/bin/make -j12 -f &quot;/home/lijiashushu/ros_ws/src/baxter_moveit_application/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
@@ -1527,6 +1659,72 @@
 					<DistClean command="/usr/bin/make -j12 -f &quot;/home/lijiashushu/ros_ws/src/baxter_moveit_application/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
+			<Target title="euler_using_moveit_planner_node">
+				<Option output="/home/lijiashushu/ros_ws/src/baxter_moveit_application/cmake-build-debug/devel/lib/baxter_moveit_application/euler_using_moveit_planner_node" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/lijiashushu/ros_ws/src/baxter_moveit_application/cmake-build-debug/devel/lib/baxter_moveit_application"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add option="-DROS_BUILD_SHARED_LIBS=1"/>
+					<Add option="-DROS_PACKAGE_NAME=&quot;baxter_moveit_application&quot;"/>
+					<Add option="-DROSCONSOLE_BACKEND_LOG4CXX"/>
+					<Add directory="/home/lijiashushu/ros_ws/src/baxter_moveit_application/include"/>
+					<Add directory="/home/lijiashushu/ros_ws/src/kdl_parser/kdl_parser/include"/>
+					<Add directory="/opt/ros/kinetic/include"/>
+					<Add directory="/opt/ros/kinetic/share/xmlrpcpp/cmake/../../../include/xmlrpcpp"/>
+					<Add directory="/home/lijiashushu/ws_moveit/src/moveit_visual_tools/include"/>
+					<Add directory="/usr/include/eigen3"/>
+					<Add directory="/usr/local/include/qpOASES"/>
+					<Add directory="/usr/include/c++/5"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/5"/>
+					<Add directory="/usr/include/c++/5/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/5/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j12 -f &quot;/home/lijiashushu/ros_ws/src/baxter_moveit_application/cmake-build-debug/Makefile&quot;  VERBOSE=1 euler_using_moveit_planner_node"/>
+					<CompileFile command="/usr/bin/make -j12 -f &quot;/home/lijiashushu/ros_ws/src/baxter_moveit_application/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j12 -f &quot;/home/lijiashushu/ros_ws/src/baxter_moveit_application/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j12 -f &quot;/home/lijiashushu/ros_ws/src/baxter_moveit_application/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="euler_using_moveit_planner_node/fast">
+				<Option output="/home/lijiashushu/ros_ws/src/baxter_moveit_application/cmake-build-debug/devel/lib/baxter_moveit_application/euler_using_moveit_planner_node" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/lijiashushu/ros_ws/src/baxter_moveit_application/cmake-build-debug/devel/lib/baxter_moveit_application"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add option="-DROS_BUILD_SHARED_LIBS=1"/>
+					<Add option="-DROS_PACKAGE_NAME=&quot;baxter_moveit_application&quot;"/>
+					<Add option="-DROSCONSOLE_BACKEND_LOG4CXX"/>
+					<Add directory="/home/lijiashushu/ros_ws/src/baxter_moveit_application/include"/>
+					<Add directory="/home/lijiashushu/ros_ws/src/kdl_parser/kdl_parser/include"/>
+					<Add directory="/opt/ros/kinetic/include"/>
+					<Add directory="/opt/ros/kinetic/share/xmlrpcpp/cmake/../../../include/xmlrpcpp"/>
+					<Add directory="/home/lijiashushu/ws_moveit/src/moveit_visual_tools/include"/>
+					<Add directory="/usr/include/eigen3"/>
+					<Add directory="/usr/local/include/qpOASES"/>
+					<Add directory="/usr/include/c++/5"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/5"/>
+					<Add directory="/usr/include/c++/5/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/5/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j12 -f &quot;/home/lijiashushu/ros_ws/src/baxter_moveit_application/cmake-build-debug/Makefile&quot;  VERBOSE=1 euler_using_moveit_planner_node/fast"/>
+					<CompileFile command="/usr/bin/make -j12 -f &quot;/home/lijiashushu/ros_ws/src/baxter_moveit_application/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j12 -f &quot;/home/lijiashushu/ros_ws/src/baxter_moveit_application/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j12 -f &quot;/home/lijiashushu/ros_ws/src/baxter_moveit_application/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
 			<Target title="20191025_test1_node">
 				<Option output="/home/lijiashushu/ros_ws/src/baxter_moveit_application/cmake-build-debug/devel/lib/baxter_moveit_application/20191025_test1_node" prefix_auto="0" extension_auto="0"/>
 				<Option working_dir="/home/lijiashushu/ros_ws/src/baxter_moveit_application/cmake-build-debug/devel/lib/baxter_moveit_application"/>
@@ -2337,6 +2535,72 @@
 					<DistClean command="/usr/bin/make -j12 -f &quot;/home/lijiashushu/ros_ws/src/baxter_moveit_application/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
+			<Target title="euler_ik_test_node">
+				<Option output="/home/lijiashushu/ros_ws/src/baxter_moveit_application/cmake-build-debug/devel/lib/baxter_moveit_application/euler_ik_test_node" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/lijiashushu/ros_ws/src/baxter_moveit_application/cmake-build-debug/devel/lib/baxter_moveit_application"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add option="-DROS_BUILD_SHARED_LIBS=1"/>
+					<Add option="-DROS_PACKAGE_NAME=&quot;baxter_moveit_application&quot;"/>
+					<Add option="-DROSCONSOLE_BACKEND_LOG4CXX"/>
+					<Add directory="/home/lijiashushu/ros_ws/src/baxter_moveit_application/include"/>
+					<Add directory="/home/lijiashushu/ros_ws/src/kdl_parser/kdl_parser/include"/>
+					<Add directory="/opt/ros/kinetic/include"/>
+					<Add directory="/opt/ros/kinetic/share/xmlrpcpp/cmake/../../../include/xmlrpcpp"/>
+					<Add directory="/home/lijiashushu/ws_moveit/src/moveit_visual_tools/include"/>
+					<Add directory="/usr/include/eigen3"/>
+					<Add directory="/usr/local/include/qpOASES"/>
+					<Add directory="/usr/include/c++/5"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/5"/>
+					<Add directory="/usr/include/c++/5/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/5/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j12 -f &quot;/home/lijiashushu/ros_ws/src/baxter_moveit_application/cmake-build-debug/Makefile&quot;  VERBOSE=1 euler_ik_test_node"/>
+					<CompileFile command="/usr/bin/make -j12 -f &quot;/home/lijiashushu/ros_ws/src/baxter_moveit_application/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j12 -f &quot;/home/lijiashushu/ros_ws/src/baxter_moveit_application/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j12 -f &quot;/home/lijiashushu/ros_ws/src/baxter_moveit_application/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="euler_ik_test_node/fast">
+				<Option output="/home/lijiashushu/ros_ws/src/baxter_moveit_application/cmake-build-debug/devel/lib/baxter_moveit_application/euler_ik_test_node" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/lijiashushu/ros_ws/src/baxter_moveit_application/cmake-build-debug/devel/lib/baxter_moveit_application"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add option="-DROS_BUILD_SHARED_LIBS=1"/>
+					<Add option="-DROS_PACKAGE_NAME=&quot;baxter_moveit_application&quot;"/>
+					<Add option="-DROSCONSOLE_BACKEND_LOG4CXX"/>
+					<Add directory="/home/lijiashushu/ros_ws/src/baxter_moveit_application/include"/>
+					<Add directory="/home/lijiashushu/ros_ws/src/kdl_parser/kdl_parser/include"/>
+					<Add directory="/opt/ros/kinetic/include"/>
+					<Add directory="/opt/ros/kinetic/share/xmlrpcpp/cmake/../../../include/xmlrpcpp"/>
+					<Add directory="/home/lijiashushu/ws_moveit/src/moveit_visual_tools/include"/>
+					<Add directory="/usr/include/eigen3"/>
+					<Add directory="/usr/local/include/qpOASES"/>
+					<Add directory="/usr/include/c++/5"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/5"/>
+					<Add directory="/usr/include/c++/5/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/5/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j12 -f &quot;/home/lijiashushu/ros_ws/src/baxter_moveit_application/cmake-build-debug/Makefile&quot;  VERBOSE=1 euler_ik_test_node/fast"/>
+					<CompileFile command="/usr/bin/make -j12 -f &quot;/home/lijiashushu/ros_ws/src/baxter_moveit_application/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j12 -f &quot;/home/lijiashushu/ros_ws/src/baxter_moveit_application/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j12 -f &quot;/home/lijiashushu/ros_ws/src/baxter_moveit_application/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
 			<Target title="actionlib_msgs_generate_messages_lisp">
 				<Option working_dir="/home/lijiashushu/ros_ws/src/baxter_moveit_application/cmake-build-debug"/>
 				<Option type="4"/>
@@ -2372,6 +2636,72 @@
 				<Option type="4"/>
 				<MakeCommands>
 					<Build command="/usr/bin/make -j12 -f &quot;/home/lijiashushu/ros_ws/src/baxter_moveit_application/cmake-build-debug/Makefile&quot;  VERBOSE=1 trajectory_msgs_generate_messages_cpp"/>
+					<CompileFile command="/usr/bin/make -j12 -f &quot;/home/lijiashushu/ros_ws/src/baxter_moveit_application/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j12 -f &quot;/home/lijiashushu/ros_ws/src/baxter_moveit_application/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j12 -f &quot;/home/lijiashushu/ros_ws/src/baxter_moveit_application/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="euler_dual_cbitrrt_node">
+				<Option output="/home/lijiashushu/ros_ws/src/baxter_moveit_application/cmake-build-debug/devel/lib/baxter_moveit_application/euler_dual_cbitrrt_node" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/lijiashushu/ros_ws/src/baxter_moveit_application/cmake-build-debug/devel/lib/baxter_moveit_application"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add option="-DROS_BUILD_SHARED_LIBS=1"/>
+					<Add option="-DROS_PACKAGE_NAME=&quot;baxter_moveit_application&quot;"/>
+					<Add option="-DROSCONSOLE_BACKEND_LOG4CXX"/>
+					<Add directory="/home/lijiashushu/ros_ws/src/baxter_moveit_application/include"/>
+					<Add directory="/home/lijiashushu/ros_ws/src/kdl_parser/kdl_parser/include"/>
+					<Add directory="/opt/ros/kinetic/include"/>
+					<Add directory="/opt/ros/kinetic/share/xmlrpcpp/cmake/../../../include/xmlrpcpp"/>
+					<Add directory="/home/lijiashushu/ws_moveit/src/moveit_visual_tools/include"/>
+					<Add directory="/usr/include/eigen3"/>
+					<Add directory="/usr/local/include/qpOASES"/>
+					<Add directory="/usr/include/c++/5"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/5"/>
+					<Add directory="/usr/include/c++/5/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/5/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j12 -f &quot;/home/lijiashushu/ros_ws/src/baxter_moveit_application/cmake-build-debug/Makefile&quot;  VERBOSE=1 euler_dual_cbitrrt_node"/>
+					<CompileFile command="/usr/bin/make -j12 -f &quot;/home/lijiashushu/ros_ws/src/baxter_moveit_application/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j12 -f &quot;/home/lijiashushu/ros_ws/src/baxter_moveit_application/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j12 -f &quot;/home/lijiashushu/ros_ws/src/baxter_moveit_application/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+				</MakeCommands>
+			</Target>
+			<Target title="euler_dual_cbitrrt_node/fast">
+				<Option output="/home/lijiashushu/ros_ws/src/baxter_moveit_application/cmake-build-debug/devel/lib/baxter_moveit_application/euler_dual_cbitrrt_node" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/lijiashushu/ros_ws/src/baxter_moveit_application/cmake-build-debug/devel/lib/baxter_moveit_application"/>
+				<Option object_output="./"/>
+				<Option type="1"/>
+				<Option compiler="gcc"/>
+				<Compiler>
+					<Add option="-DROS_BUILD_SHARED_LIBS=1"/>
+					<Add option="-DROS_PACKAGE_NAME=&quot;baxter_moveit_application&quot;"/>
+					<Add option="-DROSCONSOLE_BACKEND_LOG4CXX"/>
+					<Add directory="/home/lijiashushu/ros_ws/src/baxter_moveit_application/include"/>
+					<Add directory="/home/lijiashushu/ros_ws/src/kdl_parser/kdl_parser/include"/>
+					<Add directory="/opt/ros/kinetic/include"/>
+					<Add directory="/opt/ros/kinetic/share/xmlrpcpp/cmake/../../../include/xmlrpcpp"/>
+					<Add directory="/home/lijiashushu/ws_moveit/src/moveit_visual_tools/include"/>
+					<Add directory="/usr/include/eigen3"/>
+					<Add directory="/usr/local/include/qpOASES"/>
+					<Add directory="/usr/include/c++/5"/>
+					<Add directory="/usr/include/x86_64-linux-gnu/c++/5"/>
+					<Add directory="/usr/include/c++/5/backward"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/5/include"/>
+					<Add directory="/usr/local/include"/>
+					<Add directory="/usr/lib/gcc/x86_64-linux-gnu/5/include-fixed"/>
+					<Add directory="/usr/include/x86_64-linux-gnu"/>
+					<Add directory="/usr/include"/>
+				</Compiler>
+				<MakeCommands>
+					<Build command="/usr/bin/make -j12 -f &quot;/home/lijiashushu/ros_ws/src/baxter_moveit_application/cmake-build-debug/Makefile&quot;  VERBOSE=1 euler_dual_cbitrrt_node/fast"/>
 					<CompileFile command="/usr/bin/make -j12 -f &quot;/home/lijiashushu/ros_ws/src/baxter_moveit_application/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
 					<Clean command="/usr/bin/make -j12 -f &quot;/home/lijiashushu/ros_ws/src/baxter_moveit_application/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 					<DistClean command="/usr/bin/make -j12 -f &quot;/home/lijiashushu/ros_ws/src/baxter_moveit_application/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
@@ -3033,6 +3363,12 @@
 			<Option target="ik_test_node"/>
 			<Option target="dual_cbitrrt_multi_node"/>
 		</Unit>
+		<Unit filename="/home/lijiashushu/ros_ws/src/baxter_moveit_application/include/baxter_moveit_application/DualCBiRRTEuler/dual_cbirrt.h">
+			<Option target="test_manipulability"/>
+			<Option target="euler_dual_cbitrrt_multi_node"/>
+			<Option target="euler_ik_test_node"/>
+			<Option target="euler_dual_cbitrrt_node"/>
+		</Unit>
 		<Unit filename="/home/lijiashushu/ros_ws/src/baxter_moveit_application/include/baxter_moveit_application/DualCBiRRT_Astar/Astar_searcher.h">
 			<Option target="astar_dual_cbitrrt_node"/>
 			<Option target="astar_demo"/>
@@ -3118,6 +3454,27 @@
 		</Unit>
 		<Unit filename="/home/lijiashushu/ros_ws/src/baxter_moveit_application/src/DualCBiRRT/using_moveit_planner.cpp">
 			<Option target="using_moveit_planner_node"/>
+		</Unit>
+		<Unit filename="/home/lijiashushu/ros_ws/src/baxter_moveit_application/src/DualCBiRRTEuler/dual_cbirrt.cpp">
+			<Option target="test_manipulability"/>
+			<Option target="euler_dual_cbitrrt_multi_node"/>
+			<Option target="euler_ik_test_node"/>
+			<Option target="euler_dual_cbitrrt_node"/>
+		</Unit>
+		<Unit filename="/home/lijiashushu/ros_ws/src/baxter_moveit_application/src/DualCBiRRTEuler/dual_cbirrt_test.cpp">
+			<Option target="euler_dual_cbitrrt_node"/>
+		</Unit>
+		<Unit filename="/home/lijiashushu/ros_ws/src/baxter_moveit_application/src/DualCBiRRTEuler/dual_cbirrt_test_multi_times.cpp">
+			<Option target="euler_dual_cbitrrt_multi_node"/>
+		</Unit>
+		<Unit filename="/home/lijiashushu/ros_ws/src/baxter_moveit_application/src/DualCBiRRTEuler/ik_test.cpp">
+			<Option target="euler_ik_test_node"/>
+		</Unit>
+		<Unit filename="/home/lijiashushu/ros_ws/src/baxter_moveit_application/src/DualCBiRRTEuler/test_manipulability.cpp">
+			<Option target="test_manipulability"/>
+		</Unit>
+		<Unit filename="/home/lijiashushu/ros_ws/src/baxter_moveit_application/src/DualCBiRRTEuler/using_moveit_planner.cpp">
+			<Option target="euler_using_moveit_planner_node"/>
 		</Unit>
 		<Unit filename="/home/lijiashushu/ros_ws/src/baxter_moveit_application/src/DualCBiRRT_Astar/Astar_searcher.cpp">
 			<Option target="astar_dual_cbitrrt_node"/>

@@ -46,7 +46,7 @@ AstarPathFinder * _astar_path_finder     = new AstarPathFinder();
 
 
 std::vector<double> left_euler_offset_angles = {0, 0.52, 1.05, 1.57};
-double _error_coefficient = 0.5;
+double _error_coefficient = 0.05;
 
 
 void rcvWaypointsCallback(const nav_msgs::Path & wp);
@@ -277,9 +277,9 @@ bool solve_dual_arm_IK(vector<Vector3d> & astar_path, planning_scene::PlanningSc
                 }
             }
 
-            distance(0) = -0.06 * std::sin(left_euler_offset_angles[j]);
+            distance(0) = -0.2 * std::sin(left_euler_offset_angles[j]);
             distance(1) = 0;
-            distance(2) = 0.06 * std::cos(left_euler_offset_angles[j]);
+            distance(2) = 0.2 * std::cos(left_euler_offset_angles[j]);
             
             //如果求解成功，就使用解对应的位置，如果失败就是用原来的目标位置
             if(left_ik_success){
@@ -375,6 +375,202 @@ bool solve_dual_arm_IK(vector<Vector3d> & astar_path, planning_scene::PlanningSc
                 }
             }
             ik_results_along_the_path_all_posture[j].push_back(current_joint_angles_matrix);
+        }
+    }
+}
+
+bool solve_one_ik_problem(Vector3d left_target_pos, size_t offset_index, robot_state::RobotState & current_robot_state){
+    const robot_state::JointModelGroup* left_group = current_robot_state.getJointModelGroup("left_arm"); //
+    const robot_state::JointModelGroup* right_group = current_robot_state.getJointModelGroup("right_arm");
+    Eigen::Vector3d left_ref_euler(0, 0, 1.57);
+
+    Eigen::Vector3d left_target_euler;
+    left_target_euler(0) = left_ref_euler(0) + left_euler_offset_angles[offset_index];
+    left_target_euler(1) = left_ref_euler(1);
+    left_target_euler(2) = left_ref_euler(2);
+
+    Eigen::Matrix3d left_target_rot_matrix;
+    Eigen::AngleAxisd left_goal_roll_angle(Eigen::AngleAxisd(left_target_euler[2], Eigen::Vector3d::UnitX()));
+    Eigen::AngleAxisd left_goal_pitch_angle(Eigen::AngleAxisd(left_target_euler[1], Eigen::Vector3d::UnitY()));
+    Eigen::AngleAxisd left_goal_yaw_angle(Eigen::AngleAxisd(left_target_euler[0], Eigen::Vector3d::UnitZ()));
+    left_target_rot_matrix = left_goal_yaw_angle*left_goal_pitch_angle*left_goal_roll_angle;
+    
+    Eigen::Affine3d left_current_end_pose;
+    Eigen::Vector3d left_current_pos;
+    Eigen::Vector3d left_current_euler;
+    Eigen::Matrix3d left_current_rot_matrix;
+    KDL::Rotation left_current_rot_kdl;
+    left_current_end_pose = current_robot_state.getGlobalLinkTransform("left_gripper");
+    left_current_pos = left_current_end_pose.translation();
+    left_current_rot_matrix = left_current_end_pose.rotation();
+    for(size_t i=0; i<3; i++){
+        for(size_t j=0; j<3; j++){
+            left_current_rot_kdl(i, j) = left_current_rot_matrix(i, j);
+        }
+    }
+    left_current_rot_kdl.GetEulerZYX(left_current_euler(0), left_current_euler(1), left_current_euler(2));
+    Eigen::MatrixXd left_current_jacobian;
+    Eigen::MatrixXd left_current_jacobian_mp_inverse;
+    Eigen::Matrix<double,7,1> left_current_joint_vec;
+    std::vector<double> left_current_joint_interface;
+    current_robot_state.copyJointGroupPositions("left_arm", left_current_joint_interface);
+    for(size_t i=0; i<7; i++){
+        left_current_joint_vec[i] = left_current_joint_interface[i];
+    }
+    
+    Eigen::Vector3d left_error_pos;
+    Eigen::Vector3d left_error_euler;
+    Eigen::Matrix3d left_error_rot_matrix;
+    Eigen::AngleAxisd left_error_axis_angle;
+    Eigen::Vector3d left_error_rot3vec;
+    Eigen::Matrix<double,6,1> left_error_6vec;
+    KDL::Rotation left_error_rot_matrix_kdl;
+    Eigen::Matrix<double,7,1> left_error_joint_vec;
+    
+    while (true){
+        left_error_pos = left_target_pos - left_current_pos;
+        left_error_euler = left_target_euler - left_current_euler;
+        std::cout<<"left_error_pos\n"<<left_error_pos.transpose()<<std::endl;
+        std::cout<<"left_error_euler\n"<<left_error_euler.transpose()<<std::endl;
+        left_error_rot_matrix = left_target_rot_matrix * (left_current_rot_matrix.inverse());
+        left_error_axis_angle = left_error_rot_matrix;
+        std::cout<<"angle:  "<<left_error_axis_angle.angle()<<std::endl;
+
+        if(left_error_pos.norm() < 0.005 && left_error_euler.norm()<0.005){
+            std::cout<<"left computing IK success"<<std::endl;
+            break;
+        }
+        else{
+
+            left_error_rot3vec = left_error_axis_angle.angle() * left_error_axis_angle.axis();
+            left_error_6vec.head(3) = left_error_pos;
+            left_error_6vec.tail(3) = left_error_rot3vec;
+            left_error_6vec = (_error_coefficient * left_error_6vec) / 0.01;
+
+            left_current_jacobian = current_robot_state.getJacobian(left_group);
+            left_current_jacobian_mp_inverse = (left_current_jacobian.transpose() * ((left_current_jacobian * left_current_jacobian.transpose() + 0.0001 * Eigen::Matrix<double,6,6>::Identity()).inverse())).eval();
+            left_error_joint_vec = left_current_jacobian_mp_inverse * left_error_6vec;
+            left_error_joint_vec *= 0.01;
+
+            left_current_joint_vec += left_error_joint_vec;
+            for(size_t i=0; i<7; i++){
+                left_current_joint_interface[i] = left_current_joint_vec[i];
+            }
+            current_robot_state.setJointGroupPositions(left_group, left_current_joint_interface);
+            current_robot_state.update();
+
+            if(current_robot_state.satisfiesBounds(left_group, 0.05)){
+                //更新状态
+                left_current_end_pose = current_robot_state.getGlobalLinkTransform("left_gripper");
+                left_current_rot_matrix = left_current_end_pose.rotation();
+                left_current_pos = left_current_end_pose.translation();
+                for(size_t i=0; i<3; i++){
+                    for(size_t j=0; j<3; j++){
+                        left_current_rot_kdl(i, j) = left_current_rot_matrix(i, j);
+                    }
+                }
+                left_current_rot_kdl.GetEulerZYX(left_current_euler(0), left_current_euler(1), left_current_euler(2));
+            }
+            else{
+                std::cout<<"left computing IK fail, exceed joint limits!!"<<std::endl;
+                break;
+            }
+        }
+    }
+
+    Eigen::Vector3d distance(-0.2 * sin(left_euler_offset_angles[offset_index]), 0, 0.2 * cos(left_euler_offset_angles[offset_index]));
+    Eigen::Vector3d right_target_pos;
+    right_target_pos = left_target_rot_matrix * distance + left_target_pos;
+    Eigen::Vector3d right_target_euler;
+    right_target_euler(0) = left_target_euler(0) - 2 * left_euler_offset_angles[offset_index];
+    right_target_euler(1) = left_target_euler(1);
+    right_target_euler(2) = left_target_euler(2) - 3.14;
+    Eigen::Matrix3d right_target_rot_matrix;
+    Eigen::AngleAxisd right_goal_roll_angle(Eigen::AngleAxisd(right_target_euler[2], Eigen::Vector3d::UnitX()));
+    Eigen::AngleAxisd right_goal_pitch_angle(Eigen::AngleAxisd(right_target_euler[1], Eigen::Vector3d::UnitY()));
+    Eigen::AngleAxisd right_goal_yaw_angle(Eigen::AngleAxisd(right_target_euler[0], Eigen::Vector3d::UnitZ()));
+    right_target_rot_matrix = right_goal_yaw_angle*right_goal_pitch_angle*right_goal_roll_angle;
+
+    Eigen::Affine3d right_current_end_pose;
+    Eigen::Vector3d right_current_pos;
+    Eigen::Vector3d right_current_euler;
+    Eigen::Matrix3d right_current_rot_matrix;
+    KDL::Rotation right_current_rot_kdl;
+    right_current_end_pose = current_robot_state.getGlobalLinkTransform("right_gripper");
+    right_current_pos = right_current_end_pose.translation();
+    right_current_rot_matrix = right_current_end_pose.rotation();
+    for(size_t i=0; i<3; i++){
+        for(size_t j=0; j<3; j++){
+            right_current_rot_kdl(i, j) = right_current_rot_matrix(i, j);
+        }
+    }
+    right_current_rot_kdl.GetEulerZYX(right_current_euler(0), right_current_euler(1), right_current_euler(2));
+    Eigen::MatrixXd right_current_jacobian;
+    Eigen::MatrixXd right_current_jacobian_mp_inverse;
+    Eigen::Matrix<double,7,1> right_current_joint_vec;
+    std::vector<double> right_current_joint_interface;
+    current_robot_state.copyJointGroupPositions("right_arm", right_current_joint_interface);
+    for(size_t i=0; i<7; i++){
+        right_current_joint_vec[i] = right_current_joint_interface[i];
+    }
+
+    Eigen::Vector3d right_error_pos;
+    Eigen::Vector3d right_error_euler;
+    Eigen::Matrix3d right_error_rot_matrix;
+    Eigen::AngleAxisd right_error_axis_angle;
+    Eigen::Vector3d right_error_rot3vec;
+    Eigen::Matrix<double,6,1> right_error_6vec;
+    KDL::Rotation right_error_rot_matrix_kdl;
+    Eigen::Matrix<double,7,1> right_error_joint_vec;
+
+    while (true){
+        right_error_pos = right_target_pos - right_current_pos;
+        right_error_euler = right_target_euler - right_current_euler;
+        std::cout<<"right_error_pos\n"<<right_error_pos.transpose()<<std::endl;
+        std::cout<<"right_error_euler\n"<<right_error_euler.transpose()<<std::endl;
+        right_error_rot_matrix = right_target_rot_matrix * (right_current_rot_matrix.inverse());
+        right_error_axis_angle = right_error_rot_matrix;
+        std::cout<<"angle:  "<<right_error_axis_angle.angle()<<std::endl;
+
+        if(right_error_pos.norm() < 0.005 && right_error_euler.norm()<0.005){
+            std::cout<<"right computing IK success"<<std::endl;
+            break;
+        }
+        else{
+
+            right_error_rot3vec = right_error_axis_angle.angle() * right_error_axis_angle.axis();
+            right_error_6vec.head(3) = right_error_pos;
+            right_error_6vec.tail(3) = right_error_rot3vec;
+            right_error_6vec = (_error_coefficient * right_error_6vec) / 0.01;
+
+            right_current_jacobian = current_robot_state.getJacobian(right_group);
+            right_current_jacobian_mp_inverse = (right_current_jacobian.transpose() * ((right_current_jacobian * right_current_jacobian.transpose() + 0.0001 * Eigen::Matrix<double,6,6>::Identity()).inverse())).eval();
+            right_error_joint_vec = right_current_jacobian_mp_inverse * right_error_6vec;
+            right_error_joint_vec *= 0.01;
+
+            right_current_joint_vec += right_error_joint_vec;
+            for(size_t i=0; i<7; i++){
+                right_current_joint_interface[i] = right_current_joint_vec[i];
+            }
+            current_robot_state.setJointGroupPositions(right_group, right_current_joint_interface);
+            current_robot_state.update();
+
+            if(current_robot_state.satisfiesBounds(right_group, 0.05)){
+                //更新状态
+                right_current_end_pose = current_robot_state.getGlobalLinkTransform("right_gripper");
+                right_current_rot_matrix = right_current_end_pose.rotation();
+                right_current_pos = right_current_end_pose.translation();
+                for(size_t i=0; i<3; i++){
+                    for(size_t j=0; j<3; j++){
+                        right_current_rot_kdl(i, j) = right_current_rot_matrix(i, j);
+                    }
+                }
+                right_current_rot_kdl.GetEulerZYX(right_current_euler(0), right_current_euler(1), right_current_euler(2));
+            }
+            else{
+                std::cout<<"right computing IK fail, exceed joint limits!!"<<std::endl;
+                break;
+            }
         }
     }
 }
@@ -476,14 +672,15 @@ int main(int argc, char** argv)
     _grid_path_vis_pub            = nh.advertise<visualization_msgs::Marker>("grid_path_vis", 1);
     _visited_nodes_vis_pub        = nh.advertise<visualization_msgs::Marker>("visited_nodes_vis",1);
     _obstacle_nodes_vis_pub        = nh.advertise<visualization_msgs::Marker>("obstacle_nodes_vis",1);
+    ros::Publisher planning_scene_diff_publisher = nh.advertise<moveit_msgs::PlanningScene>("/planning_scene", 1);
 
     ros::WallDuration sleep_t(0.5);
-    while (_grid_path_vis_pub.getNumSubscribers() < 1 or _obstacle_nodes_vis_pub.getNumSubscribers() < 1)
+    while (_grid_path_vis_pub.getNumSubscribers() < 1 or _obstacle_nodes_vis_pub.getNumSubscribers() < 1 or planning_scene_diff_publisher.getNumSubscribers() < 1)
     {
         sleep_t.sleep();
     }
 
-    nh.param("map/resolution",    _resolution,   0.1);
+    nh.param("map/resolution",    _resolution,   0.12);
     
     nh.param("map/x_size",        _x_size, 1.50);
     nh.param("map/y_size",        _y_size, 2.0);
@@ -518,7 +715,23 @@ int main(int argc, char** argv)
     robot_state::RobotState robot_state_original = planning_scene_for_operate->getCurrentStateNonConst();
 
     set_scene_object_as_obstacle(planning_scene_for_operate);
-    
+
+//    std::vector<double> baxter_left_neutral_pos = {0.0010190456195,-0.541413503883,-8.95068892985e-05,0.748570361585,-0.000972739830137,1.25329285604,-7.44821020824e-05};
+//    std::vector<double> baxter_right_neutral_pos = {-0.00144350975696,-0.541413503826,-0.000113662662422,0.748576314717,-0.000463683012766,1.25329915969,0.0001414542156};
+
+    std::vector<double> baxter_left_neutral_pos = {0.514998,-0.487572,-1.79923,1.6679,-0.28682,0.603706,2.86722};
+    std::vector<double> baxter_right_neutral_pos = {-0.517204,-0.49348,1.79496,1.66956,0.302716,0.602833,-2.87906};
+    robot_state.setJointGroupPositions("left_arm", baxter_left_neutral_pos);
+    robot_state.setJointGroupPositions("right_arm", baxter_right_neutral_pos);
+    robot_state.update();
+    planning_scene_for_operate->setCurrentState(robot_state);
+    moveit_msgs::PlanningScene planning_scene_msg;
+    planning_scene_for_operate->getPlanningSceneMsg(planning_scene_msg);
+    planning_scene_msg.is_diff = true;
+    planning_scene_diff_publisher.publish(planning_scene_msg);
+    ros::Duration(1).sleep();
+
+
     Vector3d start_pt;
     start_pt<<0.717443, -0.0286898,    0.66986;
     Vector3d target_pt;
@@ -529,7 +742,13 @@ int main(int argc, char** argv)
     
     std::vector<std::vector<Eigen::Matrix<double, 14, 1>>> ik_results_along_the_path_all_posture(4);
 
-    solve_dual_arm_IK(astar_path, planning_scene_for_operate, ik_results_along_the_path_all_posture);
+//    solve_dual_arm_IK(astar_path, planning_scene_for_operate, ik_results_along_the_path_all_posture);
+    solve_one_ik_problem(astar_path[3], 2, robot_state);
+    planning_scene_for_operate->setCurrentState(robot_state);
+    planning_scene_for_operate->getPlanningSceneMsg(planning_scene_msg);
+    planning_scene_msg.is_diff = true;
+    planning_scene_diff_publisher.publish(planning_scene_msg);
+    ros::Duration(1).sleep();
 
     ROS_WARN("ik_results_along_the_path_all_posture.size %d", int(ik_results_along_the_path_all_posture.size()));
     ROS_WARN("ik_results_along_the_path_all_posture[0].size %d", int(ik_results_along_the_path_all_posture[0].size()));
@@ -537,11 +756,7 @@ int main(int argc, char** argv)
     ROS_WARN("ik_results_along_the_path_all_posture[2].size %d", int(ik_results_along_the_path_all_posture[2].size()));
     ROS_WARN("ik_results_along_the_path_all_posture[3].size %d", int(ik_results_along_the_path_all_posture[3].size()));
 
-    ros::Publisher planning_scene_diff_publisher = nh.advertise<moveit_msgs::PlanningScene>("/planning_scene", 1);
-    while (planning_scene_diff_publisher.getNumSubscribers() < 1)
-    {
-        sleep_t.sleep();
-    }
+
 
     std::vector<double> both_arm_angles(14);
     Eigen::Matrix<double, 14, 1> tmp_matrix;
@@ -566,13 +781,11 @@ int main(int argc, char** argv)
         }
     }
 
-    planning_scene_for_operate->setCurrentState(robot_state_original);
-    moveit_msgs::PlanningScene planning_scene_msg;
-    planning_scene_for_operate->getPlanningSceneMsg(planning_scene_msg);
-    planning_scene_msg.is_diff = true;
-
-    planning_scene_diff_publisher.publish(planning_scene_msg);
-    ros::Duration(1).sleep();
+//    planning_scene_for_operate->setCurrentState(robot_state_original);
+//    planning_scene_for_operate->getPlanningSceneMsg(planning_scene_msg);
+//    planning_scene_msg.is_diff = true;
+//    planning_scene_diff_publisher.publish(planning_scene_msg);
+//    ros::Duration(1).sleep();
 
     delete _astar_path_finder;
     return 0;

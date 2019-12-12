@@ -1,6 +1,0 @@
-seed,sample_counts,extend_counts,project_success_counts,project_rate,ik_success_numbers,ik_success_rate,extend_success_numbers,extend_success_rate,average success constraint project compute times,average ik compute times,average success ik compute times
-0,1378,2864,1062,0.37081,1062,0.37081,125,0.0436453,1.0339,1.34183,3.61864
-1,4651,9605,3136,0.326497,3015,0.313899,399,0.0415409,1.04432,0.997293,3.13698
-2,1593,3331,1432,0.429901,1428,0.4287,164,0.0492345,1.05168,1.39207,3.243
-3,780,1653,783,0.473684,783,0.473684,103,0.0623109,1.02299,1.46098,3.08429
-4,5333,10960,4075,0.371807,4037,0.368339,341,0.0311131,1.01914,1.27345,3.41838

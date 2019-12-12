@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="BookmarkManager">
-    <bookmark url="file://$PROJECT_DIR$/src/DualCBiRRT/dual_cbirrt.cpp" line="2672" mnemonic="1" />
-    <bookmark url="file://$PROJECT_DIR$/src/DualCBiRRT/dual_cbirrt.cpp" line="2923" mnemonic="2" />
+    <bookmark url="file://$PROJECT_DIR$/src/DualCBiRRTEuler/dual_cbirrt.cpp" />
+    <bookmark url="file://$PROJECT_DIR$/src/DualCBiRRTEuler/dual_cbirrt.cpp" line="3329" mnemonic="1" />
   </component>
   <component name="CMakeRunConfigurationManager" shouldGenerate="true" shouldDeleteObsolete="true">
     <generated>
@@ -42,8 +42,8 @@
       <config projectName="baxter_moveit_application" targetName="20191027_test2_node" />
       <config projectName="baxter_moveit_application" targetName="std_msgs_generate_messages_lisp" />
       <config projectName="baxter_moveit_application" targetName="gmock" />
-      <config projectName="baxter_moveit_application" targetName="geometry_msgs_generate_messages_py" />
       <config projectName="baxter_moveit_application" targetName="actionlib_generate_messages_lisp" />
+      <config projectName="baxter_moveit_application" targetName="geometry_msgs_generate_messages_py" />
       <config projectName="baxter_moveit_application" targetName="tf2_msgs_generate_messages_lisp" />
       <config projectName="baxter_moveit_application" targetName="gtest" />
       <config projectName="baxter_moveit_application" targetName="shape_msgs_generate_messages_py" />
@@ -51,8 +51,8 @@
       <config projectName="baxter_moveit_application" targetName="octomap_msgs_generate_messages_lisp" />
       <config projectName="baxter_moveit_application" targetName="actionlib_generate_messages_cpp" />
       <config projectName="baxter_moveit_application" targetName="sensor_msgs_generate_messages_lisp" />
-      <config projectName="baxter_moveit_application" targetName="object_recognition_msgs_generate_messages_eus" />
       <config projectName="baxter_moveit_application" targetName="geometry_msgs_generate_messages_cpp" />
+      <config projectName="baxter_moveit_application" targetName="object_recognition_msgs_generate_messages_eus" />
       <config projectName="baxter_moveit_application" targetName="astar_dual_cbitrrt_node" />
       <config projectName="baxter_moveit_application" targetName="astar_demo" />
       <config projectName="baxter_moveit_application" targetName="moveit_msgs_generate_messages_cpp" />
@@ -65,8 +65,8 @@
       <config projectName="baxter_moveit_application" targetName="20191029_test2_node" />
       <config projectName="baxter_moveit_application" targetName="moveit_ros_manipulation_gencfg" />
       <config projectName="baxter_moveit_application" targetName="doxygen" />
-      <config projectName="baxter_moveit_application" targetName="download_extra_data" />
       <config projectName="baxter_moveit_application" targetName="graph_msgs_generate_messages_lisp" />
+      <config projectName="baxter_moveit_application" targetName="download_extra_data" />
       <config projectName="baxter_moveit_application" targetName="geometry_msgs_generate_messages_nodejs" />
       <config projectName="baxter_moveit_application" targetName="trajectory_msgs_generate_messages_py" />
       <config projectName="baxter_moveit_application" targetName="moveit_ros_planning_gencfg" />
@@ -78,9 +78,11 @@
       <config projectName="baxter_moveit_application" targetName="object_recognition_msgs_generate_messages_cpp" />
       <config projectName="baxter_moveit_application" targetName="std_msgs_generate_messages_py" />
       <config projectName="baxter_moveit_application" targetName="graph_msgs_generate_messages_eus" />
+      <config projectName="baxter_moveit_application" targetName="euler_using_moveit_planner_node" />
       <config projectName="baxter_moveit_application" targetName="trajectory_msgs_generate_messages_nodejs" />
       <config projectName="baxter_moveit_application" targetName="std_msgs_generate_messages_eus" />
       <config projectName="baxter_moveit_application" targetName="sensor_msgs_generate_messages_cpp" />
+      <config projectName="baxter_moveit_application" targetName="euler_ik_test_node" />
       <config projectName="baxter_moveit_application" targetName="shape_msgs_generate_messages_cpp" />
       <config projectName="baxter_moveit_application" targetName="shape_msgs_generate_messages_lisp" />
       <config projectName="baxter_moveit_application" targetName="20191030_test1_node" />
@@ -92,6 +94,7 @@
       <config projectName="baxter_moveit_application" targetName="actionlib_msgs_generate_messages_cpp" />
       <config projectName="baxter_moveit_application" targetName="multi_using_moveit_planner_node" />
       <config projectName="baxter_moveit_application" targetName="graph_msgs_generate_messages_cpp" />
+      <config projectName="baxter_moveit_application" targetName="euler_dual_cbitrrt_multi_node" />
       <config projectName="baxter_moveit_application" targetName="tf_generate_messages_eus" />
       <config projectName="baxter_moveit_application" targetName="visualization_msgs_generate_messages_lisp" />
       <config projectName="baxter_moveit_application" targetName="moveit_msgs_generate_messages_lisp" />
@@ -102,11 +105,12 @@
       <config projectName="baxter_moveit_application" targetName="my_rrt_node" />
       <config projectName="baxter_moveit_application" targetName="20191029_test1_node" />
       <config projectName="baxter_moveit_application" targetName="tf_generate_messages_nodejs" />
+      <config projectName="baxter_moveit_application" targetName="euler_dual_cbitrrt_node" />
       <config projectName="baxter_moveit_application" targetName="astar_using_moveit_planner_node" />
       <config projectName="baxter_moveit_application" targetName="tf2_msgs_generate_messages_nodejs" />
       <config projectName="baxter_moveit_application" targetName="dual_cbitrrt_multi_node" />
-      <config projectName="baxter_moveit_application" targetName="geometry_msgs_generate_messages_lisp" />
       <config projectName="baxter_moveit_application" targetName="gtest_main" />
+      <config projectName="baxter_moveit_application" targetName="geometry_msgs_generate_messages_lisp" />
       <config projectName="baxter_moveit_application" targetName="tf_generate_messages_cpp" />
       <config projectName="baxter_moveit_application" targetName="object_recognition_msgs_generate_messages_nodejs" />
       <config projectName="baxter_moveit_application" targetName="tf_generate_messages_lisp" />
@@ -123,6 +127,7 @@
       <config projectName="baxter_moveit_application" targetName="tf2_msgs_generate_messages_cpp" />
       <config projectName="baxter_moveit_application" targetName="shape_msgs_generate_messages_eus" />
       <config projectName="baxter_moveit_application" targetName="roscpp_generate_messages_eus" />
+      <config projectName="baxter_moveit_application" targetName="test_manipulability" />
       <config projectName="baxter_moveit_application" targetName="actionlib_msgs_generate_messages_lisp" />
       <config projectName="baxter_moveit_application" targetName="dual_cbitrrt_node" />
     </generated>
@@ -134,164 +139,60 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6fae3ce6-f295-4788-bee1-00ffa829f99c" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/qpOASE/qpoase_test.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/CMakeLists.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeCache.txt" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeCache.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/20191025_test1_node.dir/DependInfo.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/20191025_test1_node.dir/DependInfo.cmake" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/20191025_test1_node.dir/build.make" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/20191025_test1_node.dir/build.make" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/20191025_test1_node.dir/flags.make" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/20191025_test1_node.dir/flags.make" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/20191025_test1_node.dir/link.txt" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/20191025_test1_node.dir/link.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/20191025_test2_node.dir/DependInfo.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/20191025_test2_node.dir/DependInfo.cmake" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/20191025_test2_node.dir/build.make" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/20191025_test2_node.dir/build.make" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/20191025_test2_node.dir/flags.make" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/20191025_test2_node.dir/flags.make" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/20191025_test2_node.dir/link.txt" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/20191025_test2_node.dir/link.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/20191026_test1_node.dir/DependInfo.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/20191026_test1_node.dir/DependInfo.cmake" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/20191026_test1_node.dir/build.make" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/20191026_test1_node.dir/build.make" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/20191026_test1_node.dir/flags.make" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/20191026_test1_node.dir/flags.make" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/20191026_test1_node.dir/link.txt" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/20191026_test1_node.dir/link.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/20191027_test1_node.dir/DependInfo.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/20191027_test1_node.dir/DependInfo.cmake" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/20191027_test1_node.dir/build.make" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/20191027_test1_node.dir/build.make" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/20191027_test1_node.dir/flags.make" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/20191027_test1_node.dir/flags.make" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/20191027_test1_node.dir/link.txt" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/20191027_test1_node.dir/link.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/20191027_test2_node.dir/DependInfo.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/20191027_test2_node.dir/DependInfo.cmake" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/20191027_test2_node.dir/build.make" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/20191027_test2_node.dir/build.make" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/20191027_test2_node.dir/flags.make" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/20191027_test2_node.dir/flags.make" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/20191027_test2_node.dir/link.txt" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/20191027_test2_node.dir/link.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/20191028_test1_node.dir/DependInfo.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/20191028_test1_node.dir/DependInfo.cmake" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/20191028_test1_node.dir/build.make" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/20191028_test1_node.dir/build.make" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/20191028_test1_node.dir/flags.make" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/20191028_test1_node.dir/flags.make" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/20191028_test1_node.dir/link.txt" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/20191028_test1_node.dir/link.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/20191028_test2_node.dir/DependInfo.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/20191028_test2_node.dir/DependInfo.cmake" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/20191028_test2_node.dir/build.make" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/20191028_test2_node.dir/build.make" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/20191028_test2_node.dir/flags.make" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/20191028_test2_node.dir/flags.make" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/20191028_test2_node.dir/link.txt" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/20191028_test2_node.dir/link.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/20191029_test1_node.dir/DependInfo.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/20191029_test1_node.dir/DependInfo.cmake" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/20191029_test1_node.dir/build.make" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/20191029_test1_node.dir/build.make" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/20191029_test1_node.dir/flags.make" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/20191029_test1_node.dir/flags.make" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/20191029_test1_node.dir/link.txt" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/20191029_test1_node.dir/link.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/20191029_test2_node.dir/DependInfo.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/20191029_test2_node.dir/DependInfo.cmake" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/20191029_test2_node.dir/build.make" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/20191029_test2_node.dir/build.make" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/20191029_test2_node.dir/flags.make" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/20191029_test2_node.dir/flags.make" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/20191029_test2_node.dir/link.txt" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/20191029_test2_node.dir/link.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/20191029_test3_node.dir/DependInfo.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/20191029_test3_node.dir/DependInfo.cmake" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/20191029_test3_node.dir/build.make" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/20191029_test3_node.dir/build.make" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/20191029_test3_node.dir/flags.make" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/20191029_test3_node.dir/flags.make" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/20191029_test3_node.dir/link.txt" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/20191029_test3_node.dir/link.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/20191030_test1_node.dir/DependInfo.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/20191030_test1_node.dir/DependInfo.cmake" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/20191030_test1_node.dir/build.make" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/20191030_test1_node.dir/build.make" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/20191030_test1_node.dir/flags.make" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/20191030_test1_node.dir/flags.make" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/20191030_test1_node.dir/link.txt" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/20191030_test1_node.dir/link.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/CMakeError.log" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/CMakeError.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/CMakeOutput.log" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/CMakeOutput.log" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Makefile.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Makefile.cmake" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Makefile2" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Makefile2" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/TargetDirectories.txt" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/TargetDirectories.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/astar_demo.dir/CXX.includecache" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/astar_demo.dir/CXX.includecache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/astar_demo.dir/DependInfo.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/astar_demo.dir/DependInfo.cmake" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/astar_demo.dir/build.make" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/astar_demo.dir/build.make" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/astar_demo.dir/flags.make" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/astar_demo.dir/flags.make" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/astar_demo.dir/link.txt" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/astar_demo.dir/link.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/astar_demo.dir/src/DualCBiRRT_Astar/astar_demo_node.cpp.o" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/astar_demo.dir/src/DualCBiRRT_Astar/astar_demo_node.cpp.o" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/astar_dual_cbitrrt_multi_node.dir/DependInfo.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/astar_dual_cbitrrt_multi_node.dir/DependInfo.cmake" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/astar_dual_cbitrrt_multi_node.dir/build.make" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/astar_dual_cbitrrt_multi_node.dir/build.make" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/astar_dual_cbitrrt_multi_node.dir/flags.make" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/astar_dual_cbitrrt_multi_node.dir/flags.make" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/astar_dual_cbitrrt_multi_node.dir/link.txt" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/astar_dual_cbitrrt_multi_node.dir/link.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/astar_dual_cbitrrt_node.dir/CXX.includecache" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/astar_dual_cbitrrt_node.dir/CXX.includecache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/astar_dual_cbitrrt_node.dir/DependInfo.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/astar_dual_cbitrrt_node.dir/DependInfo.cmake" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/astar_dual_cbitrrt_node.dir/build.make" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/astar_dual_cbitrrt_node.dir/build.make" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/astar_dual_cbitrrt_node.dir/flags.make" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/astar_dual_cbitrrt_node.dir/flags.make" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/astar_dual_cbitrrt_node.dir/link.txt" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/astar_dual_cbitrrt_node.dir/link.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/astar_dual_cbitrrt_node.dir/src/DualCBiRRT_Astar/dual_cbirrt.cpp.o" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/astar_dual_cbitrrt_node.dir/src/DualCBiRRT_Astar/dual_cbirrt.cpp.o" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/astar_ik_test_node.dir/DependInfo.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/astar_ik_test_node.dir/DependInfo.cmake" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/astar_ik_test_node.dir/build.make" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/astar_ik_test_node.dir/build.make" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/astar_ik_test_node.dir/flags.make" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/astar_ik_test_node.dir/flags.make" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/astar_ik_test_node.dir/link.txt" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/astar_ik_test_node.dir/link.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/astar_using_moveit_planner_node.dir/DependInfo.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/astar_using_moveit_planner_node.dir/DependInfo.cmake" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/astar_using_moveit_planner_node.dir/build.make" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/astar_using_moveit_planner_node.dir/build.make" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/astar_using_moveit_planner_node.dir/depend.make" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/astar_using_moveit_planner_node.dir/depend.make" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/astar_using_moveit_planner_node.dir/flags.make" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/astar_using_moveit_planner_node.dir/flags.make" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/astar_using_moveit_planner_node.dir/link.txt" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/astar_using_moveit_planner_node.dir/link.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/cbitrrt_node.dir/DependInfo.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/cbitrrt_node.dir/DependInfo.cmake" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/cbitrrt_node.dir/build.make" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/cbitrrt_node.dir/build.make" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/cbitrrt_node.dir/flags.make" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/cbitrrt_node.dir/flags.make" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/cbitrrt_node.dir/link.txt" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/cbitrrt_node.dir/link.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/clion-log.txt" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/clion-log.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/crrt_node.dir/DependInfo.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/crrt_node.dir/DependInfo.cmake" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/crrt_node.dir/build.make" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/crrt_node.dir/build.make" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/crrt_node.dir/flags.make" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/crrt_node.dir/flags.make" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/crrt_node.dir/link.txt" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/crrt_node.dir/link.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/dual_cbitrrt_multi_node.dir/CXX.includecache" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/dual_cbitrrt_multi_node.dir/CXX.includecache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/dual_cbitrrt_multi_node.dir/DependInfo.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/dual_cbitrrt_multi_node.dir/DependInfo.cmake" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/dual_cbitrrt_multi_node.dir/build.make" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/dual_cbitrrt_multi_node.dir/build.make" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/dual_cbitrrt_multi_node.dir/flags.make" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/dual_cbitrrt_multi_node.dir/flags.make" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/dual_cbitrrt_multi_node.dir/link.txt" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/dual_cbitrrt_multi_node.dir/link.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/dual_cbitrrt_multi_node.dir/src/DualCBiRRT/dual_cbirrt.cpp.o" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/dual_cbitrrt_multi_node.dir/src/DualCBiRRT/dual_cbirrt.cpp.o" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/dual_cbitrrt_multi_node.dir/src/DualCBiRRT/dual_cbirrt_test_multi_times.cpp.o" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/dual_cbitrrt_multi_node.dir/src/DualCBiRRT/dual_cbirrt_test_multi_times.cpp.o" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/dual_cbitrrt_node.dir/CXX.includecache" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/dual_cbitrrt_node.dir/CXX.includecache" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/dual_cbitrrt_node.dir/DependInfo.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/dual_cbitrrt_node.dir/DependInfo.cmake" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/dual_cbitrrt_node.dir/build.make" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/dual_cbitrrt_node.dir/build.make" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/dual_cbitrrt_node.dir/depend.internal" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/dual_cbitrrt_node.dir/depend.internal" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/dual_cbitrrt_node.dir/depend.make" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/dual_cbitrrt_node.dir/depend.make" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/dual_cbitrrt_node.dir/flags.make" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/dual_cbitrrt_node.dir/flags.make" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/dual_cbitrrt_node.dir/link.txt" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/dual_cbitrrt_node.dir/link.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/dual_cbitrrt_node.dir/src/DualCBiRRT/dual_cbirrt.cpp.o" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/dual_cbitrrt_node.dir/src/DualCBiRRT/dual_cbirrt.cpp.o" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/dual_cbitrrt_node.dir/src/DualCBiRRT/dual_cbirrt_test.cpp.o" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/dual_cbitrrt_node.dir/src/DualCBiRRT/dual_cbirrt_test.cpp.o" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/ik_test_node.dir/DependInfo.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/ik_test_node.dir/DependInfo.cmake" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/ik_test_node.dir/build.make" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/ik_test_node.dir/build.make" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/ik_test_node.dir/flags.make" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/ik_test_node.dir/flags.make" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/ik_test_node.dir/link.txt" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/ik_test_node.dir/link.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/multi_cbitrrt_multi_node.dir/DependInfo.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/multi_cbitrrt_multi_node.dir/DependInfo.cmake" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/multi_cbitrrt_multi_node.dir/build.make" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/multi_cbitrrt_multi_node.dir/build.make" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/multi_cbitrrt_multi_node.dir/flags.make" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/multi_cbitrrt_multi_node.dir/flags.make" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/multi_cbitrrt_multi_node.dir/link.txt" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/multi_cbitrrt_multi_node.dir/link.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/multi_cbitrrt_node.dir/CXX.includecache" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/multi_cbitrrt_node.dir/DependInfo.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/multi_cbitrrt_node.dir/DependInfo.cmake" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/multi_cbitrrt_node.dir/build.make" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/multi_cbitrrt_node.dir/build.make" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/multi_cbitrrt_node.dir/depend.internal" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/multi_cbitrrt_node.dir/depend.make" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/multi_cbitrrt_node.dir/depend.make" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/multi_cbitrrt_node.dir/flags.make" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/multi_cbitrrt_node.dir/flags.make" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/multi_cbitrrt_node.dir/link.txt" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/multi_cbitrrt_node.dir/link.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/multi_cbitrrt_node.dir/src/MultiCBiRRT/dual_cbirrt_test.cpp.o" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/multi_ik_test_node.dir/DependInfo.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/multi_ik_test_node.dir/DependInfo.cmake" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/multi_ik_test_node.dir/build.make" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/multi_ik_test_node.dir/build.make" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/multi_ik_test_node.dir/flags.make" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/multi_ik_test_node.dir/flags.make" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/multi_ik_test_node.dir/link.txt" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/multi_ik_test_node.dir/link.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/multi_using_moveit_planner_node.dir/DependInfo.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/multi_using_moveit_planner_node.dir/DependInfo.cmake" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/multi_using_moveit_planner_node.dir/build.make" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/multi_using_moveit_planner_node.dir/build.make" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/multi_using_moveit_planner_node.dir/flags.make" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/multi_using_moveit_planner_node.dir/flags.make" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/multi_using_moveit_planner_node.dir/link.txt" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/multi_using_moveit_planner_node.dir/link.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/my_rrt_node.dir/DependInfo.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/my_rrt_node.dir/DependInfo.cmake" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/my_rrt_node.dir/build.make" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/my_rrt_node.dir/build.make" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/my_rrt_node.dir/flags.make" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/my_rrt_node.dir/flags.make" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/my_rrt_node.dir/link.txt" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/my_rrt_node.dir/link.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/ik_test_node.dir/progress.make" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/ik_test_node.dir/progress.make" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/multi_cbitrrt_multi_node.dir/progress.make" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/multi_cbitrrt_multi_node.dir/progress.make" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/multi_cbitrrt_node.dir/progress.make" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/multi_cbitrrt_node.dir/progress.make" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/multi_ik_test_node.dir/progress.make" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/multi_ik_test_node.dir/progress.make" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/multi_using_moveit_planner_node.dir/progress.make" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/multi_using_moveit_planner_node.dir/progress.make" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/my_rrt_node.dir/progress.make" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/my_rrt_node.dir/progress.make" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/progress.marks" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/progress.marks" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/using_moveit_planner_node.dir/DependInfo.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/using_moveit_planner_node.dir/DependInfo.cmake" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/using_moveit_planner_node.dir/build.make" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/using_moveit_planner_node.dir/build.make" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/using_moveit_planner_node.dir/depend.make" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/using_moveit_planner_node.dir/depend.make" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/using_moveit_planner_node.dir/flags.make" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/using_moveit_planner_node.dir/flags.make" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/using_moveit_planner_node.dir/link.txt" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/using_moveit_planner_node.dir/link.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/qpOASES_test.dir/progress.make" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/qpOASES_test.dir/progress.make" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/using_moveit_planner_node.dir/progress.make" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/using_moveit_planner_node.dir/progress.make" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/Makefile" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/Makefile" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/baxter_moveit_application.cbp" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/baxter_moveit_application.cbp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/devel/lib/baxter_moveit_application/astar_demo" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/devel/lib/baxter_moveit_application/astar_demo" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/devel/lib/baxter_moveit_application/astar_dual_cbitrrt_node" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/devel/lib/baxter_moveit_application/astar_dual_cbitrrt_node" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/devel/lib/baxter_moveit_application/dual_cbitrrt_multi_node" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/devel/lib/baxter_moveit_application/dual_cbitrrt_multi_node" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/cmake-build-debug/devel/lib/baxter_moveit_application/dual_cbitrrt_node" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/devel/lib/baxter_moveit_application/dual_cbitrrt_node" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/devel/lib/baxter_moveit_application/multi_cbitrrt_node" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/gtest/gmock.cbp" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/gtest/gmock.cbp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/gtest/gtest/gtest.cbp" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/gtest/gtest/gtest.cbp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/task_no_try_fix.csv" beforeDir="false" afterPath="$PROJECT_DIR$/draw_data/task_no_try_fix.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/draw_data/task_yes_try_fix.csv" beforeDir="false" afterPath="$PROJECT_DIR$/draw_data/task_yes_try_fix.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/include/baxter_moveit_application/DualCBiRRT/dual_cbirrt.h" beforeDir="false" afterPath="$PROJECT_DIR$/include/baxter_moveit_application/DualCBiRRT/dual_cbirrt.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/gtest/CMakeFiles/gmock.dir/progress.make" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/gtest/CMakeFiles/gmock.dir/progress.make" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/gtest/CMakeFiles/gmock_main.dir/progress.make" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/gtest/CMakeFiles/gmock_main.dir/progress.make" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/gtest/gtest/CMakeFiles/gtest.dir/progress.make" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/gtest/gtest/CMakeFiles/gtest.dir/progress.make" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/gtest/gtest/CMakeFiles/gtest_main.dir/progress.make" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/gtest/gtest/CMakeFiles/gtest_main.dir/progress.make" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/draw_data/add_dis.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/draw_data/adjust_dir_no.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/draw_data/adjust_dir_yes.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/draw_data/dense_collide.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/draw_data/draw_data.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/draw_data/meiyou_collide.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/draw_data/narrow_no_dis.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/draw_data/narrow_yes_dis.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/draw_data/no_dis.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/draw_data/no_step_limit.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/draw_data/sparse_collide.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/draw_data/task_no_collide_info.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/draw_data/task_no_try_fix.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/draw_data/task_yes_collide_info.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/draw_data/task_yes_collide_info_alpha=0.5.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/draw_data/task_yes_collide_info_alpha=1.0.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/draw_data/task_yes_try_fix.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/draw_data/yes_dis.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/draw_data/yes_step_limit.csv" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/DualCBiRRT/dual_cbirrt.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/DualCBiRRT/dual_cbirrt.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/DualCBiRRT/dual_cbirrt_test.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/DualCBiRRT/dual_cbirrt_test.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/DualCBiRRT/dual_cbirrt_test_multi_times.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/DualCBiRRT/dual_cbirrt_test_multi_times.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/DualCBiRRT/using_moveit_planner.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/DualCBiRRT/using_moveit_planner.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/DualCBiRRT_Astar/Astar_searcher.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/DualCBiRRT_Astar/Astar_searcher.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/DualCBiRRT_Astar/astar_demo_node.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/DualCBiRRT_Astar/astar_demo_node.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/DualCBiRRT_Astar/dual_cbirrt.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/DualCBiRRT_Astar/dual_cbirrt.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/DualCBiRRT_Astar/using_moveit_planner.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/DualCBiRRT_Astar/using_moveit_planner.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/MultiCBiRRT/dual_cbirrt.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/src/MultiCBiRRT/dual_cbirrt.cpp" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/cmake-build-debug/" />
     <ignored path="$PROJECT_DIR$/../../build/" />
@@ -307,37 +208,123 @@
   <component name="ExecutionTargetManager" SELECTED_TARGET="CMakeBuildProfile:Debug" />
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/DualCBiRRT/using_moveit_planner.cpp">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="798">
-              <caret line="42" column="35" selection-start-line="42" selection-start-column="35" selection-end-line="42" selection-end-column="35" />
-              <folding>
-                <element signature="e#0#20#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/DualCBiRRT/dual_cbirrt.cpp">
+        <entry file="file://$PROJECT_DIR$/src/DualCBiRRTEuler/dual_cbirrt.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="5917">
-              <caret line="4815" selection-start-line="4815" selection-end-line="4815" />
+            <state relative-caret-position="390">
+              <caret line="3481" column="21" lean-forward="true" selection-start-line="3481" selection-start-column="21" selection-end-line="3481" selection-end-column="21" />
               <folding>
-                <element signature="e#1#62#0" expanded="true" />
+                <element signature="e#541#3347#0" />
+                <element signature="e#3378#4539#0" />
+                <element signature="e#4541#5869#0" />
+                <element signature="e#5871#27727#0" />
+                <element signature="e#27729#66498#0" />
+                <element signature="e#66500#77348#0" />
+                <element signature="e#77350#107768#0" />
+                <element signature="e#107770#117259#0" />
+                <element signature="e#117261#128420#0" />
+                <element signature="e#128422#144141#0" />
+                <element signature="e#144143#165979#0" />
+                <element signature="e#190909#222926#0" />
+                <element signature="e#222928#235797#0" />
+                <element signature="e#235799#239501#0" />
+                <element signature="e#239503#240847#0" />
+                <element signature="e#240849#248013#0" />
+                <element signature="e#248015#254143#0" />
+                <element signature="e#254145#259326#0" />
+                <element signature="e#259328#259515#0" />
+                <element signature="e#259517#259726#0" />
+                <element signature="e#259728#259944#0" />
+                <element signature="e#259946#260158#0" />
+                <element signature="e#260160#260379#0" />
+                <element signature="e#260381#260972#0" />
+                <element signature="e#260974#261367#0" />
+                <element signature="e#261369#261595#0" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/DualCBiRRT/dual_cbirrt_test.cpp">
+        <entry file="file:///opt/ros/kinetic/include/moveit_msgs/CollisionObject.h">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="274">
-              <caret line="37" selection-start-line="37" selection-end-line="37" />
+            <state relative-caret-position="494">
+              <caret line="26" selection-start-line="26" selection-end-line="26" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/DualCBiRRTEuler/test_manipulability.cpp">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-1058">
+              <caret line="97" column="33" selection-start-line="97" selection-start-column="33" selection-end-line="97" selection-end-column="33" />
               <folding>
                 <element signature="e#0#20#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file:///opt/ros/kinetic/include/moveit/collision_detection/collision_tools.h">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="215">
+              <caret line="46" column="5" selection-start-line="46" selection-start-column="5" selection-end-line="46" selection-end-column="5" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/CMakeLists.txt">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="163">
+              <caret line="261" column="27" selection-start-line="261" selection-start-column="15" selection-end-line="261" selection-end-column="27" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/include/baxter_moveit_application/DualCBiRRTEuler/dual_cbirrt.h">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="2318">
+              <caret line="122" column="76" selection-start-line="122" selection-start-column="55" selection-end-line="122" selection-end-column="76" />
+              <folding>
+                <element signature="e#0#2#0" />
+                <element signature="e#97#117#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/DualCBiRRTEuler/dual_cbirrt_test_multi_times.cpp">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="234">
+              <caret line="52" column="39" selection-start-line="46" selection-start-column="51" selection-end-line="46" selection-end-column="112" />
+              <folding>
+                <element signature="e#0#20#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/DualCBiRRTEuler/dual_cbirrt_test.cpp">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1254">
+              <caret line="66" column="27" selection-start-line="66" selection-start-column="27" selection-end-line="66" selection-end-column="27" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/DualCBiRRT_Astar/astar_demo_node.cpp">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="12559">
+              <caret line="661" column="13" selection-start-line="661" selection-start-column="13" selection-end-line="661" selection-end-column="58" />
+              <folding>
+                <element signature="e#764#815#0" />
               </folding>
             </state>
           </provider>
@@ -347,46 +334,41 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>ik_results_along_the_path_all_postures</find>
-      <find>left_ref_eluer</find>
-      <find>sleep_t</find>
-      <find>left_group</find>
-      <find>left_joint_angles_matrix</find>
-      <find>norm</find>
-      <find>goal_roll_angle</find>
-      <find>start_state</find>
-      <find>right_current_euler</find>
-      <find>left_current_rot_matrix</find>
-      <find>right_goal_roll_angle</find>
-      <find>adver</find>
-      <find>extend_goal_task_state_vector</find>
-      <find>qs_task_state_vector</find>
-      <find>IK</find>
-      <find>master_link_model_set</find>
-      <find>fix success</find>
-      <find>try</find>
-      <find>0.06</find>
-      <find>left_euler</find>
-      <find>euler</find>
-      <find>goal</find>
-      <find>_euler</find>
-      <find>eulerA</find>
-      <find>eulerAngles</find>
-      <find>left</find>
-      <find>left_error_euler</find>
-      <find>new loop</find>
-      <find>new loop!</find>
-      <find>left_rot_error_axis_angle</find>
+      <find>add</find>
+      <find>slave_dis_map</find>
+      <find>master_dis_map</find>
+      <find>master_dir_manipulability</find>
+      <find>mast</find>
+      <find>master_ob_jac_vec</find>
+      <find>nan</find>
+      <find>_a_tree_minimum_extend_manipulability</find>
+      <find>SVD</find>
+      <find>JacobiSVD</find>
+      <find>slave_manipulability_jac</find>
+      <find>alpha</find>
+      <find>_master_link_model_set</find>
+      <find>_obstacle_nodes_vis_pub</find>
+      <find>slave_ob_theta_dot</find>
+      <find>master_collide_pos</find>
+      <find>slave_collide_normal</find>
+      <find>master_collide_normal</find>
+      <find>my_planner2</find>
+      <find>vis</find>
+      <find>++</find>
+      <find>collision_pair_count</find>
+      <find>master_robot_collision_point</find>
+      <find>slave_robot_collision_point</find>
+      <find>robot</find>
+      <find>slave</find>
+      <find>master</find>
+      <find>master_object_collision_point</find>
+      <find>object_point</find>
+      <find>master_all_dir</find>
     </findStrings>
     <replaceStrings>
-      <replace>CRRT</replace>
-      <replace>30</replace>
-      <replace>pitch</replace>
-      <replace>norm</replace>
       <replace>CBiRRT</replace>
       <replace>DualCBiRRT</replace>
       <replace>cur</replace>
-      <replace>goal</replace>
       <replace>7</replace>
       <replace>tree_b</replace>
       <replace>&quot;&lt;&lt;&quot;,</replace>
@@ -398,13 +380,22 @@
       <replace>slave_g</replace>
       <replace>left</replace>
       <replace>DualCBiRRT_Astar</replace>
-      <replace>master</replace>
-      <replace>slave</replace>
-      <replace>slave_group</replace>
       <replace>MultiCBiRRT</replace>
       <replace>current</replace>
       <replace>www</replace>
+      <replace>DualCBiRRTEuler</replace>
+      <replace>slave_group</replace>
+      <replace>3</replace>
+      <replace>s_g_</replace>
+      <replace>g_</replace>
+      <replace>complex</replace>
+      <replace>b_tree</replace>
+      <replace>b_</replace>
+      <replace>goal</replace>
       <replace>right</replace>
+      <replace>object</replace>
+      <replace>master</replace>
+      <replace>slave</replace>
     </replaceStrings>
     <dirStrings>
       <dir>$PROJECT_DIR$/src/qpOASE</dir>
@@ -438,33 +429,40 @@
         <option value="$PROJECT_DIR$/src/MultiCBiRRT/dual_cbirrt_test_multi_times.cpp" />
         <option value="$PROJECT_DIR$/src/MultiCBiRRT/ik_test.cpp" />
         <option value="$PROJECT_DIR$/include/baxter_moveit_application/MultiCBiRRT/dual_cbirrt.h" />
-        <option value="$PROJECT_DIR$/src/MultiCBiRRT/dual_cbirrt.cpp" />
         <option value="$PROJECT_DIR$/src/DualCBiRRT_Astar/dual_cbirrt.cpp" />
         <option value="$PROJECT_DIR$/src/DualCBiRRT_Astar/using_moveit_planner.cpp" />
-        <option value="$PROJECT_DIR$/src/DualCBiRRT/dual_cbirrt_test_multi_times.cpp" />
         <option value="$PROJECT_DIR$/src/qpOASE/qpoase_test.cpp" />
+        <option value="$PROJECT_DIR$/src/DualCBiRRT/using_moveit_planner.cpp" />
+        <option value="$PROJECT_DIR$/src/DualCBiRRT_Astar/Astar_searcher.cpp" />
+        <option value="$PROJECT_DIR$/src/DualCBiRRT/dual_cbirrt_test.cpp" />
+        <option value="$PROJECT_DIR$/src/DualCBiRRT/dual_cbirrt_test_multi_times.cpp" />
         <option value="$PROJECT_DIR$/include/baxter_moveit_application/DualCBiRRT/dual_cbirrt.h" />
         <option value="$PROJECT_DIR$/src/DualCBiRRT/dual_cbirrt.cpp" />
-        <option value="$PROJECT_DIR$/src/DualCBiRRT/using_moveit_planner.cpp" />
-        <option value="$PROJECT_DIR$/CMakeLists.txt" />
-        <option value="$PROJECT_DIR$/src/DualCBiRRT/dual_cbirrt_test.cpp" />
-        <option value="$PROJECT_DIR$/src/DualCBiRRT_Astar/Astar_searcher.cpp" />
+        <option value="$PROJECT_DIR$/src/DualCBiRRTEuler/using_moveit_planner.cpp" />
+        <option value="$PROJECT_DIR$/src/MultiCBiRRT/dual_cbirrt.cpp" />
         <option value="$PROJECT_DIR$/src/DualCBiRRT_Astar/astar_demo_node.cpp" />
+        <option value="$PROJECT_DIR$/src/DualCBiRRTEuler/dual_cbirrt_test_multi_times.cpp" />
+        <option value="$PROJECT_DIR$/src/DualCBiRRTEuler/dual_cbirrt_test.cpp" />
+        <option value="$PROJECT_DIR$/include/baxter_moveit_application/DualCBiRRTEuler/dual_cbirrt.h" />
+        <option value="$PROJECT_DIR$/CMakeLists.txt" />
+        <option value="$PROJECT_DIR$/src/DualCBiRRTEuler/test_manipulability.cpp" />
+        <option value="$PROJECT_DIR$/src/DualCBiRRTEuler/dual_cbirrt.cpp" />
       </list>
     </option>
   </component>
   <component name="OCFindUsagesOptions" text="true" ivars="false" properties="true" derivedClasses="false" />
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="76" />
-    <option name="y" value="6" />
-    <option name="width" value="865" />
-    <option name="height" value="1084" />
+    <option name="x" value="65" />
+    <option name="y" value="-4" />
+    <option name="width" value="756" />
+    <option name="height" value="1048" />
   </component>
   <component name="ProjectView">
     <navigator proportions="" version="1">
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -494,6 +492,14 @@
               <item name="baxter_moveit_application" type="b2602c69:ProjectViewProjectNode" />
               <item name="baxter_moveit_application" type="47feb1d3:ProjectViewModuleNode" />
               <item name="baxter_moveit_application" type="462c0819:PsiDirectoryNode" />
+              <item name="include" type="462c0819:PsiDirectoryNode" />
+              <item name="baxter_moveit_application" type="462c0819:PsiDirectoryNode" />
+              <item name="DualCBiRRTEuler" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="baxter_moveit_application" type="b2602c69:ProjectViewProjectNode" />
+              <item name="baxter_moveit_application" type="47feb1d3:ProjectViewModuleNode" />
+              <item name="baxter_moveit_application" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
@@ -507,7 +513,6 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -534,7 +539,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="CMake Application.astar_demo">
+  <component name="RunManager" selected="CMake Application.euler_dual_cbitrrt_multi_node">
     <configuration name="20191025_test1_node" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="baxter_moveit_application" TARGET_NAME="20191025_test1_node" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="baxter_moveit_application" RUN_TARGET_NAME="20191025_test1_node">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
@@ -696,6 +701,26 @@
       </method>
     </configuration>
     <configuration name="dual_cbitrrt_node" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="baxter_moveit_application" TARGET_NAME="dual_cbitrrt_node" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="baxter_moveit_application" RUN_TARGET_NAME="dual_cbitrrt_node">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="euler_dual_cbitrrt_multi_node" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="baxter_moveit_application" TARGET_NAME="euler_dual_cbitrrt_multi_node" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="baxter_moveit_application" RUN_TARGET_NAME="euler_dual_cbitrrt_multi_node">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="euler_dual_cbitrrt_node" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="baxter_moveit_application" TARGET_NAME="euler_dual_cbitrrt_node" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="baxter_moveit_application" RUN_TARGET_NAME="euler_dual_cbitrrt_node">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="euler_ik_test_node" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="baxter_moveit_application" TARGET_NAME="euler_ik_test_node" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="baxter_moveit_application" RUN_TARGET_NAME="euler_ik_test_node">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="euler_using_moveit_planner_node" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="baxter_moveit_application" TARGET_NAME="euler_using_moveit_planner_node" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="baxter_moveit_application" RUN_TARGET_NAME="euler_using_moveit_planner_node">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
@@ -1020,6 +1045,11 @@
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
+    <configuration name="test_manipulability" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="baxter_moveit_application" TARGET_NAME="test_manipulability" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="baxter_moveit_application" RUN_TARGET_NAME="test_manipulability">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="tests" type="CMakeRunConfiguration" factoryName="Application" PASS_PARENT_ENVS_2="true" PROJECT_NAME="baxter_moveit_application" TARGET_NAME="tests" CONFIG_NAME="Debug">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
@@ -1164,6 +1194,10 @@
       <item itemvalue="CMake Application.doxygen" />
       <item itemvalue="CMake Application.dual_cbitrrt_multi_node" />
       <item itemvalue="CMake Application.dual_cbitrrt_node" />
+      <item itemvalue="CMake Application.euler_dual_cbitrrt_multi_node" />
+      <item itemvalue="CMake Application.euler_dual_cbitrrt_node" />
+      <item itemvalue="CMake Application.euler_ik_test_node" />
+      <item itemvalue="CMake Application.euler_using_moveit_planner_node" />
       <item itemvalue="CMake Application.geometry_msgs_generate_messages_cpp" />
       <item itemvalue="CMake Application.geometry_msgs_generate_messages_eus" />
       <item itemvalue="CMake Application.geometry_msgs_generate_messages_lisp" />
@@ -1228,6 +1262,7 @@
       <item itemvalue="CMake Application.std_msgs_generate_messages_lisp" />
       <item itemvalue="CMake Application.std_msgs_generate_messages_nodejs" />
       <item itemvalue="CMake Application.std_msgs_generate_messages_py" />
+      <item itemvalue="CMake Application.test_manipulability" />
       <item itemvalue="CMake Application.tests" />
       <item itemvalue="CMake Application.tf2_msgs_generate_messages_cpp" />
       <item itemvalue="CMake Application.tf2_msgs_generate_messages_eus" />
@@ -1314,54 +1349,73 @@
       <workItem from="1574908282700" duration="3027000" />
       <workItem from="1574945765460" duration="5549000" />
       <workItem from="1574951724807" duration="245000" />
-      <workItem from="1574990005693" duration="2664000" />
+      <workItem from="1574990005693" duration="29350000" />
+      <workItem from="1575077554172" duration="2003000" />
+      <workItem from="1575079749129" duration="1685000" />
+      <workItem from="1575111914814" duration="7317000" />
+      <workItem from="1575183095287" duration="4337000" />
+      <workItem from="1575248440543" duration="31885000" />
+      <workItem from="1575335243794" duration="17708000" />
+      <workItem from="1575369345167" duration="10711000" />
+      <workItem from="1575384656280" duration="2407000" />
+      <workItem from="1575423948025" duration="15331000" />
+      <workItem from="1575459678054" duration="7307000" />
+      <workItem from="1575507402950" duration="14206000" />
+      <workItem from="1575540758571" duration="12653000" />
+      <workItem from="1575596768354" duration="18473000" />
+      <workItem from="1575891551365" duration="9650000" />
+      <workItem from="1575970820960" duration="15905000" />
+      <workItem from="1576002343648" duration="8723000" />
+      <workItem from="1576057424288" duration="12350000" />
+      <workItem from="1576077023100" duration="5243000" />
+      <workItem from="1576099425257" duration="2403000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="366976000" />
+    <option name="totallyTimeSpent" value="593959000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="65" y="-4" width="1855" height="1084" extended-state="6" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49790794" visible="true" weight="0.102819234" />
-      <window_info id="Structure" order="1" sideWeight="0.50209206" side_tool="true" weight="0.1509121" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49508196" visible="true" weight="0.016583748" />
+      <window_info id="Structure" order="1" sideWeight="0.50491804" side_tool="true" weight="0.28372094" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.3294979" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.4997236" visible="true" weight="0.08891214" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.23922414" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.4997236" weight="0.32845187" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.19730942" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Database Changes" order="7" />
-      <window_info anchor="bottom" id="Terminal" order="8" />
+      <window_info anchor="bottom" id="Terminal" order="8" weight="0.32954547" />
       <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.5002764" side_tool="true" weight="0.5366109" />
       <window_info anchor="bottom" id="Version Control" order="10" />
       <window_info anchor="bottom" id="CMake" order="11" weight="0.4385776" />
-      <window_info anchor="bottom" id="Messages" order="12" weight="0.8127615" />
+      <window_info anchor="bottom" id="Messages" order="12" weight="0.47594142" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
       <window_info anchor="right" id="Database" order="3" />
     </layout>
     <layout-to-restore>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49790794" visible="true" weight="0.07517966" />
-      <window_info id="Structure" order="1" sideWeight="0.50209206" side_tool="true" weight="0.1509121" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49508196" visible="true" weight="0.016583748" />
+      <window_info id="Structure" order="1" sideWeight="0.50491804" side_tool="true" weight="0.28372094" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.3294979" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.4997236" visible="true" weight="0.28974897" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.43200836" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.4997236" weight="0.28451884" />
+      <window_info active="true" anchor="bottom" id="Debug" order="3" visible="true" weight="0.15271966" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Database Changes" order="7" />
-      <window_info anchor="bottom" id="Terminal" order="8" />
+      <window_info anchor="bottom" id="Terminal" order="8" weight="0.32954547" />
       <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.5002764" side_tool="true" weight="0.5366109" />
       <window_info anchor="bottom" id="Version Control" order="10" />
-      <window_info anchor="bottom" id="CMake" order="11" weight="0.52719665" />
-      <window_info anchor="bottom" id="Messages" order="12" weight="0.4983315" />
+      <window_info anchor="bottom" id="CMake" order="11" weight="0.4385776" />
+      <window_info anchor="bottom" id="Messages" order="12" weight="0.7834728" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -1426,8 +1480,30 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
           <url>file://$PROJECT_DIR$/src/DualCBiRRT/dual_cbirrt_test.cpp</url>
-          <line>61</line>
+          <line>75</line>
           <option name="timeStamp" value="134" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/src/DualCBiRRT/dual_cbirrt_test.cpp</url>
+          <line>63</line>
+          <option name="timeStamp" value="139" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <condition expression="nearest_node_index == 18" language="ObjectiveC" />
+          <url>file://$PROJECT_DIR$/src/DualCBiRRTEuler/dual_cbirrt.cpp</url>
+          <line>1680</line>
+          <option name="timeStamp" value="146" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <condition expression="nearest_node_index == 18" language="ObjectiveC" />
+          <url>file://$PROJECT_DIR$/src/DualCBiRRTEuler/dual_cbirrt.cpp</url>
+          <line>1806</line>
+          <option name="timeStamp" value="147" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/src/DualCBiRRTEuler/test_manipulability.cpp</url>
+          <line>116</line>
+          <option name="timeStamp" value="155" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
@@ -1439,6 +1515,11 @@
   </component>
   <component name="debuggerHistoryManager">
     <expressions id="breakpointCondition">
+      <expression>
+        <expression-string>nearest_node_index == 18</expression-string>
+        <language-id>ObjectiveC</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
       <expression>
         <expression-string>random_task_state_vector[0]==0.543219</expression-string>
         <language-id>ObjectiveC</language-id>
@@ -1479,129 +1560,9 @@
         <language-id>ObjectiveC</language-id>
         <evaluation-mode>EXPRESSION</evaluation-mode>
       </expression>
-      <expression>
-        <expression-string>qs_old_index = 22</expression-string>
-        <language-id>ObjectiveC</language-id>
-        <evaluation-mode>EXPRESSION</evaluation-mode>
-      </expression>
     </expressions>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file:///opt/ros/kinetic/include/rviz_visual_tools/rviz_visual_tools.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="9690">
-          <caret line="510" column="39" selection-start-line="510" selection-start-column="39" selection-end-line="510" selection-end-column="39" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file:///usr/include/eigen3/Eigen/src/Core/util/StaticAssert.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="171">
-          <caret line="31" selection-start-line="31" selection-end-line="31" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file:///usr/include/eigen3/Eigen/src/Core/CwiseBinaryOp.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="129">
-          <caret line="109" selection-start-line="109" selection-end-line="109" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/DualCBiRRT/ik_test.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1026">
-          <caret line="54" column="113" selection-start-line="54" selection-start-column="113" selection-end-line="54" selection-end-column="113" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file:///opt/ros/kinetic/include/moveit/collision_detection/collision_common.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2679">
-          <caret line="141" column="79" selection-start-line="141" selection-start-column="79" selection-end-line="141" selection-end-column="79" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file:///opt/ros/kinetic/include/moveit/robot_model/link_model.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="227">
-          <caret line="71" column="6" selection-start-line="71" selection-start-column="6" selection-end-line="71" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file:///usr/include/eigen3/Eigen/src/Core/Matrix.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="708">
-          <caret line="224" selection-start-line="224" selection-end-line="224" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file:///usr/include/eigen3/Eigen/src/Core/PlainObjectBase.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="708">
-          <caret line="681" selection-start-line="681" selection-end-line="681" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file:///usr/include/eigen3/Eigen/src/Core/Dot.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="257">
-          <caret line="127" column="33" selection-start-line="127" selection-start-column="33" selection-end-line="127" selection-end-column="33" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file:///opt/ros/kinetic/include/moveit/robot_state/robot_state.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="25973">
-          <caret line="1367" column="25" selection-start-line="1367" selection-start-column="25" selection-end-line="1367" selection-end-column="25" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file:///usr/include/eigen3/Eigen/src/Core/DenseBase.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="122">
-          <caret line="564" column="39" selection-start-line="564" selection-start-column="39" selection-end-line="564" selection-end-column="39" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/20191028/20191028_test1.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1501">
-          <caret line="79" selection-start-line="79" selection-end-line="79" />
-          <folding>
-            <element signature="e#0#20#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/20191028/20191028_test2.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="627">
-          <caret line="33" column="28" selection-start-line="33" selection-start-column="28" selection-end-line="33" selection-end-column="28" />
-          <folding>
-            <element signature="e#0#20#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/20191027/20191027_test1.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <folding>
-            <element signature="e#0#20#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/20191027/20191027_test2.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <folding>
-            <element signature="e#0#20#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/20191026/20191026_test1.cpp">
       <provider selected="true" editor-type-id="text-editor">
         <state>
@@ -1636,13 +1597,6 @@
           <folding>
             <element signature="e#0#20#0" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file:///opt/ros/kinetic/include/moveit_msgs/CollisionObject.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="162">
-          <caret line="71" column="19" selection-start-line="71" selection-start-column="19" selection-end-line="71" selection-end-column="19" />
         </state>
       </provider>
     </entry>
@@ -1709,39 +1663,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file:///usr/include/eigen3/Eigen/src/Core/GeneralProduct.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="114">
-          <caret line="414" selection-start-line="414" selection-end-line="414" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file:///usr/include/eigen3/Eigen/src/Core/Product.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="114">
-          <caret line="130" selection-start-line="130" selection-end-line="130" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/MultiCBiRRT/dual_cbirrt.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="890">
-          <caret line="1510" column="17" selection-start-line="1510" selection-start-column="17" selection-end-line="1510" selection-end-column="17" />
-          <folding>
-            <element signature="e#79212#95882#0" />
-            <element signature="e#95884#105794#0" />
-            <element signature="e#147799#159365#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file:///usr/include/eigen3/Eigen/src/Core/CommaInitializer.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="172">
-          <caret line="67" selection-start-line="67" selection-end-line="67" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/include/baxter_moveit_application/DualCBiRRT_Astar/dual_cbirrt.h">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1691">
@@ -1759,27 +1680,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file:///usr/include/c++/5/bits/stl_vector.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="171">
-          <caret line="794" selection-start-line="794" selection-end-line="794" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/DualCBiRRT_Astar/using_moveit_planner.cpp">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="348">
           <caret line="55" column="25" selection-start-line="55" selection-start-column="25" selection-end-line="55" selection-end-column="25" />
-          <folding>
-            <element signature="e#0#20#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/DualCBiRRT/dual_cbirrt_test_multi_times.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1033">
-          <caret line="252" column="13" selection-start-line="252" selection-start-column="13" selection-end-line="252" selection-end-column="13" />
           <folding>
             <element signature="e#0#20#0" expanded="true" />
           </folding>
@@ -1853,23 +1757,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/include/baxter_moveit_application/DualCBiRRT/dual_cbirrt.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2869">
-          <caret line="151" column="31" selection-start-line="151" selection-start-column="11" selection-end-line="151" selection-end-column="31" />
-          <folding>
-            <element signature="e#97#117#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/CMakeLists.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="202">
-          <caret line="22" column="24" selection-start-line="22" selection-start-column="24" selection-end-line="22" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file:///opt/ros/kinetic/include/ros/ros.h">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="102">
@@ -1891,20 +1778,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/DualCBiRRT_Astar/astar_demo_node.cpp">
+    <entry file="file://$PROJECT_DIR$/src/DualCBiRRT/dual_cbirrt_test_multi_times.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="322">
-          <caret line="226" column="67" lean-forward="true" selection-start-line="226" selection-start-column="67" selection-end-line="226" selection-end-column="67" />
-          <folding>
-            <element signature="e#1#19#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/DualCBiRRT/dual_cbirrt_test.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="274">
-          <caret line="37" selection-start-line="37" selection-end-line="37" />
+        <state relative-caret-position="-3410">
+          <caret line="45" selection-start-line="45" selection-end-line="45" />
           <folding>
             <element signature="e#0#20#0" expanded="true" />
           </folding>
@@ -1913,10 +1790,261 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/DualCBiRRT/dual_cbirrt.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="5917">
-          <caret line="4815" selection-start-line="4815" selection-end-line="4815" />
+        <state relative-caret-position="273">
+          <caret line="5375" selection-start-line="5375" selection-end-line="5375" />
           <folding>
             <element signature="e#1#62#0" expanded="true" />
+            <element signature="e#1914#2663#0" />
+            <element signature="e#2665#3584#0" />
+            <element signature="e#3586#4743#0" />
+            <element signature="e#4745#6073#0" />
+            <element signature="e#6075#19428#0" />
+            <element signature="e#19430#42916#0" />
+            <element signature="e#42918#60159#0" />
+            <element signature="e#60161#79241#0" />
+            <element signature="e#96659#118395#0" />
+            <element signature="e#118397#139740#0" />
+            <element signature="e#167128#177038#0" />
+            <element signature="e#177040#187006#0" />
+            <element signature="e#187008#197008#0" />
+            <element signature="e#197010#207508#0" />
+            <element signature="e#207510#219142#0" />
+            <element signature="e#219144#230693#0" />
+            <element signature="e#230695#243108#0" />
+            <element signature="e#243110#254694#0" />
+            <element signature="e#262800#272914#0" />
+            <element signature="e#272916#287067#0" />
+            <element signature="e#287069#293197#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/DualCBiRRT/dual_cbirrt_test.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="384">
+          <caret line="100" column="50" selection-start-line="100" selection-start-column="50" selection-end-line="100" selection-end-column="113" />
+          <folding>
+            <element signature="e#0#20#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///usr/include/eigen3/Eigen/src/Core/GeneralProduct.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="153">
+          <caret line="414" selection-start-line="414" selection-end-line="414" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///usr/include/eigen3/Eigen/src/Core/Product.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="153">
+          <caret line="130" selection-start-line="130" selection-end-line="130" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/DualCBiRRTEuler/using_moveit_planner.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-689">
+          <caret line="39" column="23" selection-start-line="39" selection-start-column="23" selection-end-line="39" selection-end-column="23" />
+          <folding>
+            <element signature="e#0#20#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///opt/ros/kinetic/include/moveit/collision_detection/collision_world.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="443">
+          <caret line="128" column="48" selection-start-line="128" selection-start-column="48" selection-end-line="128" selection-end-column="48" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/MultiCBiRRT/dual_cbirrt.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="936">
+          <caret line="3939" column="4" selection-start-line="3939" selection-start-column="4" selection-end-line="3939" selection-end-column="4" />
+          <folding>
+            <element signature="e#79212#95882#0" />
+            <element signature="e#95884#105794#0" />
+            <element signature="e#147799#159365#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///usr/include/eigen3/Eigen/src/Core/PlainObjectBase.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="310">
+          <caret line="253" selection-start-line="253" selection-end-line="253" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///usr/include/c++/5/iostream">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="249">
+          <caret line="41" selection-start-line="41" selection-end-line="41" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///opt/ros/kinetic/include/moveit/robot_state/robot_state.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="130">
+          <caret line="1240" selection-start-line="1240" selection-end-line="1240" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///usr/include/eigen3/Eigen/src/Core/CommaInitializer.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="665">
+          <caret line="35" selection-start-line="35" selection-end-line="35" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/include/baxter_moveit_application/DualCBiRRT/dual_cbirrt.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="394">
+          <caret line="166" column="46" selection-start-line="166" selection-start-column="46" selection-end-line="166" selection-end-column="46" />
+          <folding>
+            <element signature="e#97#117#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///usr/include/c++/5/bits/stl_vector.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="17670">
+          <caret line="930" column="6" selection-start-line="930" selection-start-column="6" selection-end-line="930" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///usr/include/c++/5/ext/new_allocator.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="148">
+          <caret line="109" selection-start-line="109" selection-end-line="109" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///usr/include/c++/5/bits/stl_bvector.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="281">
+          <caret line="80" selection-start-line="80" selection-end-line="80" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///opt/ros/kinetic/include/moveit/collision_detection/collision_common.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-261">
+          <caret line="293" column="7" selection-start-line="293" selection-start-column="7" selection-end-line="293" selection-end-column="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///opt/ros/kinetic/include/visualization_msgs/MarkerArray.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="494">
+          <caret line="26" column="2" selection-start-line="26" selection-start-column="2" selection-end-line="26" selection-end-column="2" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///opt/ros/kinetic/include/moveit_msgs/CollisionObject.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="494">
+          <caret line="26" selection-start-line="26" selection-end-line="26" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/include/baxter_moveit_application/DualCBiRRTEuler/dual_cbirrt.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2318">
+          <caret line="122" column="76" selection-start-line="122" selection-start-column="55" selection-end-line="122" selection-end-column="76" />
+          <folding>
+            <element signature="e#0#2#0" />
+            <element signature="e#97#117#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/DualCBiRRTEuler/dual_cbirrt_test.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1254">
+          <caret line="66" column="27" selection-start-line="66" selection-start-column="27" selection-end-line="66" selection-end-column="27" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/DualCBiRRT_Astar/astar_demo_node.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="12559">
+          <caret line="661" column="13" selection-start-line="661" selection-start-column="13" selection-end-line="661" selection-end-column="58" />
+          <folding>
+            <element signature="e#764#815#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///opt/ros/kinetic/include/moveit/collision_detection/collision_tools.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="215">
+          <caret line="46" column="5" selection-start-line="46" selection-start-column="5" selection-end-line="46" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/CMakeLists.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="163">
+          <caret line="261" column="27" selection-start-line="261" selection-start-column="15" selection-end-line="261" selection-end-column="27" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/DualCBiRRTEuler/test_manipulability.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1058">
+          <caret line="97" column="33" selection-start-line="97" selection-start-column="33" selection-end-line="97" selection-end-column="33" />
+          <folding>
+            <element signature="e#0#20#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/DualCBiRRTEuler/dual_cbirrt_test_multi_times.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="234">
+          <caret line="52" column="39" selection-start-line="46" selection-start-column="51" selection-end-line="46" selection-end-column="112" />
+          <folding>
+            <element signature="e#0#20#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/DualCBiRRTEuler/dual_cbirrt.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="390">
+          <caret line="3481" column="21" lean-forward="true" selection-start-line="3481" selection-start-column="21" selection-end-line="3481" selection-end-column="21" />
+          <folding>
+            <element signature="e#541#3347#0" />
+            <element signature="e#3378#4539#0" />
+            <element signature="e#4541#5869#0" />
+            <element signature="e#5871#27727#0" />
+            <element signature="e#27729#66498#0" />
+            <element signature="e#66500#77348#0" />
+            <element signature="e#77350#107768#0" />
+            <element signature="e#107770#117259#0" />
+            <element signature="e#117261#128420#0" />
+            <element signature="e#128422#144141#0" />
+            <element signature="e#144143#165979#0" />
+            <element signature="e#190909#222926#0" />
+            <element signature="e#222928#235797#0" />
+            <element signature="e#235799#239501#0" />
+            <element signature="e#239503#240847#0" />
+            <element signature="e#240849#248013#0" />
+            <element signature="e#248015#254143#0" />
+            <element signature="e#254145#259326#0" />
+            <element signature="e#259328#259515#0" />
+            <element signature="e#259517#259726#0" />
+            <element signature="e#259728#259944#0" />
+            <element signature="e#259946#260158#0" />
+            <element signature="e#260160#260379#0" />
+            <element signature="e#260381#260972#0" />
+            <element signature="e#260974#261367#0" />
+            <element signature="e#261369#261595#0" />
           </folding>
         </state>
       </provider>

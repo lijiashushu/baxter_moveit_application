@@ -239,7 +239,25 @@ target_link_libraries(multi_ik_test_node ${catkin_LIBRARIES})
 add_executable(multi_using_moveit_planner_node src/MultiCBiRRT/using_moveit_planner.cpp)
 target_link_libraries(multi_using_moveit_planner_node ${catkin_LIBRARIES})
 
+## DualCBiRRTEuler
+add_executable(euler_dual_cbitrrt_node src/DualCBiRRTEuler/dual_cbirrt_test.cpp src/DualCBiRRTEuler/dual_cbirrt.cpp  include/baxter_moveit_application/DualCBiRRTEuler/dual_cbirrt.h)
+target_link_libraries(euler_dual_cbitrrt_node ${catkin_LIBRARIES})
+
+add_executable(euler_dual_cbitrrt_multi_node src/DualCBiRRTEuler/dual_cbirrt_test_multi_times.cpp src/DualCBiRRTEuler/dual_cbirrt.cpp  include/baxter_moveit_application/DualCBiRRTEuler/dual_cbirrt.h)
+target_link_libraries(euler_dual_cbitrrt_multi_node ${catkin_LIBRARIES})
+
+add_executable(euler_ik_test_node src/DualCBiRRTEuler/ik_test.cpp src/DualCBiRRTEuler/dual_cbirrt.cpp  include/baxter_moveit_application/DualCBiRRTEuler/dual_cbirrt.h)
+target_link_libraries(euler_ik_test_node ${catkin_LIBRARIES})
+
+add_executable(euler_using_moveit_planner_node src/DualCBiRRTEuler/using_moveit_planner.cpp)
+target_link_libraries(euler_using_moveit_planner_node ${catkin_LIBRARIES})
+
+add_executable(test_manipulability src/DualCBiRRTEuler/test_manipulability.cpp src/DualCBiRRTEuler/dual_cbirrt.cpp  include/baxter_moveit_application/DualCBiRRTEuler/dual_cbirrt.h)
+target_link_libraries(test_manipulability ${catkin_LIBRARIES})
+
 ## qpOASES_test+++++++
+
+
 
 add_executable(qpOASES_test src/qpOASE/qpoase_test.cpp)
 target_link_libraries(qpOASES_test /usr/local/lib/libqpOASES.a)

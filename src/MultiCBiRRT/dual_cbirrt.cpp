@@ -3878,9 +3878,10 @@ void DualCBiRRT::output_perdex_multi(std::ofstream & outFILE){
     double average_extend_one_project_time = 0;
     double average_extend_one_ik_time = 0;
 
+
     for (size_t i=0; i<sample_counts; i++){
         total_sample_time += _performance_record[i].spend_time;
-        
+
         for(size_t j=0; j<_performance_record[i].tree_a.size(); j++){
             extend_try++;
             total_extend_time += _performance_record[i].tree_a[j].extend_total_spend_time;
@@ -3905,7 +3906,7 @@ void DualCBiRRT::output_perdex_multi(std::ofstream & outFILE){
             extend_try++;
             total_extend_time += _performance_record[i].tree_b[j].extend_total_spend_time;
             total_project_time += _performance_record[i].tree_b[j].project_total_spend_time;
-            total_ik_time += _performance_record[i].tree_b[j].ik_total_spend_time;            
+            total_ik_time += _performance_record[i].tree_b[j].ik_total_spend_time;
             constraint_project_compute_times += _performance_record[i].tree_b[j].constraint_project_times;
             ik_compute_times += _performance_record[i].tree_b[j].ik_project_times;
             if(_performance_record[i].tree_b[j].project_success)
@@ -3922,7 +3923,7 @@ void DualCBiRRT::output_perdex_multi(std::ofstream & outFILE){
             }
         }
     }
-    
+
     constraint_project_success_rate = double(constraint_project_success)/double(extend_try);
     ik_success_rate = double(ik_success)/double(extend_try);
     extend_success_rate = double(extend_success)/double(extend_try);

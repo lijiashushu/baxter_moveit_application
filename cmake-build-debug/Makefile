@@ -68,18 +68,6 @@ install/strip/fast: preinstall/fast
 	/home/lijiashushu/tool/clion-2019.1.4/bin/cmake/linux/bin/cmake -DCMAKE_INSTALL_DO_STRIP=1 -P cmake_install.cmake
 .PHONY : install/strip/fast
 
-# Special rule for the target install/local
-install/local: preinstall
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing only the local directory..."
-	/home/lijiashushu/tool/clion-2019.1.4/bin/cmake/linux/bin/cmake -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake
-.PHONY : install/local
-
-# Special rule for the target install/local
-install/local/fast: preinstall/fast
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing only the local directory..."
-	/home/lijiashushu/tool/clion-2019.1.4/bin/cmake/linux/bin/cmake -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake
-.PHONY : install/local/fast
-
 # Special rule for the target install
 install: preinstall
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Install the project..."
@@ -112,6 +100,18 @@ test:
 test/fast: test
 
 .PHONY : test/fast
+
+# Special rule for the target install/local
+install/local: preinstall
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing only the local directory..."
+	/home/lijiashushu/tool/clion-2019.1.4/bin/cmake/linux/bin/cmake -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake
+.PHONY : install/local
+
+# Special rule for the target install/local
+install/local/fast: preinstall/fast
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing only the local directory..."
+	/home/lijiashushu/tool/clion-2019.1.4/bin/cmake/linux/bin/cmake -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake
+.PHONY : install/local/fast
 
 # Special rule for the target rebuild_cache
 rebuild_cache:
@@ -166,6 +166,32 @@ preinstall/fast:
 depend:
 	$(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
 .PHONY : depend
+
+#=============================================================================
+# Target rules for targets named test_manipulability
+
+# Build rule for target.
+test_manipulability: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 test_manipulability
+.PHONY : test_manipulability
+
+# fast build rule for target.
+test_manipulability/fast:
+	$(MAKE) -f CMakeFiles/test_manipulability.dir/build.make CMakeFiles/test_manipulability.dir/build
+.PHONY : test_manipulability/fast
+
+#=============================================================================
+# Target rules for targets named euler_dual_cbitrrt_multi_node
+
+# Build rule for target.
+euler_dual_cbitrrt_multi_node: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 euler_dual_cbitrrt_multi_node
+.PHONY : euler_dual_cbitrrt_multi_node
+
+# fast build rule for target.
+euler_dual_cbitrrt_multi_node/fast:
+	$(MAKE) -f CMakeFiles/euler_dual_cbitrrt_multi_node.dir/build.make CMakeFiles/euler_dual_cbitrrt_multi_node.dir/build
+.PHONY : euler_dual_cbitrrt_multi_node/fast
 
 #=============================================================================
 # Target rules for targets named multi_using_moveit_planner_node
@@ -608,6 +634,19 @@ geometry_msgs_generate_messages_lisp: cmake_check_build_system
 geometry_msgs_generate_messages_lisp/fast:
 	$(MAKE) -f CMakeFiles/geometry_msgs_generate_messages_lisp.dir/build.make CMakeFiles/geometry_msgs_generate_messages_lisp.dir/build
 .PHONY : geometry_msgs_generate_messages_lisp/fast
+
+#=============================================================================
+# Target rules for targets named euler_using_moveit_planner_node
+
+# Build rule for target.
+euler_using_moveit_planner_node: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 euler_using_moveit_planner_node
+.PHONY : euler_using_moveit_planner_node
+
+# fast build rule for target.
+euler_using_moveit_planner_node/fast:
+	$(MAKE) -f CMakeFiles/euler_using_moveit_planner_node.dir/build.make CMakeFiles/euler_using_moveit_planner_node.dir/build
+.PHONY : euler_using_moveit_planner_node/fast
 
 #=============================================================================
 # Target rules for targets named 20191025_test1_node
@@ -1273,6 +1312,19 @@ graph_msgs_generate_messages_nodejs/fast:
 .PHONY : graph_msgs_generate_messages_nodejs/fast
 
 #=============================================================================
+# Target rules for targets named euler_ik_test_node
+
+# Build rule for target.
+euler_ik_test_node: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 euler_ik_test_node
+.PHONY : euler_ik_test_node
+
+# fast build rule for target.
+euler_ik_test_node/fast:
+	$(MAKE) -f CMakeFiles/euler_ik_test_node.dir/build.make CMakeFiles/euler_ik_test_node.dir/build
+.PHONY : euler_ik_test_node/fast
+
+#=============================================================================
 # Target rules for targets named actionlib_msgs_generate_messages_lisp
 
 # Build rule for target.
@@ -1323,6 +1375,19 @@ trajectory_msgs_generate_messages_cpp: cmake_check_build_system
 trajectory_msgs_generate_messages_cpp/fast:
 	$(MAKE) -f CMakeFiles/trajectory_msgs_generate_messages_cpp.dir/build.make CMakeFiles/trajectory_msgs_generate_messages_cpp.dir/build
 .PHONY : trajectory_msgs_generate_messages_cpp/fast
+
+#=============================================================================
+# Target rules for targets named euler_dual_cbitrrt_node
+
+# Build rule for target.
+euler_dual_cbitrrt_node: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 euler_dual_cbitrrt_node
+.PHONY : euler_dual_cbitrrt_node
+
+# fast build rule for target.
+euler_dual_cbitrrt_node/fast:
+	$(MAKE) -f CMakeFiles/euler_dual_cbitrrt_node.dir/build.make CMakeFiles/euler_dual_cbitrrt_node.dir/build
+.PHONY : euler_dual_cbitrrt_node/fast
 
 #=============================================================================
 # Target rules for targets named trajectory_msgs_generate_messages_lisp
@@ -2260,6 +2325,177 @@ src/DualCBiRRT/using_moveit_planner.cpp.s:
 	$(MAKE) -f CMakeFiles/using_moveit_planner_node.dir/build.make CMakeFiles/using_moveit_planner_node.dir/src/DualCBiRRT/using_moveit_planner.cpp.s
 .PHONY : src/DualCBiRRT/using_moveit_planner.cpp.s
 
+src/DualCBiRRTEuler/dual_cbirrt.o: src/DualCBiRRTEuler/dual_cbirrt.cpp.o
+
+.PHONY : src/DualCBiRRTEuler/dual_cbirrt.o
+
+# target to build an object file
+src/DualCBiRRTEuler/dual_cbirrt.cpp.o:
+	$(MAKE) -f CMakeFiles/test_manipulability.dir/build.make CMakeFiles/test_manipulability.dir/src/DualCBiRRTEuler/dual_cbirrt.cpp.o
+	$(MAKE) -f CMakeFiles/euler_dual_cbitrrt_multi_node.dir/build.make CMakeFiles/euler_dual_cbitrrt_multi_node.dir/src/DualCBiRRTEuler/dual_cbirrt.cpp.o
+	$(MAKE) -f CMakeFiles/euler_ik_test_node.dir/build.make CMakeFiles/euler_ik_test_node.dir/src/DualCBiRRTEuler/dual_cbirrt.cpp.o
+	$(MAKE) -f CMakeFiles/euler_dual_cbitrrt_node.dir/build.make CMakeFiles/euler_dual_cbitrrt_node.dir/src/DualCBiRRTEuler/dual_cbirrt.cpp.o
+.PHONY : src/DualCBiRRTEuler/dual_cbirrt.cpp.o
+
+src/DualCBiRRTEuler/dual_cbirrt.i: src/DualCBiRRTEuler/dual_cbirrt.cpp.i
+
+.PHONY : src/DualCBiRRTEuler/dual_cbirrt.i
+
+# target to preprocess a source file
+src/DualCBiRRTEuler/dual_cbirrt.cpp.i:
+	$(MAKE) -f CMakeFiles/test_manipulability.dir/build.make CMakeFiles/test_manipulability.dir/src/DualCBiRRTEuler/dual_cbirrt.cpp.i
+	$(MAKE) -f CMakeFiles/euler_dual_cbitrrt_multi_node.dir/build.make CMakeFiles/euler_dual_cbitrrt_multi_node.dir/src/DualCBiRRTEuler/dual_cbirrt.cpp.i
+	$(MAKE) -f CMakeFiles/euler_ik_test_node.dir/build.make CMakeFiles/euler_ik_test_node.dir/src/DualCBiRRTEuler/dual_cbirrt.cpp.i
+	$(MAKE) -f CMakeFiles/euler_dual_cbitrrt_node.dir/build.make CMakeFiles/euler_dual_cbitrrt_node.dir/src/DualCBiRRTEuler/dual_cbirrt.cpp.i
+.PHONY : src/DualCBiRRTEuler/dual_cbirrt.cpp.i
+
+src/DualCBiRRTEuler/dual_cbirrt.s: src/DualCBiRRTEuler/dual_cbirrt.cpp.s
+
+.PHONY : src/DualCBiRRTEuler/dual_cbirrt.s
+
+# target to generate assembly for a file
+src/DualCBiRRTEuler/dual_cbirrt.cpp.s:
+	$(MAKE) -f CMakeFiles/test_manipulability.dir/build.make CMakeFiles/test_manipulability.dir/src/DualCBiRRTEuler/dual_cbirrt.cpp.s
+	$(MAKE) -f CMakeFiles/euler_dual_cbitrrt_multi_node.dir/build.make CMakeFiles/euler_dual_cbitrrt_multi_node.dir/src/DualCBiRRTEuler/dual_cbirrt.cpp.s
+	$(MAKE) -f CMakeFiles/euler_ik_test_node.dir/build.make CMakeFiles/euler_ik_test_node.dir/src/DualCBiRRTEuler/dual_cbirrt.cpp.s
+	$(MAKE) -f CMakeFiles/euler_dual_cbitrrt_node.dir/build.make CMakeFiles/euler_dual_cbitrrt_node.dir/src/DualCBiRRTEuler/dual_cbirrt.cpp.s
+.PHONY : src/DualCBiRRTEuler/dual_cbirrt.cpp.s
+
+src/DualCBiRRTEuler/dual_cbirrt_test.o: src/DualCBiRRTEuler/dual_cbirrt_test.cpp.o
+
+.PHONY : src/DualCBiRRTEuler/dual_cbirrt_test.o
+
+# target to build an object file
+src/DualCBiRRTEuler/dual_cbirrt_test.cpp.o:
+	$(MAKE) -f CMakeFiles/euler_dual_cbitrrt_node.dir/build.make CMakeFiles/euler_dual_cbitrrt_node.dir/src/DualCBiRRTEuler/dual_cbirrt_test.cpp.o
+.PHONY : src/DualCBiRRTEuler/dual_cbirrt_test.cpp.o
+
+src/DualCBiRRTEuler/dual_cbirrt_test.i: src/DualCBiRRTEuler/dual_cbirrt_test.cpp.i
+
+.PHONY : src/DualCBiRRTEuler/dual_cbirrt_test.i
+
+# target to preprocess a source file
+src/DualCBiRRTEuler/dual_cbirrt_test.cpp.i:
+	$(MAKE) -f CMakeFiles/euler_dual_cbitrrt_node.dir/build.make CMakeFiles/euler_dual_cbitrrt_node.dir/src/DualCBiRRTEuler/dual_cbirrt_test.cpp.i
+.PHONY : src/DualCBiRRTEuler/dual_cbirrt_test.cpp.i
+
+src/DualCBiRRTEuler/dual_cbirrt_test.s: src/DualCBiRRTEuler/dual_cbirrt_test.cpp.s
+
+.PHONY : src/DualCBiRRTEuler/dual_cbirrt_test.s
+
+# target to generate assembly for a file
+src/DualCBiRRTEuler/dual_cbirrt_test.cpp.s:
+	$(MAKE) -f CMakeFiles/euler_dual_cbitrrt_node.dir/build.make CMakeFiles/euler_dual_cbitrrt_node.dir/src/DualCBiRRTEuler/dual_cbirrt_test.cpp.s
+.PHONY : src/DualCBiRRTEuler/dual_cbirrt_test.cpp.s
+
+src/DualCBiRRTEuler/dual_cbirrt_test_multi_times.o: src/DualCBiRRTEuler/dual_cbirrt_test_multi_times.cpp.o
+
+.PHONY : src/DualCBiRRTEuler/dual_cbirrt_test_multi_times.o
+
+# target to build an object file
+src/DualCBiRRTEuler/dual_cbirrt_test_multi_times.cpp.o:
+	$(MAKE) -f CMakeFiles/euler_dual_cbitrrt_multi_node.dir/build.make CMakeFiles/euler_dual_cbitrrt_multi_node.dir/src/DualCBiRRTEuler/dual_cbirrt_test_multi_times.cpp.o
+.PHONY : src/DualCBiRRTEuler/dual_cbirrt_test_multi_times.cpp.o
+
+src/DualCBiRRTEuler/dual_cbirrt_test_multi_times.i: src/DualCBiRRTEuler/dual_cbirrt_test_multi_times.cpp.i
+
+.PHONY : src/DualCBiRRTEuler/dual_cbirrt_test_multi_times.i
+
+# target to preprocess a source file
+src/DualCBiRRTEuler/dual_cbirrt_test_multi_times.cpp.i:
+	$(MAKE) -f CMakeFiles/euler_dual_cbitrrt_multi_node.dir/build.make CMakeFiles/euler_dual_cbitrrt_multi_node.dir/src/DualCBiRRTEuler/dual_cbirrt_test_multi_times.cpp.i
+.PHONY : src/DualCBiRRTEuler/dual_cbirrt_test_multi_times.cpp.i
+
+src/DualCBiRRTEuler/dual_cbirrt_test_multi_times.s: src/DualCBiRRTEuler/dual_cbirrt_test_multi_times.cpp.s
+
+.PHONY : src/DualCBiRRTEuler/dual_cbirrt_test_multi_times.s
+
+# target to generate assembly for a file
+src/DualCBiRRTEuler/dual_cbirrt_test_multi_times.cpp.s:
+	$(MAKE) -f CMakeFiles/euler_dual_cbitrrt_multi_node.dir/build.make CMakeFiles/euler_dual_cbitrrt_multi_node.dir/src/DualCBiRRTEuler/dual_cbirrt_test_multi_times.cpp.s
+.PHONY : src/DualCBiRRTEuler/dual_cbirrt_test_multi_times.cpp.s
+
+src/DualCBiRRTEuler/ik_test.o: src/DualCBiRRTEuler/ik_test.cpp.o
+
+.PHONY : src/DualCBiRRTEuler/ik_test.o
+
+# target to build an object file
+src/DualCBiRRTEuler/ik_test.cpp.o:
+	$(MAKE) -f CMakeFiles/euler_ik_test_node.dir/build.make CMakeFiles/euler_ik_test_node.dir/src/DualCBiRRTEuler/ik_test.cpp.o
+.PHONY : src/DualCBiRRTEuler/ik_test.cpp.o
+
+src/DualCBiRRTEuler/ik_test.i: src/DualCBiRRTEuler/ik_test.cpp.i
+
+.PHONY : src/DualCBiRRTEuler/ik_test.i
+
+# target to preprocess a source file
+src/DualCBiRRTEuler/ik_test.cpp.i:
+	$(MAKE) -f CMakeFiles/euler_ik_test_node.dir/build.make CMakeFiles/euler_ik_test_node.dir/src/DualCBiRRTEuler/ik_test.cpp.i
+.PHONY : src/DualCBiRRTEuler/ik_test.cpp.i
+
+src/DualCBiRRTEuler/ik_test.s: src/DualCBiRRTEuler/ik_test.cpp.s
+
+.PHONY : src/DualCBiRRTEuler/ik_test.s
+
+# target to generate assembly for a file
+src/DualCBiRRTEuler/ik_test.cpp.s:
+	$(MAKE) -f CMakeFiles/euler_ik_test_node.dir/build.make CMakeFiles/euler_ik_test_node.dir/src/DualCBiRRTEuler/ik_test.cpp.s
+.PHONY : src/DualCBiRRTEuler/ik_test.cpp.s
+
+src/DualCBiRRTEuler/test_manipulability.o: src/DualCBiRRTEuler/test_manipulability.cpp.o
+
+.PHONY : src/DualCBiRRTEuler/test_manipulability.o
+
+# target to build an object file
+src/DualCBiRRTEuler/test_manipulability.cpp.o:
+	$(MAKE) -f CMakeFiles/test_manipulability.dir/build.make CMakeFiles/test_manipulability.dir/src/DualCBiRRTEuler/test_manipulability.cpp.o
+.PHONY : src/DualCBiRRTEuler/test_manipulability.cpp.o
+
+src/DualCBiRRTEuler/test_manipulability.i: src/DualCBiRRTEuler/test_manipulability.cpp.i
+
+.PHONY : src/DualCBiRRTEuler/test_manipulability.i
+
+# target to preprocess a source file
+src/DualCBiRRTEuler/test_manipulability.cpp.i:
+	$(MAKE) -f CMakeFiles/test_manipulability.dir/build.make CMakeFiles/test_manipulability.dir/src/DualCBiRRTEuler/test_manipulability.cpp.i
+.PHONY : src/DualCBiRRTEuler/test_manipulability.cpp.i
+
+src/DualCBiRRTEuler/test_manipulability.s: src/DualCBiRRTEuler/test_manipulability.cpp.s
+
+.PHONY : src/DualCBiRRTEuler/test_manipulability.s
+
+# target to generate assembly for a file
+src/DualCBiRRTEuler/test_manipulability.cpp.s:
+	$(MAKE) -f CMakeFiles/test_manipulability.dir/build.make CMakeFiles/test_manipulability.dir/src/DualCBiRRTEuler/test_manipulability.cpp.s
+.PHONY : src/DualCBiRRTEuler/test_manipulability.cpp.s
+
+src/DualCBiRRTEuler/using_moveit_planner.o: src/DualCBiRRTEuler/using_moveit_planner.cpp.o
+
+.PHONY : src/DualCBiRRTEuler/using_moveit_planner.o
+
+# target to build an object file
+src/DualCBiRRTEuler/using_moveit_planner.cpp.o:
+	$(MAKE) -f CMakeFiles/euler_using_moveit_planner_node.dir/build.make CMakeFiles/euler_using_moveit_planner_node.dir/src/DualCBiRRTEuler/using_moveit_planner.cpp.o
+.PHONY : src/DualCBiRRTEuler/using_moveit_planner.cpp.o
+
+src/DualCBiRRTEuler/using_moveit_planner.i: src/DualCBiRRTEuler/using_moveit_planner.cpp.i
+
+.PHONY : src/DualCBiRRTEuler/using_moveit_planner.i
+
+# target to preprocess a source file
+src/DualCBiRRTEuler/using_moveit_planner.cpp.i:
+	$(MAKE) -f CMakeFiles/euler_using_moveit_planner_node.dir/build.make CMakeFiles/euler_using_moveit_planner_node.dir/src/DualCBiRRTEuler/using_moveit_planner.cpp.i
+.PHONY : src/DualCBiRRTEuler/using_moveit_planner.cpp.i
+
+src/DualCBiRRTEuler/using_moveit_planner.s: src/DualCBiRRTEuler/using_moveit_planner.cpp.s
+
+.PHONY : src/DualCBiRRTEuler/using_moveit_planner.s
+
+# target to generate assembly for a file
+src/DualCBiRRTEuler/using_moveit_planner.cpp.s:
+	$(MAKE) -f CMakeFiles/euler_using_moveit_planner_node.dir/build.make CMakeFiles/euler_using_moveit_planner_node.dir/src/DualCBiRRTEuler/using_moveit_planner.cpp.s
+.PHONY : src/DualCBiRRTEuler/using_moveit_planner.cpp.s
+
 src/DualCBiRRT_Astar/Astar_searcher.o: src/DualCBiRRT_Astar/Astar_searcher.cpp.o
 
 .PHONY : src/DualCBiRRT_Astar/Astar_searcher.o
@@ -2687,10 +2923,12 @@ help:
 	@echo "... clean"
 	@echo "... depend"
 	@echo "... install/strip"
-	@echo "... install/local"
 	@echo "... install"
 	@echo "... list_install_components"
 	@echo "... test"
+	@echo "... test_manipulability"
+	@echo "... install/local"
+	@echo "... euler_dual_cbitrrt_multi_node"
 	@echo "... multi_using_moveit_planner_node"
 	@echo "... multi_ik_test_node"
 	@echo "... multi_cbitrrt_multi_node"
@@ -2725,6 +2963,7 @@ help:
 	@echo "... shape_msgs_generate_messages_cpp"
 	@echo "... geometry_msgs_generate_messages_py"
 	@echo "... geometry_msgs_generate_messages_lisp"
+	@echo "... euler_using_moveit_planner_node"
 	@echo "... 20191025_test1_node"
 	@echo "... roscpp_generate_messages_cpp"
 	@echo "... object_recognition_msgs_generate_messages_eus"
@@ -2778,10 +3017,12 @@ help:
 	@echo "... actionlib_msgs_generate_messages_eus"
 	@echo "... octomap_msgs_generate_messages_cpp"
 	@echo "... graph_msgs_generate_messages_nodejs"
+	@echo "... euler_ik_test_node"
 	@echo "... actionlib_msgs_generate_messages_lisp"
 	@echo "... actionlib_msgs_generate_messages_py"
 	@echo "... shape_msgs_generate_messages_py"
 	@echo "... trajectory_msgs_generate_messages_cpp"
+	@echo "... euler_dual_cbitrrt_node"
 	@echo "... trajectory_msgs_generate_messages_lisp"
 	@echo "... trajectory_msgs_generate_messages_nodejs"
 	@echo "... rosgraph_msgs_generate_messages_eus"
@@ -2872,6 +3113,24 @@ help:
 	@echo "... src/DualCBiRRT/using_moveit_planner.o"
 	@echo "... src/DualCBiRRT/using_moveit_planner.i"
 	@echo "... src/DualCBiRRT/using_moveit_planner.s"
+	@echo "... src/DualCBiRRTEuler/dual_cbirrt.o"
+	@echo "... src/DualCBiRRTEuler/dual_cbirrt.i"
+	@echo "... src/DualCBiRRTEuler/dual_cbirrt.s"
+	@echo "... src/DualCBiRRTEuler/dual_cbirrt_test.o"
+	@echo "... src/DualCBiRRTEuler/dual_cbirrt_test.i"
+	@echo "... src/DualCBiRRTEuler/dual_cbirrt_test.s"
+	@echo "... src/DualCBiRRTEuler/dual_cbirrt_test_multi_times.o"
+	@echo "... src/DualCBiRRTEuler/dual_cbirrt_test_multi_times.i"
+	@echo "... src/DualCBiRRTEuler/dual_cbirrt_test_multi_times.s"
+	@echo "... src/DualCBiRRTEuler/ik_test.o"
+	@echo "... src/DualCBiRRTEuler/ik_test.i"
+	@echo "... src/DualCBiRRTEuler/ik_test.s"
+	@echo "... src/DualCBiRRTEuler/test_manipulability.o"
+	@echo "... src/DualCBiRRTEuler/test_manipulability.i"
+	@echo "... src/DualCBiRRTEuler/test_manipulability.s"
+	@echo "... src/DualCBiRRTEuler/using_moveit_planner.o"
+	@echo "... src/DualCBiRRTEuler/using_moveit_planner.i"
+	@echo "... src/DualCBiRRTEuler/using_moveit_planner.s"
 	@echo "... src/DualCBiRRT_Astar/Astar_searcher.o"
 	@echo "... src/DualCBiRRT_Astar/Astar_searcher.i"
 	@echo "... src/DualCBiRRT_Astar/Astar_searcher.s"
