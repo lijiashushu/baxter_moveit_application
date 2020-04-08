@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <package format="2">
-  <name>baxter_moveit_application</name>
+  <name>dual_rrt_star</name>
   <version>0.0.0</version>
   <description>The baxter_moveit_application package</description>
 

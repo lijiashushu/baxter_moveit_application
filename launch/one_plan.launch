@@ -1,0 +1,19 @@
+<launch>
+<arg name="seed" default="0"/>
+<arg name="prob"  default="0.8"/>
+<arg name="max_times"  default="200"/>
+<arg name="step"  default="0.02"/>
+<arg name="index"  default="0"/>
+<arg name="star"  default="false"/>
+
+  <node pkg="dual_rrt_star" type="one_plan_node" name="one_plan_node" output="screen" required = "true">
+      <param name="dualrrt/bi_probility"       value="$(arg prob)" />
+      <param name="dualrrt/max_sample_times"       value="$(arg max_times)" />
+      <param name="dualrrt/task_step"       value="$(arg step)"/>
+      <param name="dualrrt/constrain_index"       value="$(arg index)"/>
+      <param name="dualrrt/seed"       value="$(arg seed)"/>
+ 	<param name="dualrrt/star"       value="$(arg star)"/>
+  </node>
+
+</launch>
+

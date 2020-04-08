@@ -1,8 +1,0 @@
-prefix=/home/lijiashushu/ros_ws/src/baxter_moveit_application/cmake-build-debug/devel
-
-Name: baxter_moveit_application
-Description: Description of baxter_moveit_application
-Version: 0.0.0
-Cflags: 
-Libs: -L/home/lijiashushu/ros_ws/src/baxter_moveit_application/cmake-build-debug/devel/lib 
-Requires: 
