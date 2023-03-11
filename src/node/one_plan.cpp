@@ -1,0 +1,248 @@
+//
+// Created by lijiashushu on 20-4-3.
+//
+
+#include <ros/ros.h>
+#include "dual_rrt_star/path_planner/task_space.h"
+#include "dual_rrt_star/path_planner/joint_space.h"
+#include "dual_rrt_star/trajectory_planner/minimum_jerk_planner/minimum_jerk_planner.h"
+#include "dual_rrt_star/trajectory_planner/time_dual_constraint_planner/time_dual_constraint_planner.h"
+//#include <cuda.h>
+int main(int argc, char** argv){
+    ros::init(argc, argv, "one_plan_node");
+    ros::NodeHandle nh("~");
+//    ros::AsyncSpinner spinner(1);
+//    spinner.start();
+
+    std::srand((unsigned)time(NULL)); //fisrt srand set the seed, then rand()get the num
+    int max_sample_times, constrain_index, seed;
+    double bi_probility, task_step, max_planning_time;
+    bool if_rrt_star, if_informed;
+    double traj_soft_constraint_weight, traj_grad_step;
+    nh.param("dualrrt/bi_probility",  bi_probility, 0.8);
+    nh.param("dualrrt/max_sample_times",  max_sample_times, 500);
+    nh.param("dualrrt/task_step",  task_step, 0.1);
+    nh.param("dualrrt/constrain_index",  constrain_index, 1);
+    nh.param("dualrrt/seed",  seed, 0);
+    nh.param("dualrrt/star",  if_rrt_star, true);
+    nh.param("dualrrt/informed",  if_informed, false);
+    nh.param("dualrrt/weight",  traj_soft_constraint_weight,  0.0);
+    nh.param("dualrrt/grad_step",  traj_grad_step,  1.0);
+    nh.param("dualrrt/plan_time",  max_planning_time,  5.0);
+    if(seed == 0){
+        seed = rand();
+    }
+
+    std::vector<std::vector<double>> default_start_vec;
+    std::vector<std::vector<double>> default_goal_vec;
+    std::vector<double> start_pose;
+    std::vector<double> goal_pose;
+    
+    
+    int experiment_num = 2;
+    //提前测量好的4个不同约束姿势的初始角度
+    if(experiment_num == 1){
+        std::vector<double> start_pose0_master = {-0.0143575,-0.647576,-1.11934,0.879812,2.37683,-1.5691,-0.116081}; //没有奇异、narrow障碍物的起始左臂位置，大桌子，增加抓取物体，新姿态
+        std::vector<double> start_pose0_slave = {-0.0385529,-0.34499,1.6744,0.874578,-2.96177,-1.47428,0.297128};//没有奇异、narrow障碍物的起始右臂位置，大桌子，增加抓取物体，新姿态
+        std::vector<double> start_pose1_master = {0.514998,-0.487572,-1.79923,1.6679,-0.28682,0.603706,2.86722};
+        std::vector<double> start_pose1_slave = {-0.517204,-0.49348,1.79396,1.6679,0.302716,0.602833,-2.87906};
+        std::vector<double> start_pose2_master = {0.75793,-0.888533,-2.01998,2.09217,-0.226114,-0.224376,2.39712};
+        std::vector<double> start_pose2_slave = {-0.633959,-0.671778,2.03325,2.11988,0.716528,-0.334106,-3.05835};
+        std::vector<double> start_pose3_master = {0.119411,-0.743597,-2.05219,2.14562,-0.840575,-1.39347,3.05791};
+        std::vector<double> start_pose3_slave = {-0.119205,-0.74178,2.05281,2.14571,0.840017,-1.39411,-3.058};
+        
+        start_pose.clear();
+        start_pose.insert(start_pose.end(), start_pose0_master.begin(), start_pose0_master.end());
+        start_pose.insert(start_pose.end(), start_pose0_slave.begin(), start_pose0_slave.end());
+        default_start_vec.push_back(start_pose);
+        start_pose.clear();
+        start_pose.insert(start_pose.end(), start_pose1_master.begin(), start_pose1_master.end());
+        start_pose.insert(start_pose.end(), start_pose1_slave.begin(), start_pose1_slave.end());
+        default_start_vec.push_back(start_pose);
+        start_pose.clear();
+        start_pose.insert(start_pose.end(), start_pose2_master.begin(), start_pose2_master.end());
+        start_pose.insert(start_pose.end(), start_pose2_slave.begin(), start_pose2_slave.end());
+        default_start_vec.push_back(start_pose);
+        start_pose.clear();
+        start_pose.insert(start_pose.end(), start_pose3_master.begin(), start_pose3_master.end());
+        start_pose.insert(start_pose.end(), start_pose3_slave.begin(), start_pose3_slave.end());
+        default_start_vec.push_back(start_pose);
+
+        std::vector<double> goal_pose0_master = {0.103837,-0.367915,-0.866577,1.42099,2.45727,-1.38169,0.585954}; //没有奇异、narrow障碍物的起始左臂位置，大桌子，增加抓取物体，新姿态
+        std::vector<double> goal_pose0_slave = {-0.260812,0.0160462,1.32291,1.41565,-3.02408,-1.21469,-0.264414};//没有奇异、narrow障碍物的起始右臂位置，大桌子，增加抓取物体，新姿态
+        std::vector<double> goal_pose1_master = {0.665724,0.337947,-1.44691,2.0171,0.430279,0.472696,3.05881};
+        std::vector<double> goal_pose1_slave = {-0.640635,0.334855,1.43792,2.03636,-0.432353,0.425846,-3.05814};
+        std::vector<double> goal_pose2_master = {0.378964,-0.235001,-1.09593,2.54013,0.629455,-0.946823,2.56304};
+        std::vector<double> goal_pose2_slave = {-0.495711,0.18897,1.20076,2.51116,-0.470866,-0.757521,-3.05796};
+        std::vector<double> goal_pose3_master = {0.188932,1.04619,-1.20316,2.47039,0.862578,-1.41834,-2.53144};
+        std::vector<double> goal_pose3_slave = {-0.108729,1.0458,1.23816,2.45137,-0.881861,-1.45554,2.53844};
+
+        goal_pose.clear();
+        goal_pose.insert(goal_pose.end(), goal_pose0_master.begin(), goal_pose0_master.end());
+        goal_pose.insert(goal_pose.end(), goal_pose0_slave.begin(), goal_pose0_slave.end());
+        default_goal_vec.push_back(goal_pose);
+        goal_pose.clear();
+        goal_pose.insert(goal_pose.end(), goal_pose1_master.begin(), goal_pose1_master.end());
+        goal_pose.insert(goal_pose.end(), goal_pose1_slave.begin(), goal_pose1_slave.end());
+        default_goal_vec.push_back(goal_pose);
+        goal_pose.clear();
+        goal_pose.insert(goal_pose.end(), goal_pose2_master.begin(), goal_pose2_master.end());
+        goal_pose.insert(goal_pose.end(), goal_pose2_slave.begin(), goal_pose2_slave.end());
+        default_goal_vec.push_back(goal_pose);
+        goal_pose.clear();
+        goal_pose.insert(goal_pose.end(), goal_pose3_master.begin(), goal_pose3_master.end());
+        goal_pose.insert(goal_pose.end(), goal_pose3_slave.begin(), goal_pose3_slave.end());
+        default_goal_vec.push_back(goal_pose);
+    } 
+    else{
+        //**************只用 pose1 能用 其他都是上一个的 ********************
+        std::vector<double> start_pose0_master = {-0.0143575,-0.647576,-1.11934,0.879812,2.37683,-1.5691,-0.116081}; //没有奇异、narrow障碍物的起始左臂位置，大桌子，增加抓取物体，新姿态
+        std::vector<double> start_pose0_slave = {-0.0385529,-0.34499,1.6744,0.874578,-2.96177,-1.47428,0.297128};//没有奇异、narrow障碍物的起始右臂位置，大桌子，增加抓取物体，新姿态
+        std::vector<double> start_pose1_master = {0.696662,-0.356483,-1.58144,2.19855,2.36083,-0.410653,0.519327};
+        std::vector<double> start_pose1_slave = {-0.696662,-0.356483, 1.58144,2.19855,-2.36083,-0.410653,-0.519327};
+        std::vector<double> start_pose2_master = {0.75793,-0.888533,-2.01998,2.09217,-0.226114,-0.224376,2.39712};
+        std::vector<double> start_pose2_slave = {-0.633959,-0.671778,2.03325,2.11988,0.716528,-0.334106,-3.05835};
+        std::vector<double> start_pose3_master = {-0.420181,0.32788,-2.81828,1.76005,-0.253116,-1.34156,-1.82713};
+        std::vector<double> start_pose3_slave = {0.943985,0.0770524,2.45456,1.32517,-0.174816,-1.36827,2.30339};
+
+        start_pose.clear();
+        start_pose.insert(start_pose.end(), start_pose0_master.begin(), start_pose0_master.end());
+        start_pose.insert(start_pose.end(), start_pose0_slave.begin(), start_pose0_slave.end());
+        default_start_vec.push_back(start_pose);
+        start_pose.clear();
+        start_pose.insert(start_pose.end(), start_pose1_master.begin(), start_pose1_master.end());
+        start_pose.insert(start_pose.end(), start_pose1_slave.begin(), start_pose1_slave.end());
+        default_start_vec.push_back(start_pose);
+        start_pose.clear();
+        start_pose.insert(start_pose.end(), start_pose2_master.begin(), start_pose2_master.end());
+        start_pose.insert(start_pose.end(), start_pose2_slave.begin(), start_pose2_slave.end());
+        default_start_vec.push_back(start_pose);
+        start_pose.clear();
+        start_pose.insert(start_pose.end(), start_pose3_master.begin(), start_pose3_master.end());
+        start_pose.insert(start_pose.end(), start_pose3_slave.begin(), start_pose3_slave.end());
+        default_start_vec.push_back(start_pose);
+
+        std::vector<double> goal_pose0_master = {0.103837,-0.367915,-0.866577,1.42099,2.45727,-1.38169,0.585954}; //没有奇异、narrow障碍物的起始左臂位置，大桌子，增加抓取物体，新姿态
+        std::vector<double> goal_pose0_slave = {-0.260812,0.0160462,1.32291,1.41565,-3.02408,-1.21469,-0.264414};//没有奇异、narrow障碍物的起始右臂位置，大桌子，增加抓取物体，新姿态
+        std::vector<double> goal_pose1_master = {0.0243751,-0.0889073,-1.09442,1.19786,2.46102,-0.824353,0.564529};
+        std::vector<double> goal_pose1_slave = {-0.0243751,-0.0889073,1.09442,1.19786,-2.46102,-0.824353,-0.564529};
+        std::vector<double> goal_pose2_master = {0.378964,-0.235001,-1.09593,2.54013,0.629455,-0.946823,2.56304};
+        std::vector<double> goal_pose2_slave = {-0.495711,0.18897,1.20076,2.51116,-0.470866,-0.757521,-3.05796};
+        std::vector<double> goal_pose3_master = {-0.728359,0.978506,-2.05522,1.86281,0.820482,-1.30827,-2.61229};
+        std::vector<double> goal_pose3_slave = {-0.486375,1.04586,1.643,2.22476,-0.254866,-0.820848,2.28068};
+
+        goal_pose.clear();
+        goal_pose.insert(goal_pose.end(), goal_pose0_master.begin(), goal_pose0_master.end());
+        goal_pose.insert(goal_pose.end(), goal_pose0_slave.begin(), goal_pose0_slave.end());
+        default_goal_vec.push_back(goal_pose);
+        goal_pose.clear();
+        goal_pose.insert(goal_pose.end(), goal_pose1_master.begin(), goal_pose1_master.end());
+        goal_pose.insert(goal_pose.end(), goal_pose1_slave.begin(), goal_pose1_slave.end());
+        default_goal_vec.push_back(goal_pose);
+        goal_pose.clear();
+        goal_pose.insert(goal_pose.end(), goal_pose2_master.begin(), goal_pose2_master.end());
+        goal_pose.insert(goal_pose.end(), goal_pose2_slave.begin(), goal_pose2_slave.end());
+        default_goal_vec.push_back(goal_pose);
+        goal_pose.clear();
+        goal_pose.insert(goal_pose.end(), goal_pose3_master.begin(), goal_pose3_master.end());
+        goal_pose.insert(goal_pose.end(), goal_pose3_slave.begin(), goal_pose3_slave.end());
+        default_goal_vec.push_back(goal_pose);
+    }
+    
+
+    shared_ptr<PathPlanner> path_planner(creatPathPlanner(new TaskSpacePlanner(nh)));
+
+
+//    TaskSpacePlanner *planner = new TaskSpacePlanner(nh);
+    path_planner->initPara(seed,
+                      bi_probility,
+                      max_sample_times,
+                      max_planning_time,
+                      task_step,
+                      constrain_index,
+                      default_start_vec[constrain_index],
+                      default_goal_vec[constrain_index],
+                      true,
+                      false,
+                      true,
+                      true);
+    cout<<"seed  "<<seed<<endl;
+    cout<<"bi_probility  "<<bi_probility<<endl;
+    cout<<"max_sample_times  "<<max_sample_times<<endl;
+    cout<<"max_planning_time  "<<max_planning_time<<endl;
+    cout<<"task_step  "<<task_step<<endl;
+    cout<<"constrain_index  "<<constrain_index<<endl;
+
+
+//    JointSpacePlanner *planner = new JointSpacePlanner(nh);
+//    planner->initPara(584344921,
+//                      bi_probility,
+//                      max_sample_times,
+//                      5.0,
+//                      0.1,
+//                      constrain_index,
+//                      default_start_vec[constrain_index],
+//                      default_goal_vec[constrain_index],
+//                      false,
+//                      false,
+//                      true,
+//                      true);
+
+
+    if(path_planner->plan()){
+        path_planner->showPath();
+        Eigen::MatrixXd pathPoints = Eigen::MatrixXd::Zero(path_planner->_planning_result_joint_angles.size(), 14);
+        for(int i=0; i<path_planner->_planning_result_joint_angles.size(); i++){
+            pathPoints.row(i) = path_planner->_planning_result_joint_angles[i];
+        }
+//        std::cout<<pathPoints<<std::endl;
+        std::cout<<"distance betweent waypoints:"<<endl;
+        double interval_distance = 0;
+        std::vector<Eigen::MatrixXd> tmp_new_path_points;
+        for(int i=0; i<pathPoints.rows()-1; i++){
+            interval_distance = (pathPoints.row(i+1) - pathPoints.row(i)).norm();
+            if(interval_distance < 0.08){
+                continue;
+            }
+            tmp_new_path_points.push_back(pathPoints.row(i));
+        }
+        tmp_new_path_points.push_back(pathPoints.row(pathPoints.rows()-1));
+
+        Eigen::MatrixXd pathPointsNew = Eigen::MatrixXd::Zero(tmp_new_path_points.size(), 14);
+        for(int i=0; i<tmp_new_path_points.size(); i++){
+            pathPointsNew.row(i) = tmp_new_path_points[i];
+        }
+        cout<<"new Path Points!!!!"<<endl;
+//        cout<<pathPointsNew<<endl;
+//        Eigen::MatrixXd pathPoints(7, 14);
+//        pathPoints<<
+//                  0.514998, -0.487572,-1.79923,1.6679,-0.28682,0.603706, 2.86722, -0.517204,-0.49348, 1.79396,1.6679,0.302716,0.602833,-2.87906,
+//                0.695107, -0.388971,-1.83187, 1.83449, -0.277127,0.661101, 2.92719, -0.633855, -0.449291,1.8943, 2.01821,0.336925,0.329849,-2.92437,
+//                0.730323, -0.285182,-1.80333,2.1025, -0.264298,0.448463, 3.03204, -0.758369, -0.287821, 1.82707, 2.16735,0.273008,0.359966,-3.02602,
+//                0.756027,-0.00105752,-1.73229, 2.29707,0.269464,0.314336,2.7458, -0.791898, 0.0141751, 1.73216, 2.27622, -0.257883,0.366565,-2.76635,
+//                0.604934, 0.0631528, -1.6692, 2.12547,0.309917,0.367043, 2.81296, -0.721268, 0.0661433, 1.67025, 2.15963, -0.296116,0.387328,-2.82283,
+//                0.616999,0.157597,-1.60399, 2.05248,0.349111,0.427176, 2.89569,-0.61261,0.146656, 1.59655, 2.07604, -0.345805,0.385839,-2.89427,
+//                0.665724,0.337947,-1.44691,2.0171,0.430279,0.472696, 3.05881, -0.640635,0.334855, 1.43792, 2.03636, -0.432353,0.425846,-3.05814;
+
+        //***********************************minimum jerk trajectory********************************
+//        MinimumJerkPlanner mini_jerk_planner;
+//        Eigen::VectorXd times = Eigen::VectorXd::Ones(pathPoints.rows()-1) * 2.0; //require set each segement time manually
+//        Eigen::MatrixXd polyCoeff = mini_jerk_planner.generatePolyQP(pathPoints, times);
+//        mini_jerk_planner.viewTrajectory(polyCoeff, times, nh);
+
+        //***********************nlopt time optimal with dual arm constraint traj********************
+        Eigen::MatrixXd allSegCoeff(pathPointsNew.rows()-1, 7*(14+1));
+        TimeDualConstraintPlanner dual_arm_traj_planner;
+        dual_arm_traj_planner.getAllSegCoeff(pathPointsNew, allSegCoeff, 0, 1, 1);
+//        dual_arm_traj_planner.outputTrajToFile(allSegCoeff, pathPoints, "/home/lijiashushu/ros_ws/src/dual_rrt_star/data`");
+        sleep(2);
+        dual_arm_traj_planner.viewTrajectory(allSegCoeff, pathPointsNew, nh);
+
+    }
+    else{
+        ROS_WARN("no plan!!");
+    }
+
+//    delete path_planner;
+    return 0;
+}

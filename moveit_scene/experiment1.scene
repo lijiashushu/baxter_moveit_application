@@ -1,0 +1,30 @@
+env1_table
+* approximate_torso
+1
+cylinder
+0.16 1.2
+0 0 0
+0 0 0 1
+0 0 1 0.1
+* collision_head_link_1
+1
+sphere
+0.15
+0.11 0 0.75
+0 0 0 1
+0 0 1 0.1
+* env1_table
+1
+box
+0.48 0.8 0.015
+0.92 0 0.5
+0 0 0 1
+1 0 0 1
+* env1_table_virtual
+1
+box
+0.53 0.8 0.015
+0.87 0 0.5
+0 0 0 1
+1 0 0 0.1
+.

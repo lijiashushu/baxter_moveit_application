@@ -984,17 +984,103 @@ class NNController(object):
 
 
 def main():
-    rospy.init_node('PD_controller')
-    controller = NNController()
-    controller.control_loop()
-    # controller.fastest_rate_test()
+    # robot = URDF.from_xml_file("/home/lijiashushu/ros_ws/src/baxter_common/baxter_description/urdf/baxter.urdf")
+    rospy.init_node("draw_traj")
+    robot = URDF.from_parameter_server("robot_description")
+    tree = kdl_tree_from_urdf_model(robot)
+    leftChain = tree.getChain("base", "left_gripper")
+    rightChain = tree.getChain("base", "right_gripper")
+
+    time = np.loadtxt("/home/lijiashushu/traj_time.txt")
+    position = np.loadtxt("/home/lijiashushu/traj_angle.txt")
+    velocity = np.loadtxt("/home/lijiashushu/traj_velocity.txt")
+    acceleration = np.loadtxt("/home/lijiashushu/traj_acceleration.txt")
+
+    leftFKSolver = PyKDL.ChainFkSolverPos_recursive(leftChain)
+    rightFKSolver = PyKDL.ChainFkSolverPos_recursive(rightChain)
+    leftJacSolver = PyKDL.ChainJntToJacSolver(leftChain)
+    rightJacSolver = PyKDL.ChainJntToJacSolver(rightChain)
+    leftFrame = PyKDL.Frame()
+    rightFrame = PyKDL.Frame()
+    leftPos = PyKDL.Vector()
+    rightPos = PyKDL.Vector()
+    leftRot = PyKDL.Rotation()
+    rightRot = PyKDL.Rotation()
+    leftJointArr = PyKDL.JntArray(7)
+    rightJointArr = PyKDL.JntArray(7)
+    leftJacobian = PyKDL.Jacobian(7)
+    rightJacobian = PyKDL.Jacobian(7)
+
+    timeDraw = []
+    leftRotErrDraw = []
+    rightPosErrDraw = []
+    rightRotErrDraw = []
+
+    leftXDraw = []
+    leftYDraw = []
+    leftZDraw = []
+
+    for i in range(position.shape[0]):
+        for j in range(7):
+            leftJointArr[j] = position[i, j]
+            rightJointArr[j] = position[i, j+7]
+
+        leftFKSolver.JntToCart(leftJointArr, leftFrame)
+        rightFKSolver.JntToCart(rightJointArr, rightFrame)
+
+        leftPos = leftFrame.p
+        rightPos = rightFrame.p
+        leftRot = leftFrame.M
+        rightRot = rightFrame.M
 
 
+        leftEulerVec = np.zeros(3)
+        leftEulerVec[0], leftEulerVec[1], leftEulerVec[2] = leftRot.GetEulerZYX()
+        leftGoalEulerVec = np.array([leftEulerVec[0], 0, 1.57])
+        leftGoalRot = PyKDL.Rotation.EulerZYX(leftEulerVec[0], 0, 1.57)
+        leftEulerErr = leftEulerVec - leftGoalEulerVec
+
+        distance = PyKDL.Vector(0, 0, 0.2)
+        rightGoalPos = leftGoalRot * distance + leftPos
+        rightPosErr = rightPos - rightGoalPos
+        rightGoalEulerVec = np.array([leftEulerVec[0], 0, -1.57])
+
+        rightEulerVec = np.zeros(3)
+        rightEulerVec[0], rightEulerVec[1], rightEulerVec[2] = rightRot.GetEulerZYX()
+        rightEulerErr = rightEulerVec - rightGoalEulerVec
+
+        timeDraw.append(time[i])
+        leftRotErrDraw.append(np.linalg.norm(leftEulerErr))
+        rightPosErrDraw.append(rightPosErr.Norm())
+        rightRotErrDraw.append(np.linalg.norm(rightEulerErr))
+        leftXDraw.append(leftPos[0])
+        leftYDraw.append(leftPos[1])
+        leftZDraw.append(leftPos[2])
+
+    size1 = 17
+    size2 = 12
+    linesize = 2
+    fig0 = plt.figure()
+    ax = fig0.add_subplot(111)
+    # plt.title("PD Tracking Performance", font 1)
+    ax.tick_params(labelsize=size2)
+    plt.plot(timeDraw, leftRotErrDraw, linewidth=linesize, color='red', label='left_rot_err')
+    plt.plot(timeDraw, rightPosErrDraw, linewidth=linesize, color='blue', label='right_pos_err')
+    plt.plot(timeDraw, rightRotErrDraw, linewidth=linesize, color='green', label='right_rot_err')
+    ax.set_xlim(0.0, timeDraw[-1])
+    # ax.set_ylim(0.0, 0.05)
+    plt.legend(loc='best')
 
 
-
-
-
+    fig1 = plt.figure()
+    ax = fig1.add_subplot(111)
+    plt.title("x")
+    ax.tick_params(labelsize=size2)
+    plt.plot(timeDraw, leftXDraw, linewidth=linesize, color='red', label='angle')
+    plt.plot(timeDraw, leftYDraw, linewidth=linesize, color='green', label='angle')
+    plt.plot(timeDraw, leftZDraw, linewidth=linesize, color='blue', label='angle')
+    ax.set_xlim(0.0, timeDraw[-1])
+    plt.show()
 
 
 

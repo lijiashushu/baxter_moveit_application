@@ -1,10 +1,14 @@
 <launch>
 <arg name="seed" default="0"/>
 <arg name="prob"  default="0.8"/>
-<arg name="max_times"  default="200"/>
+<arg name="max_times"  default="1000"/>
 <arg name="step"  default="0.02"/>
 <arg name="index"  default="0"/>
 <arg name="star"  default="false"/>
+<arg name="informed"  default="false"/>
+<arg name="weight"  default="0.0"/>
+<arg name="grad_step"  default="1.0"/>
+<arg name="time"  default="2.0"/>
 
   <node pkg="dual_rrt_star" type="one_plan_node" name="one_plan_node" output="screen" required = "true">
       <param name="dualrrt/bi_probility"       value="$(arg prob)" />
@@ -12,7 +16,11 @@
       <param name="dualrrt/task_step"       value="$(arg step)"/>
       <param name="dualrrt/constrain_index"       value="$(arg index)"/>
       <param name="dualrrt/seed"       value="$(arg seed)"/>
- 	<param name="dualrrt/star"       value="$(arg star)"/>
+      <param name="dualrrt/star"       value="$(arg star)"/>
+      <param name="dualrrt/weight"       value="$(arg weight)"/>
+      <param name="dualrrt/grad_step"       value="$(arg grad_step)"/>
+      <param name="dualrrt/informed"       value="$(arg informed)"/>
+      <param name="dualrrt/plan_time"       value="$(arg time)"/>
   </node>
 
 </launch>

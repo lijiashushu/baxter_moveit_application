@@ -1,9 +1,10 @@
-#include <dual_rrt_star/dual_cbirrt_star.h>
+#include <dual_rrt_star/path_planner/task_space.h>
 
-#define PI 3.1415926
+PathPlanner* creatPathPlanner(TaskSpacePlanner* tsp){
+    return tsp;
+}
 
-
-DualCBiRRT::DualCBiRRT(const ros::NodeHandle &nh, std::string base_frame):
+TaskSpacePlanner::TaskSpacePlanner(const ros::NodeHandle &nh, std::string base_frame):
 _nh(nh), _visual_tools(base_frame)
 {
     //*************获取 moveit 保存的当前的 Planning Scene***************
@@ -65,14 +66,20 @@ _nh(nh), _visual_tools(base_frame)
     }
 }
 
-DualCBiRRT::~DualCBiRRT(){}
+TaskSpacePlanner::~TaskSpacePlanner(){}
 
-void DualCBiRRT::initPara(int seed,  double biProbility, int maxSampleTimes,  double taskStep, size_t constrainIndex,
-                          const std::vector<double>& startAngles,
-                          const std::vector<double>& goalAngles,
-                          bool displayStartState,
-                          bool if_manipuGrand,
-                          bool if_rrt_star)
+void TaskSpacePlanner::initPara(int seed,
+                                double biProbility,
+                                int maxSampleTimes,
+                                double maxPlanningTime,
+                                double taskStep,
+                                size_t constrainIndex,
+                                const std::vector<double>& startAngles,
+                                const std::vector<double>& goalAngles,
+                                bool displayStartState,
+                                bool if_manipuGrand,
+                                bool if_rrt_star,
+                                bool if_informed)
 {
     //****************设置随机数信息*******************
     _seed = seed;
@@ -81,6 +88,7 @@ void DualCBiRRT::initPara(int seed,  double biProbility, int maxSampleTimes,  do
     _random_uniform = std::uniform_real_distribution<double>(-1, 1);
 
     _max_planning_times = maxSampleTimes;
+    _max_planning_time = maxPlanningTime;
     _test_pose_num = constrainIndex;
     _task_step_size = taskStep;
 
@@ -89,10 +97,14 @@ void DualCBiRRT::initPara(int seed,  double biProbility, int maxSampleTimes,  do
 
     _if_manipuGrad = if_manipuGrand;
     _if_rrt_star = if_rrt_star;
+    _if_informed = if_informed;
 
     _planning_result.clear();
     _planning_result_index.clear();
     _planning_result_task_state_vector.clear();
+    _planning_result_joint_angles.clear();
+
+
     for(int i=0; i<2; i++){
         _tree_robotstate[i].clear();
         _tree_joints_angle_matrix[i].clear();
@@ -104,9 +116,10 @@ void DualCBiRRT::initPara(int seed,  double biProbility, int maxSampleTimes,  do
 
     //************change the robot to the start state in rviz for visualization**************
     if(displayStartState){
+//    if(true){
         robot_state::RobotState start_state(_robot_model_ptr);
         start_state.setToDefaultValues();
-        start_state.setJointGroupPositions("both_arms", _startAngles);
+        start_state.setJointGroupPositions("both_arms", _goalAngles);
         start_state.update();
 
         _planning_scene_ptr->setCurrentState(start_state);
@@ -125,7 +138,7 @@ void DualCBiRRT::initPara(int seed,  double biProbility, int maxSampleTimes,  do
 }
 
 
-void DualCBiRRT::sample(robot_state::RobotState & goal_state, random_numbers::RandomNumberGenerator& rng){
+void TaskSpacePlanner::sample(robot_state::RobotState & goal_state, random_numbers::RandomNumberGenerator& rng){
     robot_state::RobotState random_state(_robot_model_ptr);
     random_state.setToDefaultValues();
     if(_random_distribution(_random_engine)){
@@ -153,7 +166,7 @@ void DualCBiRRT::sample(robot_state::RobotState & goal_state, random_numbers::Ra
     else{;}
 }
 
-void DualCBiRRT::sampleEllipsoid(double info_cBest){
+void TaskSpacePlanner::sampleEllipsoid(double info_cBest, random_numbers::RandomNumberGenerator& rng){
     Eigen::Vector4d dirVector;
     for(int i = 0; i<4; i++){
         dirVector(i) =  _random_uniform(_random_engine);
@@ -167,21 +180,46 @@ void DualCBiRRT::sampleEllipsoid(double info_cBest){
     info_L_M(1, 1) = std::sqrt(info_cBest*info_cBest - _info_cMin*_info_cMin) /2.0;
     info_L_M(2, 2) = std::sqrt(info_cBest*info_cBest - _info_cMin*_info_cMin) /2.0;
     info_L_M(3, 3) = std::sqrt(info_cBest*info_cBest - _info_cMin*_info_cMin) /2.0;
-
-//    std::cout<<"_info_C_M"<<std::endl;
-//    std::cout<<_info_C_M<<std::endl;
-//    std::cout<<"info_L_M"<<std::endl;
-//    std::cout<<info_L_M<<std::endl;
-//    std::cout<<"xBall"<<std::endl;
-//    std::cout<<xBall.transpose()<<std::endl;
-//    std::cout<<"_info_centre"<<std::endl;
-//    std::cout<<_info_centre.transpose()<<std::endl;
-
     _random_state_vector = _info_C_M * info_L_M * xBall + _info_centre;
+
+//    geometry_msgs::Point p;
+//    p.x = _random_state_vector(0);
+//    p.y = _random_state_vector(1);
+//    p.z = _random_state_vector(2);
+//    _informed_sample_points.push_back(p);
+//    std_msgs::ColorRGBA c;
+//    c.r = 1.0;
+//    c.g = 1.0;
+//    c.a = 1.0;
+//    _informed_sample_points_color.push_back(c);
+
+    //************尝试先根据关节角度采样然后反过来看它是不是在椭球内，已得到一个运动学上可行的采样点。。*************
+//    Eigen::Matrix4d info_L_M = Eigen::Matrix4d::Zero();
+//    info_L_M(0, 0) = info_cBest / 2.0;
+//    info_L_M(1, 1) = std::sqrt(info_cBest*info_cBest - _info_cMin*_info_cMin) /2.0;
+//    info_L_M(2, 2) = std::sqrt(info_cBest*info_cBest - _info_cMin*_info_cMin) /2.0;
+//    info_L_M(3, 3) = std::sqrt(info_cBest*info_cBest - _info_cMin*_info_cMin) /2.0;
+//    Eigen::MatrixXd info_L_M_inverse =  info_L_M.inverse();
+//
+//    robot_state::RobotState random_state(_robot_model_ptr);
+//    random_state.setToDefaultValues();
+//    Eigen::Vector4d tmp_state, reverse_state;
+//
+//    while(true){
+//        random_state.setToRandomPositions(_planning_group, rng);
+//        random_state.update();
+//        tmp_state = get_task_state_vector(random_state, true);
+//        reverse_state = info_L_M_inverse * _info_C_M_inverse * (tmp_state - _info_centre);
+//        if(reverse_state.norm() < 1){
+//            _random_state_vector = tmp_state;
+//            break;
+//        }
+//    }
+
 //    std::cout<<"_random_state_vector  "<<_random_state_vector.transpose()<<std::endl;
 }
 
-void  DualCBiRRT::nearest(bool if_tree_a, std::vector<flann::Index<flann::L2<double>>>& flann_index)
+void TaskSpacePlanner::nearest(bool if_tree_a, std::vector<flann::Index<flann::L2<double>>>& flann_index)
 {
     flann::Matrix<double > querry(new double[4], 1, 4);
     flann::Matrix<int > indices(new int[1], 1, 1);
@@ -197,10 +235,9 @@ void  DualCBiRRT::nearest(bool if_tree_a, std::vector<flann::Index<flann::L2<dou
     delete dist.ptr();
 }
 
-int DualCBiRRT::extend(bool if_tree_a, bool if_sample, double& totalExtendTime, long& totalExtendCounts,
+int TaskSpacePlanner::extend(bool if_tree_a, bool if_sample, double& totalExtendTime, long& totalExtendCounts,
                        std::vector<flann::Index<flann::L2<double>>>& flann_index)
 {
-
     int reached_index = _nearest_index;
 
     robot_state::RobotState qs_state = _planning_scene_ptr->getCurrentStateNonConst();
@@ -288,12 +325,7 @@ int DualCBiRRT::extend(bool if_tree_a, bool if_sample, double& totalExtendTime, 
             //如果投影成功，qs_state肯定更新过
             if(master_ik_flag){
 //                ROS_INFO("master IK success");
-                collision_detection::CollisionRequest req;
-                collision_detection::CollisionResult res;
-                req.group_name = "left_arm";
-                _collision_world->checkRobotCollision(req, res, *_collision_robot, qs_state);
-                master_collide_flag = !(res.collision);
-
+                master_collide_flag = extend_collision_check(if_tree_a, true, qs_matrix, reached_index);
                 if(master_collide_flag){
 //                    ROS_INFO("master collide success");
                     //计算闭环约束，得到slave的目标姿态
@@ -309,99 +341,103 @@ int DualCBiRRT::extend(bool if_tree_a, bool if_sample, double& totalExtendTime, 
                     slave_ik_flag = solveIK(slave_goal_vector, slave_goal_rot_kdl, qs_state, qs_slave_task_state, qs_slave_matrix, false);
                     if(slave_ik_flag){
 //                        ROS_INFO("slave IK success");
-                        collision_detection::CollisionRequest reqSlave;
-                        reqSlave.group_name = "right_arm";
-                        collision_detection::CollisionResult resSlave;
-                        _collision_world->checkRobotCollision(reqSlave, resSlave, *_collision_robot, qs_state);
-                        slave_collide_flag = (!resSlave.collision);
+                        slave_collide_flag = extend_collision_check(if_tree_a, false, qs_slave_matrix, reached_index);
 
                         if(slave_collide_flag){
 //                            ROS_INFO("slave collide success");
 //                            ROS_INFO("adding a state");
                             totalExtendCounts++;
 
-                            if(_if_rrt_star){
-//                            if(extend_num % _extend_step_num == 0 || (qs_task_state_vector - _random_state_vector).norm() < 0.01){
-                                if(true) {
+                            if(_if_rrt_star && _foundPathFlag ){
+                                //find posible parents
+                                flann::Matrix<double> querry(new double[1 * 4], 1, 4);
+                                std::vector<std::vector<int>> indices; //outer indicates each querry, inner indicates founded points
+                                std::vector<std::vector<double>> dist;
+                                for (int i = 0; i < 4; i++) {
+                                    querry[0][i] = qs_task_state_vector(i);
+                                }
 
-                                    //find posible parents
-                                    flann::Matrix<double> querry(new double[1 * 4], 1, 4);
-                                    std::vector<std::vector<int>> indices; //outer indicates each querry, inner indicates founded points
-                                    std::vector<std::vector<double>> dist;
-                                    for (int i = 0; i < 4; i++) {
-                                        querry[0][i] = qs_task_state_vector(i);
+                                int minIndex = 0;
+                                double minCost = 0;
+                                double segCost = 0;
+                                int treeIndex;
+                                double remain_distance = 0;
+                                //***********************************ChooseParent***********************************
+//                                    flann_index[if_tree_a].radiusSearch(querry, indices, dist, pow(_task_step_size * 1.9, 2), flann::SearchParams());
+                                flann_index[if_tree_a].knnSearch(querry, indices, dist, 8, flann::SearchParams());
+
+                                std::vector<double> cost_to_root(indices[0].size(), 0);
+                                for(int i = 0; i<dist[0].size(); i++){
+                                    dist[0][i] = std::sqrt(dist[0][i]);
+                                    int curIndex = indices[0][i];
+                                    while(curIndex != 0){
+                                        cost_to_root[i] += _tree_joints_angle_matrix[if_tree_a][curIndex].second;
+                                        curIndex = _tree_robotstate[if_tree_a][curIndex].second;
                                     }
+                                }
 
-                                    int minIndex = 0;
-                                    double minCost = 0;
-                                    int treeIndex;
-                                    //                                    std::cout<<"qs_task_state "<<qs_task_state_vector.transpose()<<std::endl;
-                                    //                                    std::cout<<"reached  "<<_a_rrt_tree_task_space_vector[reached_index].first.transpose()<<std::endl;
-                                    //                                    std::cout<<"norm "<<(qs_task_state_vector - _a_rrt_tree_task_space_vector[reached_index].first).norm()<<"\n\n"<<std::endl;
-                                    //***********************************ChooseParent***********************************
-                                    flann_index[if_tree_a].radiusSearch(querry, indices, dist, 0.01, flann::SearchParams());
-//                                    std::cout<<"nearest size  "<<dist[0].size()<<std::endl;
-                                    for(int i = 0; i<dist[0].size(); i++){
-                                        dist[0][i] = std::sqrt(dist[0][i]);
+                                std::vector<int> extendCheckRecord(indices[0].size(), 0); //0 untested 1 feasible 2 infeasible
+//                                int curParentIndexIndex =  std::find(indices[0].begin(), indices[0].end(), reached_index) -  indices[0].begin();
+//                                minIndex = indices[0][curParentIndexIndex];
+//                                minCost = dist[0][curParentIndexIndex] + cost_to_root[curParentIndexIndex];
+//                                segCost = dist[0][curParentIndexIndex];
+//                                extendCheckRecord[curParentIndexIndex] = 1;
+
+                                //knn 的搜索结果可能不包含当前正在被扩展的节点。。。。
+                                minIndex = reached_index;
+                                segCost = (qs_task_state_vector - _tree_task_space_vector[if_tree_a][reached_index].first).norm();
+                                int curIndex = reached_index;
+                                while(curIndex != 0){
+                                    minCost += _tree_joints_angle_matrix[if_tree_a][curIndex].second;
+                                    curIndex = _tree_robotstate[if_tree_a][curIndex].second;
+                                }
+                                minCost += segCost;
+
+                                std::vector<std::pair<double, int>> feasibleCheckStack; //只有比当前的cost小的才进栈
+
+                                for (int i = 0; i < indices[0].size(); i++) {
+                                    if (minCost > dist[0][i] + cost_to_root[i]) {
+                                        feasibleCheckStack.push_back(std::make_pair(dist[0][i] + cost_to_root[i], i));
                                     }
+                                }
+                                std::sort(feasibleCheckStack.begin(), feasibleCheckStack.end());
 
-
-                                    std::vector<int> extendCheckRecord(indices[0].size(), 0); //0 untested 1 feasible 2 infeasible
-                                    int curParentIndexIndex =  std::find(indices[0].begin(), indices[0].end(), reached_index) -  indices[0].begin();
-                                    minIndex = indices[0][curParentIndexIndex];
-                                    minCost = dist[0][curParentIndexIndex] + _tree_joints_angle_matrix[if_tree_a][indices[0][curParentIndexIndex]].second;
-                                    extendCheckRecord[curParentIndexIndex] = 1;
-
-                                    std::vector<std::pair<double, int>> feasibleCheckStack; //只有比当前的cost小的才进栈
-                                    
-                                    for (int i = 0; i < indices[0].size(); i++) {
-                                        treeIndex = indices[0][i];
-                                        if (minCost > dist[0][i] + _tree_joints_angle_matrix[if_tree_a][treeIndex].second) {
-                                            //小步长直接连接
-//                                            minCost = dist[0][i] + _tree_joints_angle_matrix[if_tree_a][treeIndex].second;
-//                                            minIndex = treeIndex;
-                                            //大步长需要判断
-
-                                            if (extend_check(if_tree_a, qs_task_state_vector, treeIndex)) {
-                                                std::cout<<"check success!"<<std::endl;
-                                                minCost = dist[0][i] + _tree_joints_angle_matrix[if_tree_a][treeIndex].second;
-                                                minIndex = treeIndex;
-                                                extendCheckRecord[i] = 1;
-                                            } else {
-                                                extendCheckRecord[i] = 2;
-                                            }
-                                        }
+                                //从 cost 最小的开始
+                                for( int i=0; i<feasibleCheckStack.size(); i++){
+                                    treeIndex = indices[0][feasibleCheckStack[i].second];
+                                    if (extend_check(if_tree_a, qs_task_state_vector, treeIndex, remain_distance, flann_index)){
+                                        minIndex = treeIndex;
+                                        segCost = remain_distance;
+                                        minCost = feasibleCheckStack[i].first;
+                                        extendCheckRecord[feasibleCheckStack[i].second] = 1;
+                                        break;
                                     }
-                                    //***********************************Add State***********************************
-                                    reached_index = addState(qs_matrix, qs_slave_matrix, qs_task_state_vector,
-                                                             qs_slave_task_state, qs_state, minIndex, if_tree_a,
-                                                             minCost);
-                                    flann_index[if_tree_a].addPoints(querry);
-                                    _waitRelesePtr.push_back(querry.ptr());
+                                    else {
+                                        extendCheckRecord[feasibleCheckStack[i].second] = 2;
+                                    }
+                                }
 
-                                    //***********************************Rewire***********************************
-                                    for (int i = 0; i < indices[0].size(); i++) {
-                                        treeIndex = indices[0][i];
-                                        if (_tree_joints_angle_matrix[if_tree_a][treeIndex].second > dist[0][i] + _tree_joints_angle_matrix[if_tree_a][reached_index].second) {
-//                                            _tree_joints_angle_matrix[if_tree_a][treeIndex].second = dist[0][i] + _tree_joints_angle_matrix[if_tree_a][reached_index].second;
-//                                            _tree_robotstate[if_tree_a][treeIndex].second = reached_index;
+                                //***********************************Add State***********************************
+                                reached_index = addState(qs_matrix, qs_slave_matrix, qs_task_state_vector, qs_slave_task_state, qs_state, minIndex, if_tree_a, segCost);
+                                flann_index[if_tree_a].addPoints(querry);
+                                _waitRelesePtr.push_back(querry.ptr());
 
-                                            if (extendCheckRecord[i] == 1) {
-                                                _tree_joints_angle_matrix[if_tree_a][treeIndex].second = dist[0][i] + _tree_joints_angle_matrix[if_tree_a][reached_index].second;
-                                                _tree_robotstate[if_tree_a][treeIndex].second = reached_index;
-                                            }
-                                            else if (extendCheckRecord[i] == 0) {
-                                                if (extend_check(if_tree_a, qs_task_state_vector, treeIndex)) {
-                                                    _tree_joints_angle_matrix[if_tree_a][treeIndex].second = dist[0][i] + _tree_joints_angle_matrix[if_tree_a][reached_index].second;
-                                                    _tree_robotstate[if_tree_a][treeIndex].second = reached_index;
-                                                }
-                                            }
+                                //***********************************Rewire***********************************
+                                for (int i = 0; i < indices[0].size(); i++) {
+                                    treeIndex = indices[0][i];
+                                    if (extendCheckRecord[i] == 0 && (cost_to_root[i] > dist[0][i] + minCost)){
+                                        int rewire_start_index = reached_index;
+                                        if (extend_check(if_tree_a, _tree_task_space_vector[if_tree_a][treeIndex].first, rewire_start_index, remain_distance,flann_index)){
+//                                               std::cout<<"rewire"<<std::endl;
+                                            _tree_joints_angle_matrix[if_tree_a][treeIndex].second = remain_distance;
+                                            _tree_robotstate[if_tree_a][treeIndex].second = rewire_start_index;
                                         }
                                     }
                                 }
+
                             }//_if_rrt_star
                             else{
-                                double cost = (qs_task_state_vector - _tree_task_space_vector[if_tree_a][reached_index].first).norm() + _tree_joints_angle_matrix[if_tree_a][reached_index].second;
+                                double cost = (qs_task_state_vector - _tree_task_space_vector[if_tree_a][reached_index].first).norm();
                                 reached_index = addState(qs_matrix, qs_slave_matrix, qs_task_state_vector, qs_slave_task_state, qs_state, reached_index, if_tree_a, cost);
                                 flann::Matrix<double> newPoint(new double[1 * 4], 1, 4);
                                 for (int i = 0; i < 4; i++) {
@@ -423,7 +459,9 @@ int DualCBiRRT::extend(bool if_tree_a, bool if_sample, double& totalExtendTime, 
     }//end while
 }
 
-bool DualCBiRRT::extend_check(bool if_tree_a, const Eigen::Vector4d& goal_state_vec, int try_index){
+bool TaskSpacePlanner::extend_check(bool if_tree_a, const Eigen::Vector4d& goal_state_vec, int& try_index, double &remain_dis,
+                              std::vector<flann::Index<flann::L2<double>>>& flann_index){
+
     Eigen::Vector4d masterWorkStateVec;
     Eigen::Vector4d slaveWorkStateVec;
     Eigen::Matrix<double,7,1> masterWorkJointAngles;
@@ -435,7 +473,7 @@ bool DualCBiRRT::extend_check(bool if_tree_a, const Eigen::Vector4d& goal_state_
     masterWorkJointAngles = _tree_joints_angle_matrix[if_tree_a][try_index].first.head(7);
     slaveWorkJointAngles = _tree_joints_angle_matrix[if_tree_a][try_index].first.tail(7);
 
-
+    double extendDis = (goal_state_vec - masterWorkStateVec).norm();
     Eigen::Vector4d extendDir = (goal_state_vec - masterWorkStateVec).normalized();
     Eigen::Vector4d masterGoalStateVec;
     KDL::Rotation masterGoalRotKdl;
@@ -444,64 +482,113 @@ bool DualCBiRRT::extend_check(bool if_tree_a, const Eigen::Vector4d& goal_state_
 
     KDL::Vector distance(_left_right_distance_x[_test_pose_num], 0, _left_right_distance_z[_test_pose_num]);
     double error_norm;
-
-    while(true){
-        error_norm = (goal_state_vec - masterWorkStateVec).norm();
-        if(error_norm < 0.005){
-            return true;
-        }
-        else if(error_norm >= 0.005 && error_norm < _task_step_size){
-            masterGoalStateVec = goal_state_vec;
-            masterGoalRotKdl = KDL::Rotation::EulerZYX(masterGoalStateVec(3), 0.0, 1.57);
-        }
-        else{
+    if(extendDis < _task_step_size){
+        remain_dis = extendDis;
+        return true;
+    }
+    else{
+        int step = floor(extendDis / _task_step_size);
+        for(int i=0; i<step; i++){
             masterGoalStateVec = masterWorkStateVec + _task_step_size * extendDir;
             masterGoalRotKdl = KDL::Rotation::EulerZYX(masterGoalStateVec(3), 0.0, 1.57);
-        }
 
-        if(solveIK(masterGoalStateVec, masterGoalRotKdl, curState, masterWorkStateVec, masterWorkJointAngles, true)){
-            collision_detection::CollisionRequest masterReq;
-            collision_detection::CollisionResult masterRes;
-            masterReq.group_name = "left_arm";
-            _collision_world->checkRobotCollision(masterReq, masterRes, *_collision_robot, curState);
-            if(!masterRes.collision){
-                slaveGoalRotKdl = KDL::Rotation::EulerZYX(masterGoalStateVec(3) - _left_right_euler_distance[_test_pose_num], 0.0, -1.57);
-                KDL::Vector tmp = masterGoalRotKdl * distance;
-                slaveGoalStateVec(0) = tmp(0) + masterGoalStateVec(0);
-                slaveGoalStateVec(1) = tmp(1) + masterGoalStateVec(1);
-                slaveGoalStateVec(2) = tmp(2) + masterGoalStateVec(2);
-                slaveGoalStateVec(3) = masterGoalStateVec(3) - _left_right_euler_distance[_test_pose_num];
-                if(solveIK(slaveGoalStateVec, slaveGoalRotKdl, curState, slaveWorkStateVec, slaveWorkJointAngles, false)){
-                    collision_detection::CollisionRequest slaveReq;
-                    collision_detection::CollisionResult slaveRes;
-                    slaveReq.group_name = "right_arm";
-                    _collision_world->checkRobotCollision(slaveReq, slaveRes, *_collision_robot, curState);
-                    if(!slaveRes.collision){
-                        ;
+            if(solveIK(masterGoalStateVec, masterGoalRotKdl, curState, masterWorkStateVec, masterWorkJointAngles, true)){
+                collision_detection::CollisionRequest masterReq;
+                collision_detection::CollisionResult masterRes;
+                masterReq.group_name = "left_arm";
+                _collision_world->checkRobotCollision(masterReq, masterRes, *_collision_robot, curState);
+                if(!masterRes.collision){
+                    slaveGoalRotKdl = KDL::Rotation::EulerZYX(masterGoalStateVec(3) - _left_right_euler_distance[_test_pose_num], 0.0, -1.57);
+                    KDL::Vector tmp = masterGoalRotKdl * distance;
+                    slaveGoalStateVec(0) = tmp(0) + masterGoalStateVec(0);
+                    slaveGoalStateVec(1) = tmp(1) + masterGoalStateVec(1);
+                    slaveGoalStateVec(2) = tmp(2) + masterGoalStateVec(2);
+                    slaveGoalStateVec(3) = masterGoalStateVec(3) - _left_right_euler_distance[_test_pose_num];
+                    if(solveIK(slaveGoalStateVec, slaveGoalRotKdl, curState, slaveWorkStateVec, slaveWorkJointAngles, false)){
+                        collision_detection::CollisionRequest slaveReq;
+                        collision_detection::CollisionResult slaveRes;
+                        slaveReq.group_name = "right_arm";
+                        _collision_world->checkRobotCollision(slaveReq, slaveRes, *_collision_robot, curState);
+                        if(!slaveRes.collision){
+                            double cost = (masterWorkStateVec - _tree_task_space_vector[if_tree_a][try_index].first).norm();
+                            try_index = addState(masterWorkJointAngles, slaveWorkJointAngles, masterWorkStateVec, slaveWorkStateVec, curState, try_index, if_tree_a, cost);
+                            flann::Matrix<double> querry(new double[1 * 4], 1, 4);
+                            for(int i=0; i<4; i++){
+                                querry[0][i] = masterWorkStateVec(i);
+                            }
+                            flann_index[if_tree_a].addPoints(querry);
+                            _waitRelesePtr.push_back(querry.ptr());
+                        }
+                        else{
+//                            ROS_INFO("check slave collide");
+                            return false;
+                        }
                     }
                     else{
-                        ROS_INFO("check slave collide");
+//                        ROS_INFO("check slave IK fail");
                         return false;
                     }
                 }
                 else{
-                    ROS_INFO("check slave IK fail");
+//                    ROS_INFO("check master collide");
                     return false;
                 }
             }
             else{
-                ROS_INFO("check master collide");
+//                ROS_INFO("check master IK fail");
                 return false;
             }
-        }
-        else{
-            ROS_INFO("check master IK fail");
-            return false;
         }
     }
 }
 
-bool DualCBiRRT::solveIK(const Eigen::Vector4d & goal_vector,
+bool TaskSpacePlanner::extend_collision_check(bool if_tree_a, bool if_master, Eigen::Matrix<double, 7, 1> goal_matrix, int try_index)
+{
+    robot_state::RobotState workState = _tree_robotstate[if_tree_a][try_index].first;
+    Eigen::Matrix<double, 7, 1> workMatrix;
+    const robot_state::JointModelGroup* group;
+    std::string groupName;
+    if(if_master){
+        workMatrix = _tree_joints_angle_matrix[if_tree_a][try_index].first.head(7);
+        group = _planning_group;
+        groupName = "left_arm";
+    }
+    else{
+        workMatrix = _tree_joints_angle_matrix[if_tree_a][try_index].first.tail(7);
+        group = _slave_group;
+        groupName = "right_arm";
+    }
+    double dis = (goal_matrix - workMatrix).norm();
+    if(_collision_check_step < dis){
+        Eigen::Matrix<double, 7, 1> dir = (goal_matrix - workMatrix).normalized();
+        int step = floor(dis / _collision_check_step);
+
+        for(int i=0; i<step; i++){
+            workState.setJointGroupPositions(group, workMatrix + _collision_check_step * dir);
+            workState.update();
+            collision_detection::CollisionRequest req;
+            collision_detection::CollisionResult res;
+            req.group_name = groupName;
+            _collision_world->checkRobotCollision(req, res, *_collision_robot, workState);
+            if(res.collision){
+                return false;
+            }
+        }
+    }
+    workState.setJointGroupPositions(group, goal_matrix);
+    workState.update();
+    collision_detection::CollisionRequest req;
+    collision_detection::CollisionResult res;
+    req.group_name = groupName;
+    _collision_world->checkRobotCollision(req, res, *_collision_robot, workState);
+    if(res.collision){
+        return false;
+    }
+
+    return true;
+}
+
+bool TaskSpacePlanner::solveIK(const Eigen::Vector4d & goal_vector,
                          const KDL::Rotation & goal_rot,
                          robot_state::RobotState &qs_state,
                          Eigen::Vector4d &qs_task_state_vector,
@@ -600,13 +687,14 @@ bool DualCBiRRT::solveIK(const Eigen::Vector4d & goal_vector,
     return false;
 }
 
-bool DualCBiRRT::plan(){
-    double  tmp1, tmp3, tmp4;
-    int tmp2;
-    return plan(tmp1, tmp2, tmp3, tmp4);
+
+bool TaskSpacePlanner::plan(){
+    std::cout << "task space planner  " << std::endl;
+    std::ofstream tmp;
+    return plan(tmp);
 }
 
-bool DualCBiRRT::plan(double &panningTime, int &sampleCounts, double &avgExtendTime, double &avgExtendCountPerSample) {
+bool TaskSpacePlanner::plan(std::ofstream &outputFile) {
     random_numbers::RandomNumberGenerator rng(_seed);
 
     robot_state::RobotState start_state(_robot_model_ptr);
@@ -632,7 +720,6 @@ bool DualCBiRRT::plan(double &panningTime, int &sampleCounts, double &avgExtendT
 
     bool extendOrder = false; //false indicates 0 tree_a
 
-    std::chrono::high_resolution_clock::time_point startPlanningTime = std::chrono::high_resolution_clock::now();
     long totalExtendCounts = 0;
     double totalExtendTime = 0;
     std::cout<<"pose: "<<_test_pose_num<<"  seed： "<<_seed<<std::endl;
@@ -657,15 +744,28 @@ bool DualCBiRRT::plan(double &panningTime, int &sampleCounts, double &avgExtendT
     _waitRelesePtr.push_back(b_initData.ptr());
 
     double pathCost = 0;
-    int back_track[2];
+    _planning_time = 0.0;
 
-    for(int count=1; count < _max_planning_times; count++){
-        std::cout<<count<<std::endl;
+    int back_track[2];
+    std::chrono::high_resolution_clock::time_point startPlanningTime = std::chrono::high_resolution_clock::now();
+    std::chrono::high_resolution_clock::time_point loopStartTime;
+    int plan_times_count = 0;
+    while(_planning_time < _max_planning_time){
+        plan_times_count++;
+//    for(int count=1; count < _max_planning_times; count++){
+//        std::cout<<count<<std::endl;
+//        std::cout<<"planning time: "<<_planning_time<<std::endl;
+        loopStartTime = std::chrono::high_resolution_clock::now();
         if(!_foundPathFlag){
             sample(goal_state, rng);
         }
         else{
-            sampleEllipsoid(pathCost);
+            if(_if_informed){
+                sampleEllipsoid(pathCost, rng);
+            }
+            else{
+                sample(goal_state, rng);
+            }
         }
 
         //*****************************extend one tree**********************************
@@ -678,67 +778,133 @@ bool DualCBiRRT::plan(double &panningTime, int &sampleCounts, double &avgExtendT
 
         extendOrder = !extendOrder;
 
-        if((_tree_task_space_vector[0][tree_reached_index[0]].first - _tree_task_space_vector[1][tree_reached_index[1]].first).norm() < 0.005)
-        {
+
+        if(!_foundPathFlag){
+            double res_tmp = (_tree_task_space_vector[0][tree_reached_index[0]].first - _tree_task_space_vector[1][tree_reached_index[1]].first).norm();
+            if(res_tmp < 0.005)
+            {
 //            ROS_INFO("Success!!!");
-//            std::cout<<"Path Cost: "<<_tree_joints_angle_matrix[0][tree_reached_index[0]].second + _tree_joints_angle_matrix[1][tree_reached_index[1]].second<<std::endl;
-            //先添加前半部分路径点
-            if(!_foundPathFlag){
-                _foundPathFlag = true;
-                pathCost = _tree_joints_angle_matrix[0][tree_reached_index[0]].second + _tree_joints_angle_matrix[1][tree_reached_index[1]].second;
+                std::cout<<"a_tree"<<_tree_task_space_vector[0][tree_reached_index[0]].first.transpose()<<std::endl;
+                std::cout<<"b_tree"<<_tree_task_space_vector[1][tree_reached_index[1]].first.transpose()<<std::endl;
                 back_track[0] = tree_reached_index[0];
                 back_track[1] = tree_reached_index[1];
-                if(!_if_rrt_star){
-                    break;
-                }
-                //initialize informed sample parameter
-                _info_centre = (_tree_task_space_vector[0][0].first - _tree_task_space_vector[1][0].first) * 0.5;
-                _info_cMin = (_tree_task_space_vector[0][0].first - _tree_task_space_vector[1][0].first).norm();
+                _foundPathFlag = true;
 
-                Eigen::Vector4d info_a1 = (_tree_task_space_vector[0][0].first - _tree_task_space_vector[1][0].first).normalized();
-                Eigen::Vector4d info_i1 = Eigen::Vector4d::Zero();
-                info_i1(0) = 1;
-                Eigen::Matrix4d info_M_M = info_a1 * info_i1.transpose();
-                Eigen::JacobiSVD<Eigen::MatrixXd> svd(info_M_M,  Eigen::ComputeFullU | Eigen::ComputeFullV);
-                Eigen::Matrix4d info_tmp = Eigen::Matrix4d::Identity();
-                info_tmp(3, 3) = svd.matrixU().determinant()*svd.matrixV().determinant();
-                _info_C_M = svd.matrixU() * info_tmp * svd.matrixV().transpose();
+                pathCost += res_tmp;
+                int curIndex = back_track[0];
+                while(curIndex != 0){
+                    pathCost += _tree_joints_angle_matrix[0][curIndex].second;
+                    curIndex = _tree_robotstate[0][curIndex].second;
+                }
+                curIndex = back_track[1];
+                while(curIndex != 0){
+                    pathCost += _tree_joints_angle_matrix[1][curIndex].second;
+                    curIndex = _tree_robotstate[1][curIndex].second;
+                }
+
+//                if(!_if_rrt_star){
+//                    break;
+//                }
+
+                if(_if_informed){
+                    //initialize informed sample parameter
+                    _info_centre = (_tree_task_space_vector[0][0].first + _tree_task_space_vector[1][0].first) * 0.5;
+                    _info_cMin = (_tree_task_space_vector[0][0].first - _tree_task_space_vector[1][0].first).norm();
+
+                    Eigen::Vector4d info_a1 = (_tree_task_space_vector[0][0].first - _tree_task_space_vector[1][0].first).normalized();
+                    Eigen::Vector4d info_i1 = Eigen::Vector4d::Zero();
+                    info_i1(0) = 1;
+                    Eigen::Matrix4d info_M_M = info_a1 * info_i1.transpose();
+                    Eigen::JacobiSVD<Eigen::MatrixXd> svd(info_M_M,  Eigen::ComputeFullU | Eigen::ComputeFullV);
+                    Eigen::Matrix4d info_tmp = Eigen::Matrix4d::Identity();
+                    info_tmp(3, 3) = svd.matrixU().determinant()*svd.matrixV().determinant();
+                    _info_C_M = svd.matrixU() * info_tmp * svd.matrixV().transpose();
+                    _info_C_M_inverse = _info_C_M.inverse();
+                }
+                std::cout<<"first cost: "<<pathCost<<std::endl;
+            }
+            outputFile<<_planning_time<<" "<<3.0<<std::endl;
+
+        }
+        else{
+            double res_tmp = (_tree_task_space_vector[0][tree_reached_index[0]].first - _tree_task_space_vector[1][tree_reached_index[1]].first).norm();
+            double tmp_cost1 = 0;
+            double tmp_cost2 = 0;
+            if(res_tmp < 0.005)
+            {
+                tmp_cost1 += res_tmp;
+                int curIndex = tree_reached_index[0];
+                while(curIndex != 0){
+                    tmp_cost1 += _tree_joints_angle_matrix[0][curIndex].second;
+                    curIndex = _tree_robotstate[0][curIndex].second;
+                }
+                curIndex = tree_reached_index[1];
+                while(curIndex != 0){
+                    tmp_cost1 += _tree_joints_angle_matrix[1][curIndex].second;
+                    curIndex = _tree_robotstate[1][curIndex].second;
+                }
             }
             else{
-                if(pathCost > _tree_joints_angle_matrix[0][tree_reached_index[0]].second + _tree_joints_angle_matrix[1][tree_reached_index[1]].second){
-                    pathCost = _tree_joints_angle_matrix[0][tree_reached_index[0]].second + _tree_joints_angle_matrix[1][tree_reached_index[1]].second;
-                    back_track[0] = tree_reached_index[0];
-                    back_track[1] = tree_reached_index[1];
-                }
+                tmp_cost1 = 1e10;
             }
+
+            tmp_cost2 += (_tree_task_space_vector[0][back_track[0]].first - _tree_task_space_vector[1][back_track[1]].first).norm();
+            int curIndex = back_track[0];
+            while(curIndex != 0){
+                tmp_cost2 += _tree_joints_angle_matrix[0][curIndex].second;
+                curIndex = _tree_robotstate[0][curIndex].second;
+            }
+            curIndex = back_track[1];
+            while(curIndex != 0){
+                tmp_cost2 += _tree_joints_angle_matrix[1][curIndex].second;
+                curIndex = _tree_robotstate[1][curIndex].second;
+            }
+
+            if(tmp_cost1 < tmp_cost2){
+                pathCost = tmp_cost1;
+                back_track[0] = tree_reached_index[0];
+                back_track[1] = tree_reached_index[1];
+            }
+            else{
+                pathCost = tmp_cost2;
+            }
+            outputFile<<_planning_time<<" "<<pathCost<<std::endl;
+//            std::cout<<"after   cost: "<<pathCost<<std::endl;
         }
+        _planning_time += std::chrono::duration_cast<std::chrono::duration<double>>(std::chrono::high_resolution_clock::now() - loopStartTime).count();
+//        std::cout<<"pathCost: "<<pathCost<<std::endl;
     }//end while
 
     //***********return 前的处理****************
     for(auto ptr:_waitRelesePtr){
         delete ptr;
     }
-    avgExtendTime = totalExtendTime / totalExtendCounts;
-    avgExtendCountPerSample = static_cast<double>(totalExtendCounts) / (_max_planning_times + 1);
-    panningTime = std::chrono::duration_cast<std::chrono::duration<double>>(std::chrono::high_resolution_clock::now() - startPlanningTime).count();
-    std::cout<<"panningTime: "<<panningTime<<std::endl;
-    std::cout<<"pathCost: "<<pathCost<<std::endl;
+    std::cout<<"seed: "<<_seed<<std::endl;
+    std::cout<<"planningTime: "<<_planning_time<<std::endl;
+    std::cout<<"planningCount:  "<<plan_times_count<<std::endl;
+    std::cout<<"pathCost:  "<<pathCost<<std::endl;
+
     if(_foundPathFlag){
         while(back_track[0] != -1){
             _planning_result.push_back(_tree_robotstate[0][back_track[0]].first);
             _planning_result_index.push_back(_tree_robotstate[0][back_track[0]].second);
             _planning_result_task_state_vector.push_back(_tree_task_space_vector[0][back_track[0]]);
+            _planning_result_joint_angles.push_back(_tree_joints_angle_matrix[0][back_track[0]].first);
             back_track[0] = _tree_robotstate[0][back_track[0]].second;
         }
         std::reverse(_planning_result.begin(), _planning_result.end());
         std::reverse(_planning_result_index.begin(), _planning_result_index.end());
         std::reverse(_planning_result_task_state_vector.begin(), _planning_result_task_state_vector.end());
+        std::reverse(_planning_result_joint_angles.begin(), _planning_result_joint_angles.end());
 
         //添加后半部分路径点
+        //不要相同的这第一个点
+        back_track[1] = _tree_robotstate[1][back_track[1]].second;
         while(back_track[1] != -1){
             _planning_result.push_back(_tree_robotstate[1][back_track[1]].first);
             _planning_result_index.push_back(_tree_robotstate[1][back_track[1]].second);
             _planning_result_task_state_vector.push_back(_tree_task_space_vector[1][back_track[1]]);
+            _planning_result_joint_angles.push_back(_tree_joints_angle_matrix[1][back_track[1]].first);
             back_track[1] = _tree_robotstate[1][back_track[1]].second;
         }
         return true;
@@ -748,20 +914,25 @@ bool DualCBiRRT::plan(double &panningTime, int &sampleCounts, double &avgExtendT
     }
 }
 
-void DualCBiRRT::showPath(){
+void TaskSpacePlanner::showPath(){
     _visual_tools.deleteAllMarkers();
     _visual_tools.trigger();
+    ros::Duration(0.2).sleep();
 
     std::vector<geometry_msgs::Pose> result_pose;
     moveit_msgs::RobotTrajectory result_msg;
     trajectory_msgs::JointTrajectory path_point_msg;
     trajectory_msgs::JointTrajectoryPoint path_point_position_msg; //只需要添加关节位置点
+
+
     for(size_t i=0; i<_planning_result.size(); i++){
         std::vector<double> tmp1;
         std::vector<double> tmp2;
         _planning_result[i].copyJointGroupPositions(_planning_group, tmp1);
         _planning_result[i].copyJointGroupPositions(_slave_group, tmp2);
         tmp1.insert(tmp1.end(), tmp2.begin(), tmp2.end());
+
+
         path_point_position_msg.positions = tmp1;
         path_point_msg.points.push_back(path_point_position_msg);
 
@@ -814,10 +985,10 @@ void DualCBiRRT::showPath(){
     scale.x = 0.01;
     scale.y = 0.01;
     scale.z = 0.01;
-    _visual_tools.publishSpheres(extend_states_display_a_tree, extend_states_display_color_a_tree, scale);
-    _visual_tools.trigger();
-    _visual_tools.publishSpheres(extend_states_display_b_tree, extend_states_display_color_b_tree, scale);
-    _visual_tools.trigger();
+//    _visual_tools.publishSpheres(extend_states_display_a_tree, extend_states_display_color_a_tree, scale);
+//    _visual_tools.trigger();
+//    _visual_tools.publishSpheres(extend_states_display_b_tree, extend_states_display_color_b_tree, scale);
+//    _visual_tools.trigger();
 
     //*********************显示规划的轨迹*****************************
     std::vector<std::string> joint_names = _planning_group->getVariableNames();
@@ -829,7 +1000,7 @@ void DualCBiRRT::showPath(){
 
     _visual_tools.publishTrajectoryLine(result_msg, _planning_group);
     _visual_tools.trigger();
-
+    ros::Duration(0.2).sleep();
     //创建一个DisplayTrajectory msg 动画演示轨迹
     moveit_msgs::DisplayTrajectory display_traj_msg;
     moveit_msgs::RobotState start_state_msg;
@@ -852,7 +1023,7 @@ void DualCBiRRT::showPath(){
     ros::Duration(1).sleep();
 }
 
-int DualCBiRRT::addState(const Eigen::Matrix<double, 7, 1> &masterAngles,
+int TaskSpacePlanner::addState(const Eigen::Matrix<double, 7, 1> &masterAngles,
                          const Eigen::Matrix<double, 7, 1> &slaveAngles,
                          const Eigen::Vector4d &masterState,
                          const Eigen::Vector4d &slaveState,
@@ -869,7 +1040,7 @@ int DualCBiRRT::addState(const Eigen::Matrix<double, 7, 1> &masterAngles,
 }
 
 
-Eigen::Vector4d DualCBiRRT::get_task_state_vector(robot_state::RobotState &state, bool is_master){
+Eigen::Vector4d TaskSpacePlanner::get_task_state_vector(robot_state::RobotState &state, bool is_master){
     Eigen::Vector4d output;
     std::string gripper_name;
     if(is_master){
@@ -893,7 +1064,7 @@ Eigen::Vector4d DualCBiRRT::get_task_state_vector(robot_state::RobotState &state
     return output;
 }
 
-Eigen::Matrix<double, 14, 1> DualCBiRRT::get_joint_angles_matrix(const robot_state::RobotState &state){
+Eigen::Matrix<double, 14, 1> TaskSpacePlanner::get_joint_angles_matrix(const robot_state::RobotState &state){
     Eigen::Matrix<double, 14, 1> output;
     std::vector<double> goal_state_value; //用来判断是不是采样到了goal_state
     state.copyJointGroupPositions(_both_group, goal_state_value);
@@ -904,11 +1075,11 @@ Eigen::Matrix<double, 14, 1> DualCBiRRT::get_joint_angles_matrix(const robot_sta
     return output;
 }
 
-const std::vector<std::pair<robot_state::RobotState, size_t>> & DualCBiRRT::get_tree_state_vector(bool if_a_tree){
+const std::vector<std::pair<robot_state::RobotState, size_t>> & TaskSpacePlanner::get_tree_state_vector(bool if_a_tree){
     return _tree_robotstate[if_a_tree];
 }
 
-Eigen::Matrix<double, 7, 1> DualCBiRRT::manipuGradient(robot_state::RobotState & robot_state, bool is_master){
+Eigen::Matrix<double, 7, 1> TaskSpacePlanner::manipuGradient(robot_state::RobotState & robot_state, bool is_master){
     const robot_state::JointModelGroup* group;
     if(is_master){
         group = _planning_group;
@@ -939,7 +1110,7 @@ Eigen::Matrix<double, 7, 1> DualCBiRRT::manipuGradient(robot_state::RobotState &
     return gradient;
 }
 
-double DualCBiRRT::manipulability(robot_state::RobotState & robot_state, bool is_master){
+double TaskSpacePlanner::manipulability(robot_state::RobotState & robot_state, bool is_master){
     Eigen::MatrixXd jac;
     Eigen::MatrixXd jjt;
     if(is_master){
